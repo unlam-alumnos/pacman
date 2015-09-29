@@ -5,8 +5,7 @@ import javax.swing.ImageIcon;
 public abstract class Personaje {
 
 	protected int velocidad;
-	protected int posicionX;
-	protected int posicionY;
+	protected Coordenada posicion;
 	protected ImageIcon imagen;
 	
 	protected void setImagen(){}

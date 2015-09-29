@@ -2,15 +2,16 @@ package edu.unlam.pacman.model;
 
 public class Casillero {
 	
-	private short tipo; // Pared, fruta, fruta especial
+	private enum tipo { FRUTA, FRUTA_ESPECIAL, PARED, CAMINO };
+    private tipo casillero;
 
-	public Casillero(short tipo) {
+	public Casillero(tipo casillero) {
 		super();
-		this.tipo = tipo;
+		this.casillero = casillero;
 	}
 
 	public void setTipo(short tipo) {
-		this.tipo = tipo;
+		this.casillero = casillero;
 	}
 	
 	
