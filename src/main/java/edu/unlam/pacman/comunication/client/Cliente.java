@@ -20,7 +20,6 @@ public class Cliente {
         }
     }
 
-
     public void send() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

@@ -1,10 +1,12 @@
 package edu.unlam.pacman.comunication.client;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ThreadCliente extends Thread {
+public class ThreadCliente extends Thread{
     private Socket socket;
 
     public ThreadCliente(Socket socket) {
@@ -12,6 +14,7 @@ public class ThreadCliente extends Thread {
         this.socket = socket;
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public void run() {
         DataInputStream data;
