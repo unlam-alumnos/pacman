@@ -2,10 +2,10 @@ package edu.unlam.pacman.model;
 
 public class Casillero {
 	
-	private enum tipo { FRUTA, FRUTA_ESPECIAL, PARED, PISO };
-    private tipo casillero;
+	private enum Tipo { FRUTA, FRUTA_ESPECIAL, PARED, PISO };
+    private Tipo casillero;
 
-	public Casillero(tipo casillero) {
+	public Casillero(Tipo casillero) {
 		super();
 		this.casillero = casillero;
 	}

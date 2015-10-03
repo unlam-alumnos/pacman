@@ -1,6 +1,6 @@
 package edu.unlam.pacman.model;
 
-public class Pacman extends Personaje{
+public class Pacman extends Personaje {
 	
 	private int sentido; // Arriba, Abajo, Derecha, Izquierda
 	
