@@ -1,4 +1,4 @@
-package edu.unlam.pacman.model;
+package edu.unlam.pacman.ui.pacman;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,21 +7,18 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
-import com.google.common.eventbus.Subscribe;
-import edu.unlam.pacman.common.ui.BaseComponent;
 import edu.unlam.pacman.events.Bus;
 import edu.unlam.pacman.events.MoveEvent;
+import edu.unlam.pacman.ui.View;
 
-public class Pacman extends BaseComponent {
+public class PacmanView extends View<Pacman> {
+    private int x;
+    private int y;
+    private int height;
+    private int width;
 
-    private int x = 225;
-    private int y = 225;
-
-    private int height = 40;
-    private int width = 40;
-
-    public Pacman() {
-        super();
+    @Override
+    protected void onBind() {
         setOpaque(false);
         setFocusable(true);
 
@@ -56,22 +53,10 @@ public class Pacman extends BaseComponent {
         g2.fillArc(x, y, width, height, 30, 300);
     }
 
-    @Subscribe
-    public void handleMovement(MoveEvent event) {
-        x += event.getX();
-        y += event.getY();
-        repaint();
-    }
-
-    public void comer(Personaje fantasma) {
-
-    }
-
-    public void comer(Casillero frutaEspecial) {
-
-    }
-
-    public void morir() {
-
+    public void updateCoordenates(int x, int y, int height, int width) {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
     }
 }

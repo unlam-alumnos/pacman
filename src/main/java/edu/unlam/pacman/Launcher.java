@@ -3,8 +3,8 @@ package edu.unlam.pacman;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import edu.unlam.pacman.model.Pacman;
-import edu.unlam.pacman.model.Tablero;
+import edu.unlam.pacman.ui.pacman.PacmanPresenter;
+import edu.unlam.pacman.ui.tablero.TableroView;
 
 /**
  * @author Cristian Miranda
@@ -21,8 +21,10 @@ public class Launcher {
         JFrame frame = new JFrame("Pacman");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.getLayeredPane().add(new Pacman(), new Integer(2));
-        frame.getLayeredPane().add(new Tablero(), new Integer(1));
+        PacmanPresenter pacmanPresenter = new PacmanPresenter();
+
+        frame.getLayeredPane().add(pacmanPresenter.getView(), new Integer(2));
+        frame.getLayeredPane().add(new TableroView(), new Integer(1));
 
         // Display the window.
         frame.setSize(455, 660);

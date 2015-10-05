@@ -1,4 +1,4 @@
-package edu.unlam.pacman.model;
+package edu.unlam.pacman.ui.tablero;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,19 +7,27 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import edu.unlam.pacman.common.ui.BaseComponent;
+import edu.unlam.pacman.model.Casillero;
+import edu.unlam.pacman.model.Coordenada;
+import edu.unlam.pacman.model.Personaje;
+import edu.unlam.pacman.ui.View;
 
-public class Tablero extends BaseComponent {
+public class TableroView extends View<Tablero> {
 
     private Casillero[][] tablero;
     private List<Personaje> personajes;
 
-    public Tablero() {
+    public TableroView() {
         super();
         setOpaque(true);
     }
 
-    public Tablero(Casillero[][] tablero, List<Personaje> personajes) {
+    @Override
+    protected void onBind() {
+
+    }
+
+    public TableroView(Casillero[][] tablero, List<Personaje> personajes) {
         super();
         this.tablero = tablero;
         this.personajes = personajes;
