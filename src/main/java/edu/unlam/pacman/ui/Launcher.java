@@ -3,6 +3,7 @@ package edu.unlam.pacman.ui;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import edu.unlam.pacman.model.Pacman;
 import edu.unlam.pacman.model.Tablero;
 
 /**
@@ -22,9 +23,11 @@ public class Launcher {
 
         // Add the ubiquitous "Hello World" label.
         Tablero tablero = new Tablero();
+        Pacman pacman = new Pacman();
 
         // Adding board to main frame
-        frame.getContentPane().add(tablero);
+        frame.getLayeredPane().setOpaque(true);
+        frame.getLayeredPane().add(tablero);
 
         // Display the window.
         frame.setSize(455, 660);
