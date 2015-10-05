@@ -1,6 +1,6 @@
-package edu.unlam.pacman.ui.tablero;
+package edu.unlam.pacman.ui.modules.tablero;
 
-import edu.unlam.pacman.ui.Model;
+import edu.unlam.pacman.ui.mvp.Model;
 
 /**
  * @author Cristian Miranda

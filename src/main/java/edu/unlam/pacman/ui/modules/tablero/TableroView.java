@@ -1,8 +1,7 @@
-package edu.unlam.pacman.ui.tablero;
+package edu.unlam.pacman.ui.modules.tablero;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
@@ -10,9 +9,12 @@ import java.util.List;
 import edu.unlam.pacman.model.Casillero;
 import edu.unlam.pacman.model.Coordenada;
 import edu.unlam.pacman.model.Personaje;
-import edu.unlam.pacman.ui.View;
+import edu.unlam.pacman.ui.mvp.UiHandler;
+import edu.unlam.pacman.ui.mvp.View;
 
-public class TableroView extends View<Tablero> {
+public class TableroView extends View<TableroPresenter> {
+    public interface MyView extends UiHandler{
+    }
 
     private Casillero[][] tablero;
     private List<Personaje> personajes;
@@ -34,11 +36,7 @@ public class TableroView extends View<Tablero> {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-
+    public void paintComponent(Graphics2D g2) {
         int[][] board = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 0, 0, 0, 0, 0, 0, 0, 1},

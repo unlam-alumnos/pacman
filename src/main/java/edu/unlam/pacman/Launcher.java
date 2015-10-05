@@ -3,8 +3,8 @@ package edu.unlam.pacman;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import edu.unlam.pacman.ui.pacman.PacmanPresenter;
-import edu.unlam.pacman.ui.tablero.TableroView;
+import edu.unlam.pacman.ui.modules.pacman.PacmanPresenter;
+import edu.unlam.pacman.ui.modules.tablero.TableroView;
 
 /**
  * @author Cristian Miranda

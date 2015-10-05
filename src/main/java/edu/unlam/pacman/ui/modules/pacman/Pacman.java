@@ -1,6 +1,6 @@
-package edu.unlam.pacman.ui.pacman;
+package edu.unlam.pacman.ui.modules.pacman;
 
-import edu.unlam.pacman.ui.Model;
+import edu.unlam.pacman.ui.mvp.Model;
 
 /**
  * @author Cristian Miranda
@@ -11,9 +11,6 @@ public class Pacman implements Model {
     private int y = 225;
     private int height = 40;
     private int width = 40;
-
-    public Pacman() {
-    }
 
     public int getX() {
         return x;
@@ -35,15 +32,7 @@ public class Pacman implements Model {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public int getWidth() {
         return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
     }
 }

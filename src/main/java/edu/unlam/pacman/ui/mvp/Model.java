@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui;
+package edu.unlam.pacman.ui.mvp;
 
 /**
  * @author Cristian Miranda

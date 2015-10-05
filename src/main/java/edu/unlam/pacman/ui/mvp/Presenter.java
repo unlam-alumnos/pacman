@@ -1,0 +1,21 @@
+package edu.unlam.pacman.ui.mvp;
+
+import edu.unlam.pacman.events.Bus;
+
+/**
+ * @author Cristian Miranda
+ * @since 10/5/15 - 15:25
+ */
+public abstract class Presenter<V extends View<? extends UiHandler>> {
+    private V view;
+
+    public Presenter(V view) {
+        this.view = view;
+        this.view.setUiHandler((UiHandler) this);
+        Bus.register(this);
+    }
+
+    public V getView() {
+        return view;
+    }
+}
