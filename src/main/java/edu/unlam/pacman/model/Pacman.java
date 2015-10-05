@@ -7,11 +7,12 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JPanel;
+import com.google.common.eventbus.Subscribe;
+import edu.unlam.pacman.common.ui.BaseComponent;
+import edu.unlam.pacman.events.Bus;
+import edu.unlam.pacman.events.MoveEvent;
 
-import edu.unlam.pacman.common.Constants;
-
-public class Pacman extends JPanel {
+public class Pacman extends BaseComponent {
 
     private int x = 225;
     private int y = 225;
@@ -20,7 +21,7 @@ public class Pacman extends JPanel {
     private int width = 40;
 
     public Pacman() {
-        setBounds(0, 0, Constants.MAX_WIDTH, Constants.MAX_HEIGHT);
+        super();
         setOpaque(false);
         setFocusable(true);
 
@@ -29,16 +30,16 @@ public class Pacman extends JPanel {
                     @Override
                     public boolean dispatchKeyEvent(KeyEvent e) {
                         if (e.getKeyCode() == KeyEvent.VK_UP) {
-                            move(0, -5);
+                            Bus.post(new MoveEvent(0, -5));
                         }
                         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                            move(5, 0);
+                            Bus.post(new MoveEvent(5, 0));
                         }
                         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                            move(-5, 0);
+                            Bus.post(new MoveEvent(-5, 0));
                         }
                         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                            move(0, 5);
+                            Bus.post(new MoveEvent(0, 5));
                         }
                         return false;
                     }
@@ -55,9 +56,10 @@ public class Pacman extends JPanel {
         g2.fillArc(x, y, width, height, 30, 300);
     }
 
-    public void move(int dX, int dY) {
-        x += dX;
-        y += dY;
+    @Subscribe
+    public void handleMovement(MoveEvent event) {
+        x += event.getX();
+        y += event.getY();
         repaint();
     }
 
