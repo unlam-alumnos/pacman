@@ -9,12 +9,16 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import edu.unlam.pacman.common.Constants;
+
 public class Tablero extends JPanel {
 
     private Casillero[][] tablero;
     private List<Personaje> personajes;
 
     public Tablero() {
+        setBounds(0, 0, Constants.MAX_WIDTH, Constants.MAX_HEIGHT);
+        setOpaque(true);
     }
 
     public Tablero(Casillero[][] tablero, List<Personaje> personajes) {
@@ -67,7 +71,6 @@ public class Tablero extends JPanel {
         }
 
         setBackground(Color.BLACK);
-        setOpaque(true);
     }
 
     public Coordenada dondeRevivir() {

@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui;
+package edu.unlam.pacman;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -21,13 +21,8 @@ public class Launcher {
         JFrame frame = new JFrame("Pacman");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Add the ubiquitous "Hello World" label.
-        Tablero tablero = new Tablero();
-        Pacman pacman = new Pacman();
-
-        // Adding board to main frame
-        frame.getLayeredPane().setOpaque(true);
-        frame.getLayeredPane().add(tablero);
+        frame.getLayeredPane().add(new Pacman(), new Integer(2));
+        frame.getLayeredPane().add(new Tablero(), new Integer(1));
 
         // Display the window.
         frame.setSize(455, 660);
