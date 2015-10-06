@@ -12,15 +12,8 @@ import edu.unlam.pacman.ui.mvp.View;
 public class PacmanView extends View<PacmanView.MyView> {
     interface MyView extends UiHandler {
         void move(int x, int y);
+        void paintPacman();
     }
-
-    /*
-     * UI Data
-     */
-    private int x;
-    private int y;
-    private int height;
-    private int width;
 
     @Override
     protected void onBind() {
@@ -31,15 +24,12 @@ public class PacmanView extends View<PacmanView.MyView> {
 
     @Override
     public void paintComponent(Graphics2D g2) {
-        g2.setColor(Color.YELLOW);
-        g2.fillArc(x, y, width, height, 30, 300);
+        uiHandler().paintPacman();
     }
 
-    public void updateCoordenates(int x, int y, int height, int width) {
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
+    public void paintPacman(int x, int y, int width, int height) {
+        graphics().setColor(Color.YELLOW);
+        graphics().fillArc(x, y, width, height, 30, 300);
     }
 
     private void bindKeys() {

@@ -13,6 +13,7 @@ import edu.unlam.pacman.common.Constants;
  */
 public abstract class View<M extends UiHandler> extends JPanel {
     private M uiHandler;
+    private Graphics2D g2;
 
     public View() {
         onBind();
@@ -24,7 +25,7 @@ public abstract class View<M extends UiHandler> extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D) g;
+        this.g2 = (Graphics2D) g;
         paintComponent(g2);
     }
 
@@ -35,6 +36,10 @@ public abstract class View<M extends UiHandler> extends JPanel {
     }
 
     protected abstract void onBind();
+
+    public Graphics2D graphics() {
+        return g2;
+    }
 
     public void setUiHandler(UiHandler uiHandler) {
         this.uiHandler = (M) uiHandler;

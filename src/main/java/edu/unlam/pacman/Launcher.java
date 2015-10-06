@@ -1,43 +1,49 @@
 package edu.unlam.pacman;
 
+import java.awt.HeadlessException;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import edu.unlam.pacman.common.Constants;
 import edu.unlam.pacman.ui.modules.pacman.PacmanPresenter;
-import edu.unlam.pacman.ui.modules.tablero.TableroView;
+import edu.unlam.pacman.ui.modules.tablero.TableroPresenter;
+import edu.unlam.pacman.ui.mvp.Presenter;
 
 /**
  * @author Cristian Miranda
  * @since 10/2/15 - 17:35
  */
-public class Launcher {
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
+public class Launcher extends JFrame {
+    public static Integer index = 1;
+
+    public Launcher() throws HeadlessException {
         // Create and set up the window.
-        JFrame frame = new JFrame("Pacman");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        PacmanPresenter pacmanPresenter = new PacmanPresenter();
-
-        frame.getLayeredPane().add(pacmanPresenter.getView(), new Integer(2));
-        frame.getLayeredPane().add(new TableroView(), new Integer(1));
+        // Initialize content
+        initContent();
 
         // Display the window.
-        frame.setSize(455, 660);
-        frame.setVisible(true);
+        setSize(Constants.MAX_WIDTH, Constants.MAX_HEIGHT);
     }
 
     public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                createAndShowGUI();
+                new Launcher().setVisible(true);
             }
         });
+    }
+
+    private void initContent() {
+        addComponent(new TableroPresenter());
+        addComponent(new PacmanPresenter());
+    }
+
+    private void addComponent(Presenter presenter) {
+        getLayeredPane().add(presenter.getView(), index);
+        index++;
     }
 }

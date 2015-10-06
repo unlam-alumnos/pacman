@@ -11,11 +11,24 @@ public abstract class Presenter<V extends View<? extends UiHandler>> {
 
     public Presenter(V view) {
         this.view = view;
+        init();
+    }
+
+    private void init() {
         this.view.setUiHandler((UiHandler) this);
         Bus.register(this);
     }
 
     public V getView() {
         return view;
+    }
+
+    /**
+     * Only for testing purposes
+     * @param view
+     */
+    public void setView(V view) {
+        this.view = view;
+        init();
     }
 }

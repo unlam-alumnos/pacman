@@ -8,13 +8,49 @@
     <artifactId>pacman</artifactId>
     <version>0.1</version>
 
+    <properties>
+        <!-- Dependencies -->
+        <guava.version>18.0</guava.version>
+        <mockito.version>1.9.5</mockito.version>
+        <junit.version>4.11</junit.version>
+        <!-- Plugins -->
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+    </properties>
+
     <dependencies>
         <!-- Guava - Used for events-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <!-- Testing Frameworks -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

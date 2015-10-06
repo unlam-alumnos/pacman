@@ -12,18 +12,18 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     public PacmanPresenter() {
         super(new PacmanView());
         this.pacman = new Pacman();
-        updateCoordenates();
-    }
-
-    private void updateCoordenates() {
-        getView().updateCoordenates(pacman.getX(), pacman.getY(), pacman.getHeight(), pacman.getWidth());
     }
 
     @Override
     public void move(int x, int y) {
         pacman.setX(pacman.getX() + x);
         pacman.setY(pacman.getY() + y);
-        updateCoordenates();
+        paintPacman();
+    }
+
+    @Override
+    public void paintPacman() {
+        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight());
         getView().repaint();
     }
 }

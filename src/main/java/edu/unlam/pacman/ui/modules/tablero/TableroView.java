@@ -4,85 +4,37 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 
-import edu.unlam.pacman.model.Casillero;
-import edu.unlam.pacman.model.Coordenada;
-import edu.unlam.pacman.model.Personaje;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
 
-public class TableroView extends View<TableroPresenter> {
-    public interface MyView extends UiHandler{
-    }
-
-    private Casillero[][] tablero;
-    private List<Personaje> personajes;
-
-    public TableroView() {
-        super();
-        setOpaque(true);
+public class TableroView extends View<TableroView.MyView> {
+    interface MyView extends UiHandler{
+        void paint();
     }
 
     @Override
     protected void onBind() {
-
-    }
-
-    public TableroView(Casillero[][] tablero, List<Personaje> personajes) {
-        super();
-        this.tablero = tablero;
-        this.personajes = personajes;
+        setOpaque(true);
+        setBackground(Color.BLACK);
     }
 
     @Override
     public void paintComponent(Graphics2D g2) {
-        int[][] board = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 0, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 0, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1},
-        };
-
-        int x = 0;
-        int y = 0;
-        int size = 50;
-        for (int i = 0; i < board.length; i++) {
-            int[] row = board[i];
-            for (int j = 0; j < row.length; j++) {
-                g2.setStroke(new BasicStroke(5f));
-                if (row[j] == 1) { // Pared
-                    g2.setColor(Color.RED);
-                    g2.fill(new Rectangle2D.Double(x, y, size, size));
-                    g2.setColor(Color.BLACK);
-                    g2.setStroke(new BasicStroke(2f));
-                    g2.drawRect(x, y, size, size);
-                } else if (row[j] == 0) { // Vacío
-                    g2.setColor(Color.YELLOW);
-                    g2.drawOval(x + size / 2, y + size / 2, 2, 2);
-                }
-                x += size;
-            }
-            x = 0;
-            y += size;
-        }
-
-        setBackground(Color.BLACK);
+        uiHandler().paint();
     }
 
-    public Coordenada dondeRevivir() {
-        int x = 0;
-        int y = 0;
+    public void dibujarPared(int x, int y) {
+        int size = 50;
+        graphics().setColor(Color.RED);
+        graphics().fill(new Rectangle2D.Double(x, y, size, size));
+        graphics().setColor(Color.BLACK);
+        graphics().setStroke(new BasicStroke(2f));
+        graphics().drawRect(x, y, size, size);
+    }
 
-        // TODO : caclcular la posicion mas alejada de todos los fantasmas dentro del tablero
-
-        return new Coordenada(x, y);
+    public void dibujarPiso(int x, int y) {
+        graphics().setColor(Color.YELLOW);
+        graphics().drawOval(x, y, 2, 2);
     }
 }
