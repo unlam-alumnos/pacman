@@ -1,7 +1,5 @@
 package edu.unlam.pacman.ui.modules.fantasma;
 
-import edu.unlam.pacman.events.Bus;
-import edu.unlam.pacman.events.MoveEvent;
 import edu.unlam.pacman.ui.mvp.Presenter;
 
 /**
@@ -21,7 +19,6 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
         pacman.setX(pacman.getX() + x);
         pacman.setY(pacman.getY() + y);
         paintPacman();
-        Bus.post(new MoveEvent(x, y));
     }
 
     @Override
