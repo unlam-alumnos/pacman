@@ -6,7 +6,7 @@ package edu.unlam.pacman.common;
  */
 public class Constants {
 
-    public static final Integer MAX_WIDTH = 455;
-    public static final Integer MAX_HEIGHT = 660;
+    public static final Integer MAX_WIDTH = 860;
+    public static final Integer MAX_HEIGHT = 590;
 
 }
