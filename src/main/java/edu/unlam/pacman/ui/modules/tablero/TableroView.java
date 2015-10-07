@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import edu.unlam.pacman.common.Coordenada;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
 
@@ -24,17 +25,20 @@ public class TableroView extends View<TableroView.MyView> {
         uiHandler().paint();
     }
 
-    public void dibujarPared(int x, int y) {
-        int size = 50;
+    public void dibujarPared(Coordenada coordenada, int ancho, int alto) {
+        int x = coordenada.getX();
+        int y = coordenada.getY();
         graphics().setColor(Color.RED);
-        graphics().fill(new Rectangle2D.Double(x, y, size, size));
+        graphics().fill(new Rectangle2D.Double(x, y, ancho, alto));
         graphics().setColor(Color.BLACK);
         graphics().setStroke(new BasicStroke(2f));
-        graphics().drawRect(x, y, size, size);
+        graphics().drawRect(x, y, ancho, alto);
     }
 
-    public void dibujarPiso(int x, int y) {
+    public void dibujarPiso(Coordenada coordenada, int radio) {
+        int x = coordenada.getX();
+        int y = coordenada.getY();
         graphics().setColor(Color.YELLOW);
-        graphics().drawOval(x, y, 2, 2);
+        graphics().drawOval(x, y, radio, radio);
     }
 }
