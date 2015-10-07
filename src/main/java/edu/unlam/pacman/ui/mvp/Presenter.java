@@ -7,6 +7,7 @@ import edu.unlam.pacman.events.Bus;
  * @since 10/5/15 - 15:25
  */
 public abstract class Presenter<V extends View<? extends UiHandler>> {
+    protected Bus eventBus;
     private V view;
 
     public Presenter(V view) {
@@ -16,7 +17,8 @@ public abstract class Presenter<V extends View<? extends UiHandler>> {
 
     private void init() {
         this.view.setUiHandler((UiHandler) this);
-        Bus.register(this);
+        this.eventBus = Bus.getInstance();
+        this.eventBus.register(this);
     }
 
     public V getView() {

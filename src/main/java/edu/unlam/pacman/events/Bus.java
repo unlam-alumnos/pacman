@@ -8,22 +8,24 @@ import com.google.common.eventbus.EventBus;
  */
 public class Bus {
     private static EventBus bus;
+    private static Bus instance;
 
-    private Bus() {}
-
-    private static void init() {
-        if (bus == null) {
-            bus = new EventBus();
-        }
+    private Bus() {
+        bus = new EventBus();
     }
 
-    public static void register(Object bean) {
-        init();
+    public static Bus getInstance() {
+        if (instance == null) {
+            instance = new Bus();
+        }
+        return instance;
+    }
+
+    public void register(Object bean) {
         bus.register(bean);
     }
 
-    public static void post(GameEvent event) {
-        init();
+    public void post(GameEvent event) {
         bus.post(event);
     }
 }
