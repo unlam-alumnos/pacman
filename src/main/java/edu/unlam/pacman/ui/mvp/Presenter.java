@@ -1,6 +1,6 @@
 package edu.unlam.pacman.ui.mvp;
 
-import edu.unlam.pacman.events.Bus;
+import edu.unlam.pacman.comunication.bus.Bus;
 
 /**
  * @author Cristian Miranda

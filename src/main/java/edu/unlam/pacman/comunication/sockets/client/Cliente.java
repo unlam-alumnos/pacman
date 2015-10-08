@@ -1,4 +1,4 @@
-package edu.unlam.pacman.comunication.client;
+package edu.unlam.pacman.comunication.sockets.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;

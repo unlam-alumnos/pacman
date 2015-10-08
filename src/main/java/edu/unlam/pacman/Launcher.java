@@ -1,13 +1,14 @@
 package edu.unlam.pacman;
 
+import java.awt.HeadlessException;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 import edu.unlam.pacman.common.Constants;
-import edu.unlam.pacman.ui.modules.fantasma.FantasmaPresenter;
 import edu.unlam.pacman.ui.modules.pacman.PacmanPresenter;
 import edu.unlam.pacman.ui.modules.tablero.TableroPresenter;
 import edu.unlam.pacman.ui.mvp.Presenter;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author Cristian Miranda
@@ -39,7 +40,6 @@ public class Launcher extends JFrame {
     private void initContent() {
         addComponent(new TableroPresenter());
         addComponent(new PacmanPresenter());
-        addComponent(new FantasmaPresenter());
     }
 
     private void addComponent(Presenter presenter) {

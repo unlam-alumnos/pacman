@@ -6,12 +6,13 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
+import edu.unlam.pacman.common.Direction;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
 
 public class PacmanView extends View<PacmanView.MyView> {
     interface MyView extends UiHandler {
-        void move(int x, int y);
+        void move(Direction direction);
         void paintPacman();
     }
 
@@ -27,9 +28,17 @@ public class PacmanView extends View<PacmanView.MyView> {
         uiHandler().paintPacman();
     }
 
-    public void paintPacman(int x, int y, int width, int height) {
+    public void paintPacman(int x, int y, int width, int height, Direction direction) {
         graphics().setColor(Color.YELLOW);
-        graphics().fillArc(x, y, width, height, 30, 300);
+        int angle = 30;
+        if (Direction.LEFT.equals(direction)) {
+            angle = 210;
+        } else if (Direction.UP.equals(direction)) {
+            angle = 120;
+        } else if (Direction.DOWN.equals(direction)) {
+            angle = 300;
+        }
+        graphics().fillArc(x, y, width, height, angle, 300);
     }
 
     private void bindKeys() {
@@ -37,13 +46,13 @@ public class PacmanView extends View<PacmanView.MyView> {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    uiHandler().move(0, -5);
+                    uiHandler().move(Direction.UP);
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    uiHandler().move(5, 0);
+                    uiHandler().move(Direction.RIGHT);
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    uiHandler().move(-5, 0);
+                    uiHandler().move(Direction.LEFT);
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    uiHandler().move(0, 5);
+                    uiHandler().move(Direction.DOWN);
                 }
                 return false;
             }

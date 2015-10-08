@@ -1,6 +1,12 @@
 package edu.unlam.pacman.ui.modules.tablero;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.common.Coordenada;
+import edu.unlam.pacman.common.Direction;
+import edu.unlam.pacman.comunication.bus.async.Callback;
+import edu.unlam.pacman.comunication.bus.async.Request;
+import edu.unlam.pacman.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.ui.mvp.Presenter;
 
 /**
@@ -8,7 +14,6 @@ import edu.unlam.pacman.ui.mvp.Presenter;
  * @since 10/5/15 - 15:25
  */
 public class TableroPresenter extends Presenter<TableroView> implements TableroView.MyView {
-
     private Casillero[][] casilleros;
 
     public TableroPresenter() {
@@ -24,12 +29,57 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 if (Casillero.Tipo.PARED.equals(tipo)) {
                     getView().dibujarPared(casillero.getOrigen(), casillero.getAncho(), casillero.getAlto());
                 } else if (Casillero.Tipo.PISO.equals(tipo)) {
-                    getView().dibujarPiso(casillero.getOrigen(), casillero.getAlto());
+                    Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
+                    getView().dibujarPiso(coordenada, 2);
                 }
             }
         }
     }
 
+    /**
+     * Verifica la validez del movimiento pedido y responde solo si es válido
+     *
+     * @param request
+     */
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleMoveEventRequest(Request<MoveEvent> request) {
+        MoveEvent moveEvent = request.getEvent();
+        int i = 0;
+        for (Casillero[] fila : casilleros) {
+            int j = 0;
+            for (Casillero casillero : fila) {
+                Coordenada proyeccion = new Coordenada(moveEvent.getOrigen().getX() + casillero.getAncho() / 2, moveEvent.getOrigen().getY() + casillero.getAlto() / 2);
+                if (casillero.contains(proyeccion)) {
+                    Casillero siguiente = null;
+                    Direction direccion = moveEvent.getDireccion();
+                    try {
+                        if (Direction.UP.equals(direccion)) {
+                            siguiente = casilleros[i - 1][j];
+                        } else if (Direction.DOWN.equals(direccion)) {
+                            siguiente = casilleros[i + 1][j];
+                        } else if (Direction.LEFT.equals(direccion)) {
+                            siguiente = casilleros[i][j - 1];
+                        } else if (Direction.RIGHT.equals(direccion)) {
+                            siguiente = casilleros[i][j + 1];
+                        }
+                        boolean isStillFar = Math.abs(moveEvent.getOrigen().getX() - siguiente.getOrigen().getX()) >= siguiente.getAncho();
+                        if (Casillero.Tipo.PISO.equals(siguiente.getTipo())) {
+                            eventBus.post(new Callback<>(moveEvent));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Se pasó!");
+                    }
+                }
+                j++;
+            }
+            i++;
+        }
+    }
+
+    /**
+     * Crea los casilleros del tablero a partir de la matriz dada
+     */
     private void construirTablero() {
         int[][] board = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -55,7 +105,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 if (row[j] == 1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.PARED);
                 } else if (row[j] == 0) {
-                    casilleros[i][j] = new Casillero(new Coordenada(x + size / 2, y + size / 2), 2, 2, Casillero.Tipo.PISO);
+                    casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.PISO);
                 }
                 x += size;
             }

@@ -1,17 +1,19 @@
-package edu.unlam.pacman.events;
+package edu.unlam.pacman.comunication.bus;
 
-import com.google.common.eventbus.EventBus;
+import java.util.concurrent.Executors;
+
+import com.google.common.eventbus.AsyncEventBus;
 
 /**
  * @author Cristian Miranda
  * @since 10/5/15 - 14:34
  */
 public class Bus {
-    private static EventBus bus;
+    private static AsyncEventBus bus;
     private static Bus instance;
 
     private Bus() {
-        bus = new EventBus();
+        bus = new AsyncEventBus(Executors.newCachedThreadPool());
     }
 
     public static Bus getInstance() {
@@ -25,7 +27,7 @@ public class Bus {
         bus.register(bean);
     }
 
-    public void post(GameEvent event) {
+    public void post(Object event) {
         bus.post(event);
     }
 }

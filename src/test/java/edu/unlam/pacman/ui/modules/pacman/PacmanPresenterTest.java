@@ -3,8 +3,10 @@ package edu.unlam.pacman.ui.modules.pacman;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import edu.unlam.pacman.common.Direction;
 import edu.unlam.pacman.ui.modules.BasePresenterTest;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 
@@ -20,7 +22,7 @@ public class PacmanPresenterTest extends BasePresenterTest<PacmanPresenter, Pacm
         presenter.paintPacman();
 
         // Then
-        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt());
+        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt(), any(Direction.class));
     }
 
     @Override

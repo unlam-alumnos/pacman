@@ -1,7 +1,5 @@
-package edu.unlam.pacman.comunication.client;
+package edu.unlam.pacman.comunication.sockets.client;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;

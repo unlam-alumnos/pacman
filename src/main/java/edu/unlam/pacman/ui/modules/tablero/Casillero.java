@@ -19,6 +19,11 @@ public class Casillero {
 		this.tipo = tipo;
 	}
 
+	public boolean contains(Coordenada coordenada) {
+		return coordenada.getX() >= origen.getX() && coordenada.getX() <= origen.getX() + ancho
+				&& coordenada.getY() >= origen.getY() && coordenada.getY() <= origen.getY() + alto;
+	}
+
 	public Coordenada getOrigen() {
 		return origen;
 	}

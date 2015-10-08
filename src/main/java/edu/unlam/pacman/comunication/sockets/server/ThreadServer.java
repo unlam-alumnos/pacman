@@ -1,4 +1,4 @@
-package edu.unlam.pacman.comunication.server;
+package edu.unlam.pacman.comunication.sockets.server;
 
 import java.io.DataInputStream;
 import java.io.IOException;
