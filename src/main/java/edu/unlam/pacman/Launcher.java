@@ -1,14 +1,12 @@
 package edu.unlam.pacman;
 
-import java.awt.HeadlessException;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import edu.unlam.pacman.common.Constants;
 import edu.unlam.pacman.ui.modules.pacman.PacmanPresenter;
 import edu.unlam.pacman.ui.modules.tablero.TableroPresenter;
 import edu.unlam.pacman.ui.mvp.Presenter;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Cristian Miranda
@@ -26,6 +24,7 @@ public class Launcher extends JFrame {
 
         // Display the window.
         setSize(Constants.MAX_WIDTH, Constants.MAX_HEIGHT);
+        setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
