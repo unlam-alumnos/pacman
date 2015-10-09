@@ -36,7 +36,10 @@ public class TableroView extends View<TableroView.MyView> {
         graphics().drawRect(x, y, ancho, alto);
     }
 
-    public void dibujarPiso(Coordenada coordenada, int radio) {
+    public void dibujarPiso(Coordenada coordenada) {
+        dibujarFruta(coordenada,0);
+    }
+    public void dibujarFruta(Coordenada coordenada, int radio) {
         int x = coordenada.getX();
         int y = coordenada.getY();
         graphics().setColor(Color.YELLOW);

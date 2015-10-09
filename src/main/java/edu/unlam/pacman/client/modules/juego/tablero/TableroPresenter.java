@@ -28,9 +28,12 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 Casillero.Tipo tipo = casillero.getTipo();
                 if (Casillero.Tipo.PARED.equals(tipo)) {
                     getView().dibujarPared(casillero.getOrigen(), casillero.getAncho(), casillero.getAlto());
+                } else if (Casillero.Tipo.FRUTA.equals(tipo)) {
+                    Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
+                    getView().dibujarFruta(coordenada, 2);
                 } else if (Casillero.Tipo.PISO.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
-                    getView().dibujarPiso(coordenada, 2);
+                    getView().dibujarPiso(coordenada);
                 }
             }
         }
@@ -63,7 +66,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         } else if (Direction.RIGHT.equals(direccion)) {
                             siguiente = casilleros[i][j + 1];
                         }
-                        if (Casillero.Tipo.PISO.equals(siguiente.getTipo())) {
+                        if (Casillero.Tipo.FRUTA.equals(siguiente.getTipo())) {
+                            eventBus.post(new Callback<>(moveEvent));
+                            casilleros[i][j].setTipo(Casillero.Tipo.PISO);
+                        }else if(Casillero.Tipo.PISO.equals(siguiente.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                         }
                     } catch (Exception e) {
@@ -104,7 +110,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 if (row[j] == 1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.PARED);
                 } else if (row[j] == 0) {
-                    casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.PISO);
+                    casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA);
                 }
                 x += size;
             }
