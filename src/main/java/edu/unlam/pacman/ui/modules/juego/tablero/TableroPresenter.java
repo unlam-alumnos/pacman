@@ -64,7 +64,6 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         } else if (Direction.RIGHT.equals(direccion)) {
                             siguiente = casilleros[i][j + 1];
                         }
-                        boolean isStillFar = Math.abs(moveEvent.getOrigen().getX() - siguiente.getOrigen().getX()) >= siguiente.getAncho();
                         if (Casillero.Tipo.PISO.equals(siguiente.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                         }
