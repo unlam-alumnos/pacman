@@ -1,6 +1,8 @@
 package edu.unlam.pacman.ui.modules.login.login;
 
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import edu.unlam.pacman.ui.mvp.View;
 
 public class LoginView extends View<LoginView.MyView> {
     interface MyView extends UiHandler {
+        void aceptar();
     }
 
     private JTextField txtUser;
@@ -42,6 +45,12 @@ public class LoginView extends View<LoginView.MyView> {
 
         JButton btnAceptar = new JButton("Aceptar");
         btnAceptar.setBounds(147, 73, 137, 23);
+        btnAceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiHandler().aceptar();
+            }
+        });
         add(btnAceptar);
 
         btnRegister = new JButton("Registrarse");

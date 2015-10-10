@@ -1,5 +1,6 @@
 package edu.unlam.pacman.ui.modules.login.login;
 
+import edu.unlam.pacman.comunication.bus.events.modules.MenuEvent;
 import edu.unlam.pacman.ui.mvp.Presenter;
 
 /**
@@ -12,5 +13,10 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
     public LoginPresenter() {
         super(new LoginView());
         this.jugador = new Jugador();
+    }
+
+    @Override
+    public void aceptar() {
+        eventBus.post(new MenuEvent());
     }
 }

@@ -2,6 +2,7 @@ package edu.unlam.pacman.ui.modules;
 
 import javax.swing.JFrame;
 
+import edu.unlam.pacman.comunication.bus.Bus;
 import edu.unlam.pacman.ui.mvp.Presenter;
 
 /**
@@ -10,6 +11,10 @@ import edu.unlam.pacman.ui.mvp.Presenter;
  */
 public abstract class BaseFrame extends JFrame {
     protected static Integer index = 1;
+
+    public BaseFrame() {
+        Bus.getInstance().register(this);
+    }
 
     protected void addComponent(Presenter presenter) {
         getLayeredPane().add(presenter.getView(), index);
