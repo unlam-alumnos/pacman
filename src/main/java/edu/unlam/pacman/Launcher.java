@@ -1,48 +1,30 @@
 package edu.unlam.pacman;
 
-import edu.unlam.pacman.common.Constants;
-import edu.unlam.pacman.ui.modules.pacman.PacmanPresenter;
-import edu.unlam.pacman.ui.modules.tablero.TableroPresenter;
-import edu.unlam.pacman.ui.mvp.Presenter;
+import javax.swing.SwingUtilities;
 
-import javax.swing.*;
-import java.awt.*;
+import edu.unlam.pacman.ui.modules.estadisticas.Estadisticas;
+import edu.unlam.pacman.ui.modules.juego.Juego;
+import edu.unlam.pacman.ui.modules.login.Login;
+import edu.unlam.pacman.ui.modules.menu.Menu;
+import edu.unlam.pacman.ui.modules.registro.Registro;
+import edu.unlam.pacman.ui.modules.resultado.Resultado;
 
 /**
  * @author Cristian Miranda
  * @since 10/2/15 - 17:35
  */
-public class Launcher extends JFrame {
-    public static Integer index = 1;
-
-    public Launcher() throws HeadlessException {
-        // Create and set up the window.
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Initialize content
-        initContent();
-
-        // Display the window.
-        setSize(Constants.MAX_WIDTH, Constants.MAX_HEIGHT);
-        setLocationRelativeTo(null);
-    }
-
+public class Launcher {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Launcher().setVisible(true);
+                new Login().setVisible(true);
+                new Registro().setVisible(false);
+                new Menu().setVisible(false);
+                new Estadisticas().setVisible(false);
+                new Juego().setVisible(false);
+                new Resultado().setVisible(false);
             }
         });
-    }
-
-    private void initContent() {
-        addComponent(new TableroPresenter());
-        addComponent(new PacmanPresenter());
-    }
-
-    private void addComponent(Presenter presenter) {
-        getLayeredPane().add(presenter.getView(), index);
-        index++;
     }
 }

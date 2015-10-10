@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import org.junit.Before;
 
+import edu.unlam.pacman.comunication.bus.Bus;
 import edu.unlam.pacman.ui.mvp.Presenter;
 import edu.unlam.pacman.ui.mvp.View;
 
@@ -29,6 +30,7 @@ public abstract class BasePresenterTest<P extends Presenter, V extends View> {
         when(view.graphics()).thenReturn(mock(Graphics2D.class));
         doNothing().when(view).paintComponent(any(Graphics.class));
         this.presenter.setView(view);
+        this.presenter.setEventBus(mock(Bus.class));
     }
 
     protected abstract P getPresenter();

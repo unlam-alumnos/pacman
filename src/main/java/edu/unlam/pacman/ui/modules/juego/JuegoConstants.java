@@ -1,12 +1,10 @@
-package edu.unlam.pacman.common;
+package edu.unlam.pacman.ui.modules.juego;
 
 /**
  * @author Cristian Miranda
- * @since 10/5/15 - 14:03
+ * @since 10/10/15 - 13:17
  */
-public class Constants {
-
+public class JuegoConstants {
     public static final Integer MAX_WIDTH = 860;
     public static final Integer MAX_HEIGHT = 590;
-
 }

@@ -1,7 +1,8 @@
-package edu.unlam.pacman.ui.modules.tablero;
+package edu.unlam.pacman.ui.modules.juego.tablero;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.common.Coordenada;
 import edu.unlam.pacman.common.Direction;
 import edu.unlam.pacman.comunication.bus.async.Callback;

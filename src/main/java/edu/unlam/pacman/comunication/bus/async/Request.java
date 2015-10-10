@@ -16,4 +16,23 @@ public class Request<T extends GameEvent> {
     public T getEvent() {
         return event;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Request<?> request = (Request<?>) o;
+
+        return !(event != null ? !event.equals(request.event) : request.event != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return event != null ? event.hashCode() : 0;
+    }
 }

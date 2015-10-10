@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui.modules.pacman;
+package edu.unlam.pacman.ui.modules.juego.pacman;
 
 import edu.unlam.pacman.common.Direction;
 import edu.unlam.pacman.ui.mvp.Model;

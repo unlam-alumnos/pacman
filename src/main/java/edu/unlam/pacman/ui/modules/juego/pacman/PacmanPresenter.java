@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui.modules.pacman;
+package edu.unlam.pacman.ui.modules.juego.pacman;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;

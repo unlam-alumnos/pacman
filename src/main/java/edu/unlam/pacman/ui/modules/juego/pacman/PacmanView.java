@@ -1,6 +1,7 @@
-package edu.unlam.pacman.ui.modules.pacman;
+package edu.unlam.pacman.ui.modules.juego.pacman;
 
 import edu.unlam.pacman.common.Direction;
+import edu.unlam.pacman.ui.modules.juego.JuegoConstants;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
 
@@ -60,5 +61,15 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    @Override
+    protected int getViewWidth() {
+        return JuegoConstants.MAX_WIDTH;
+    }
+
+    @Override
+    protected int getViewHeight() {
+        return JuegoConstants.MAX_HEIGHT;
     }
 }

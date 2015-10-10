@@ -1,5 +1,7 @@
 package edu.unlam.pacman.model;
 
+import edu.unlam.pacman.ui.modules.juego.tablero.Casillero;
+
 public class Fantasma extends Personaje{
 	
 	private boolean bloqueado;
