@@ -37,21 +37,22 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
             int x = 0;
             int y = 0;
             Direction direction = moveEvent.getDireccion();
+            int offset = 5;
             switch (direction) {
                 case UP:
                     x = 0;
-                    y = -50;
+                    y = -offset;
                     break;
                 case DOWN:
                     x = 0;
-                    y = 50;
+                    y = offset;
                     break;
                 case LEFT:
-                    x = -50;
+                    x = -offset;
                     y = 0;
                     break;
                 case RIGHT:
-                    x = 50;
+                    x = offset;
                     y = 0;
                     break;
                 default:

@@ -1,9 +1,9 @@
 package edu.unlam.pacman.ui.modules.pacman;
 
-import java.util.UUID;
-
 import edu.unlam.pacman.common.Direction;
 import edu.unlam.pacman.ui.mvp.Model;
+
+import java.util.UUID;
 
 /**
  * @author Cristian Miranda
@@ -15,8 +15,8 @@ public class Pacman implements Model {
 
     private int x = 50;
     private int y = 50;
-    private int height = 40;
-    private int width = 40;
+    private int height = 50;
+    private int width = 50;
     private Direction direction = Direction.RIGHT;
 
     public Pacman() {
