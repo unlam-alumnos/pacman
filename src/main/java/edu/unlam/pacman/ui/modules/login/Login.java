@@ -4,6 +4,9 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
+import com.google.common.eventbus.Subscribe;
+
+import edu.unlam.pacman.comunication.bus.events.modules.LoginEvent;
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.login.login.LoginPresenter;
 
@@ -28,5 +31,10 @@ public class Login extends BaseFrame {
     @Override
     protected void initContent() {
         addComponent(new LoginPresenter());
+    }
+
+    @Subscribe
+    public void handleScreenEvent(LoginEvent loginEvent) {
+        setVisible(true);
     }
 }

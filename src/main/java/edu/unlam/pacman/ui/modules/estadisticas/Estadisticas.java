@@ -4,6 +4,9 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
+import com.google.common.eventbus.Subscribe;
+
+import edu.unlam.pacman.comunication.bus.events.modules.EstadisticasEvent;
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.estadisticas.estadisticas.EstadisticasPresenter;
 import edu.unlam.pacman.ui.modules.login.LoginConstants;
@@ -29,5 +32,10 @@ public class Estadisticas extends BaseFrame {
     @Override
     protected void initContent() {
         addComponent(new EstadisticasPresenter());
+    }
+
+    @Subscribe
+    public void handleScreenEvent(EstadisticasEvent estadisticasEvent) {
+        setVisible(true);
     }
 }

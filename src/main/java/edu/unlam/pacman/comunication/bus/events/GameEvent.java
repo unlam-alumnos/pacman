@@ -7,6 +7,8 @@ package edu.unlam.pacman.comunication.bus.events;
 public abstract class GameEvent {
     protected String subject;
 
+    protected GameEvent() {}
+
     protected GameEvent(String subject) {
         this.subject = subject;
     }

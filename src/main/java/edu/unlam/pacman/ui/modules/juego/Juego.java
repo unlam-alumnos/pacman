@@ -4,6 +4,9 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
+import com.google.common.eventbus.Subscribe;
+
+import edu.unlam.pacman.comunication.bus.events.modules.JuegoEvent;
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.juego.pacman.PacmanPresenter;
 import edu.unlam.pacman.ui.modules.juego.tablero.TableroPresenter;
@@ -29,5 +32,10 @@ public class Juego extends BaseFrame {
     protected void initContent() {
         addComponent(new TableroPresenter());
         addComponent(new PacmanPresenter());
+    }
+
+    @Subscribe
+    public void handleScreenEvent(JuegoEvent juegoEvent) {
+        setVisible(true);
     }
 }
