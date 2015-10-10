@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui.modules.tablero;
+package edu.unlam.pacman.ui.modules.juego.tablero;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import edu.unlam.pacman.common.Coordenada;
+import edu.unlam.pacman.ui.modules.juego.JuegoConstants;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
 
@@ -40,5 +41,15 @@ public class TableroView extends View<TableroView.MyView> {
         int y = coordenada.getY();
         graphics().setColor(Color.YELLOW);
         graphics().drawOval(x, y, radio, radio);
+    }
+
+    @Override
+    protected int getViewWidth() {
+        return JuegoConstants.MAX_WIDTH;
+    }
+
+    @Override
+    protected int getViewHeight() {
+        return JuegoConstants.MAX_HEIGHT;
     }
 }

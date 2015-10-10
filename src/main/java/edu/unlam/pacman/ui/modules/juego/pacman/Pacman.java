@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui.modules.pacman;
+package edu.unlam.pacman.ui.modules.juego.pacman;
 
 import java.util.UUID;
 

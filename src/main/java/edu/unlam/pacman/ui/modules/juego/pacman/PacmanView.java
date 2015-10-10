@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui.modules.pacman;
+package edu.unlam.pacman.ui.modules.juego.pacman;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,6 +7,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
 import edu.unlam.pacman.common.Direction;
+import edu.unlam.pacman.ui.modules.juego.JuegoConstants;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
 
@@ -57,5 +58,15 @@ public class PacmanView extends View<PacmanView.MyView> {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected int getViewWidth() {
+        return JuegoConstants.MAX_WIDTH;
+    }
+
+    @Override
+    protected int getViewHeight() {
+        return JuegoConstants.MAX_HEIGHT;
     }
 }

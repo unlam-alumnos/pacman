@@ -1,4 +1,4 @@
-package edu.unlam.pacman.ui.modules.tablero;
+package edu.unlam.pacman.ui.modules.juego.tablero;
 
 import org.junit.Test;
 import org.mockito.Mockito;
