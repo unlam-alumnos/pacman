@@ -5,6 +5,7 @@ import java.awt.HeadlessException;
 import javax.swing.JFrame;
 
 import edu.unlam.pacman.ui.modules.BaseFrame;
+import edu.unlam.pacman.ui.modules.estadisticas.estadisticas.EstadisticasPresenter;
 import edu.unlam.pacman.ui.modules.login.LoginConstants;
 
 /**
@@ -14,6 +15,7 @@ import edu.unlam.pacman.ui.modules.login.LoginConstants;
 public class Estadisticas extends BaseFrame {
     public Estadisticas() throws HeadlessException {
         // Create and set up the window.
+        setTitle("Estadisticas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Initialize content
@@ -26,6 +28,6 @@ public class Estadisticas extends BaseFrame {
 
     @Override
     protected void initContent() {
-
+        addComponent(new EstadisticasPresenter());
     }
 }

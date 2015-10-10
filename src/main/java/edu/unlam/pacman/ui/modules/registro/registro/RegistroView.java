@@ -2,6 +2,12 @@ package edu.unlam.pacman.ui.modules.registro.registro;
 
 import java.awt.Graphics2D;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import edu.unlam.pacman.ui.modules.registro.RegistroConstants;
 import edu.unlam.pacman.ui.mvp.UiHandler;
 import edu.unlam.pacman.ui.mvp.View;
@@ -10,10 +16,47 @@ public class RegistroView extends View<RegistroView.MyView> {
     interface MyView extends UiHandler {
     }
 
+    private JTextField txtUsuario;
+    private JPasswordField txtPass;
+    private JPasswordField txtPassConfirm;
+
     @Override
     protected void onBind() {
         setOpaque(false);
         setFocusable(true);
+
+        setBounds(100, 100, 450, 300);
+        setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLayout(null);
+
+        txtUsuario = new JTextField();
+        txtUsuario.setBounds(174, 11, 135, 20);
+        add(txtUsuario);
+        txtUsuario.setColumns(10);
+
+        txtPass = new JPasswordField();
+        txtPass.setBounds(174, 42, 135, 20);
+        add(txtPass);
+
+        txtPassConfirm = new JPasswordField();
+        txtPassConfirm.setBounds(174, 73, 135, 20);
+        add(txtPassConfirm);
+
+        JButton btnAceptar = new JButton("Aceptar");
+        btnAceptar.setBounds(172, 104, 137, 23);
+        add(btnAceptar);
+
+        JLabel lbUsuario = new JLabel("Usuario:");
+        lbUsuario.setBounds(124, 14, 40, 14);
+        add(lbUsuario);
+
+        JLabel lbPass = new JLabel("Contrase\u00F1a:");
+        lbPass.setBounds(104, 45, 60, 14);
+        add(lbPass);
+
+        JLabel lblConfirmarPass = new JLabel("Confirmar Contrase\u00F1a:");
+        lblConfirmarPass.setBounds(54, 76, 110, 14);
+        add(lblConfirmarPass);
     }
 
     @Override

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.login.LoginConstants;
+import edu.unlam.pacman.ui.modules.resultado.resultado.ResultadoPresenter;
 
 /**
  * @author Cristian Miranda
@@ -14,6 +15,7 @@ import edu.unlam.pacman.ui.modules.login.LoginConstants;
 public class Resultado extends BaseFrame {
     public Resultado() throws HeadlessException {
         // Create and set up the window.
+        setTitle("Resultado");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Initialize content
@@ -26,6 +28,6 @@ public class Resultado extends BaseFrame {
 
     @Override
     protected void initContent() {
-
+        addComponent(new ResultadoPresenter());
     }
 }
