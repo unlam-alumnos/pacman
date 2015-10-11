@@ -13,16 +13,32 @@
         <guava.version>18.0</guava.version>
         <mockito.version>1.9.5</mockito.version>
         <junit.version>4.11</junit.version>
+        <dalesbred.version>0.8.0</dalesbred.version>
+        <mysql-connector.version>5.1.36</mysql-connector.version>
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
-        <!-- Guava - Used for events-->
+        <!-- Guava - Used for events -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+
+        <!-- Dalesbred (JDBC Wrapper)-->
+        <dependency>
+            <groupId>fi.evident.dalesbred</groupId>
+            <artifactId>dalesbred</artifactId>
+            <version>${dalesbred.version}</version>
+        </dependency>
+
+        <!-- MySQL Driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
         </dependency>
 
         <!-- Testing Frameworks -->

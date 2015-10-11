@@ -2,12 +2,12 @@ package edu.unlam.pacman;
 
 import javax.swing.SwingUtilities;
 
-import edu.unlam.pacman.ui.modules.estadisticas.Estadisticas;
-import edu.unlam.pacman.ui.modules.juego.Juego;
-import edu.unlam.pacman.ui.modules.login.Login;
-import edu.unlam.pacman.ui.modules.menu.Menu;
-import edu.unlam.pacman.ui.modules.registro.Registro;
-import edu.unlam.pacman.ui.modules.resultado.Resultado;
+import edu.unlam.pacman.client.modules.estadisticas.Estadisticas;
+import edu.unlam.pacman.client.modules.juego.Juego;
+import edu.unlam.pacman.client.modules.login.Login;
+import edu.unlam.pacman.client.modules.menu.Menu;
+import edu.unlam.pacman.client.modules.registro.Registro;
+import edu.unlam.pacman.client.modules.resultado.Resultado;
 
 /**
  * @author Cristian Miranda
