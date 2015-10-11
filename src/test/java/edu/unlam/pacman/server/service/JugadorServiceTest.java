@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import edu.unlam.pacman.client.modules.login.login.Jugador;
-import edu.unlam.pacman.server.dao.RegistroDao;
+import edu.unlam.pacman.server.dao.JugadorDao;
 import edu.unlam.pacman.shared.exception.ServiceException;
 
 import static org.mockito.BDDMockito.given;
@@ -16,16 +16,16 @@ import static org.mockito.Mockito.verify;
  * @author Cristian Miranda
  * @since 10/11/15 - 18:26
  */
-public class RegistroServiceTest {
+public class JugadorServiceTest {
 
-    private RegistroService service;
-    private RegistroDao registroDao;
+    private JugadorService service;
+    private JugadorDao jugadorDao;
 
     @Before
     public void setup() {
-        this.service = RegistroService.getInstance();
-        this.registroDao = Mockito.mock(RegistroDao.class);
-        this.service.setDao(registroDao);
+        this.service = JugadorService.getInstance();
+        this.jugadorDao = Mockito.mock(JugadorDao.class);
+        this.service.setDao(jugadorDao);
     }
 
     @Test
@@ -77,12 +77,12 @@ public class RegistroServiceTest {
     }
 
     @Test
-    public void usernameYaRegistrado() {
+    public void usernameYaRegistrado() throws ServiceException {
         // Given
         String username = "pepo";
         String password = "pass";
         String passwordConfirmation = "pass";
-        given(registroDao.getByUsername(username)).willReturn(new Jugador(username, password));
+        given(jugadorDao.getByUsername(username)).willReturn(new Jugador(username, password));
 
         // When
         try {
@@ -104,6 +104,22 @@ public class RegistroServiceTest {
         service.register(username, password, passwordConfirmation);
 
         // Then
-        verify(registroDao).register(new Jugador(username, password));
+        verify(jugadorDao).register(new Jugador(username, password));
+    }
+
+    @Test
+    public void usernameAndPassword() throws ServiceException {
+        // Given
+        String username = "pepo";
+        String password = "pass";
+        given(jugadorDao.getByUsernameAndPassword(username, password)).willReturn(new Jugador(username, password));
+
+        // When
+        Jugador jugador = service.getByUsernameAndPassword(username, password);
+
+        // Then
+        Assert.assertNotNull(jugador);
+        Assert.assertEquals(username, jugador.getUsername());
+        Assert.assertEquals(password, jugador.getPassword());
     }
 }

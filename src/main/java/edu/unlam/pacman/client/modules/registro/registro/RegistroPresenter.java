@@ -1,7 +1,7 @@
 package edu.unlam.pacman.client.modules.registro.registro;
 
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.server.service.RegistroService;
+import edu.unlam.pacman.server.service.JugadorService;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.exception.ServiceException;
 
@@ -11,17 +11,17 @@ import edu.unlam.pacman.shared.exception.ServiceException;
  */
 public class RegistroPresenter extends Presenter<RegistroView> implements RegistroView.MyView {
 
-    private RegistroService service;
+    private JugadorService jugadorService;
 
     public RegistroPresenter() {
         super(new RegistroView());
-        this.service = RegistroService.getInstance();
+        this.jugadorService = JugadorService.getInstance();
     }
 
     @Override
     public void register(String username, String password, String passwordConfirmation) {
         try {
-            Long id = service.register(username, password, passwordConfirmation);
+            jugadorService.register(username, password, passwordConfirmation);
             getView().info("Jugador registrado con éxito");
             getView().clear();
             eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.LOGIN));
@@ -35,7 +35,7 @@ public class RegistroPresenter extends Presenter<RegistroView> implements Regist
      *
      * @param service
      */
-    public void setService(RegistroService service) {
-        this.service = service;
+    public void setJugadorService(JugadorService service) {
+        this.jugadorService = service;
     }
 }

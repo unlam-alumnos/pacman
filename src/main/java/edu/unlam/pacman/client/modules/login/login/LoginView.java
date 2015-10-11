@@ -16,8 +16,8 @@ import edu.unlam.pacman.client.mvp.View;
 
 public class LoginView extends View<LoginView.MyView> {
     interface MyView extends UiHandler {
-        void aceptar();
-        void registro();
+        void login(String username, String password);
+        void register();
     }
 
     private JTextField txtUser;
@@ -45,12 +45,12 @@ public class LoginView extends View<LoginView.MyView> {
         txtPass.setBounds(147, 42, 137, 20);
         add(txtPass);
 
-        btnAceptar = new JButton("Aceptar");
+        btnAceptar = new JButton("Login");
         btnAceptar.setBounds(147, 73, 137, 23);
         btnAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().aceptar();
+                uiHandler().login(txtUser.getText(), txtPass.getText());
             }
         });
         add(btnAceptar);
@@ -60,7 +60,7 @@ public class LoginView extends View<LoginView.MyView> {
         btnRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().registro();
+                uiHandler().register();
             }
         });
         add(btnRegister);
@@ -77,6 +77,11 @@ public class LoginView extends View<LoginView.MyView> {
     @Override
     public void paintComponent(Graphics2D g2) {
 
+    }
+
+    public void clear() {
+        txtUser.setText("");
+        txtPass.setText("");
     }
 
     @Override

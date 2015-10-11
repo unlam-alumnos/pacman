@@ -2,25 +2,25 @@ package edu.unlam.pacman.server.service;
 
 import com.google.common.base.Preconditions;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
-import edu.unlam.pacman.server.dao.RegistroDao;
+import edu.unlam.pacman.server.dao.JugadorDao;
 import edu.unlam.pacman.shared.exception.ServiceException;
 
 /**
  * @author Cristian Miranda
  * @since 10/11/15 - 17:47
  */
-public class RegistroService {
+public class JugadorService {
 
-    private static RegistroService instance;
-    private RegistroDao dao;
+    private static JugadorService instance;
+    private JugadorDao dao;
 
-    private RegistroService() {
-        this.dao = RegistroDao.getInstance();
+    private JugadorService() {
+        this.dao = JugadorDao.getInstance();
     }
 
-    public static RegistroService getInstance() {
+    public static JugadorService getInstance() {
         if (instance == null) {
-            instance = new RegistroService();
+            instance = new JugadorService();
         }
         return instance;
     }
@@ -32,6 +32,11 @@ public class RegistroService {
         }
         Jugador jugador = new Jugador(username, password);
         return dao.register(jugador);
+    }
+
+    public Jugador getByUsernameAndPassword(String username, String password) throws ServiceException {
+        checkPreconditions(username, password, password);
+        return dao.getByUsernameAndPassword(username, password);
     }
 
     private void checkPreconditions(String username, String password, String passwordConfirmation) throws ServiceException {
@@ -51,7 +56,7 @@ public class RegistroService {
      * Do not use - Only for testing purposes
      * @param dao
      */
-    public void setDao(RegistroDao dao) {
+    public void setDao(JugadorDao dao) {
         this.dao = dao;
     }
 }

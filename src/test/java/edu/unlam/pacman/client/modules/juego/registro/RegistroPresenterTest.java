@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 import edu.unlam.pacman.client.modules.BasePresenterTest;
 import edu.unlam.pacman.client.modules.registro.registro.RegistroPresenter;
 import edu.unlam.pacman.client.modules.registro.registro.RegistroView;
-import edu.unlam.pacman.server.service.RegistroService;
+import edu.unlam.pacman.server.service.JugadorService;
 import edu.unlam.pacman.shared.exception.ServiceException;
 
 import static org.mockito.BDDMockito.given;
@@ -19,13 +19,13 @@ import static org.mockito.Mockito.verify;
  */
 public class RegistroPresenterTest extends BasePresenterTest<RegistroPresenter, RegistroView> {
 
-    private RegistroService registroService;
+    private JugadorService registroService;
 
     @Before
     public void setup() {
         super.setup();
-        this.registroService = Mockito.mock(RegistroService.class);
-        super.presenter.setService(registroService);
+        this.registroService = Mockito.mock(JugadorService.class);
+        super.presenter.setJugadorService(registroService);
     }
 
     @Test
