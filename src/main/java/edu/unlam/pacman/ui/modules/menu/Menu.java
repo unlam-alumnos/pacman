@@ -4,9 +4,7 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
-import com.google.common.eventbus.Subscribe;
-
-import edu.unlam.pacman.comunication.bus.events.modules.MenuEvent;
+import edu.unlam.pacman.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.login.LoginConstants;
 import edu.unlam.pacman.ui.modules.menu.menu.MenuPresenter;
@@ -34,8 +32,8 @@ public class Menu extends BaseFrame {
         addComponent(new MenuPresenter());
     }
 
-    @Subscribe
-    public void handleScreenEvent(MenuEvent menuEvent) {
-        setVisible(true);
+    @Override
+    protected ScreenEvent.ScreenType getScreenType() {
+        return ScreenEvent.ScreenType.MENU;
     }
 }

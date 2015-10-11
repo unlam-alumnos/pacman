@@ -4,9 +4,7 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
-import com.google.common.eventbus.Subscribe;
-
-import edu.unlam.pacman.comunication.bus.events.modules.RegistroEvent;
+import edu.unlam.pacman.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.login.LoginConstants;
 import edu.unlam.pacman.ui.modules.registro.registro.RegistroPresenter;
@@ -34,8 +32,8 @@ public class Registro extends BaseFrame {
         addComponent(new RegistroPresenter());
     }
 
-    @Subscribe
-    public void handleScreenEvent(RegistroEvent registroEvent) {
-        setVisible(true);
+    @Override
+    protected ScreenEvent.ScreenType getScreenType() {
+        return ScreenEvent.ScreenType.REGISTRO;
     }
 }

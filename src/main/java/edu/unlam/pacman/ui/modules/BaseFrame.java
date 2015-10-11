@@ -2,7 +2,9 @@ package edu.unlam.pacman.ui.modules;
 
 import javax.swing.JFrame;
 
+import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.comunication.bus.Bus;
+import edu.unlam.pacman.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.ui.mvp.Presenter;
 
 /**
@@ -21,8 +23,19 @@ public abstract class BaseFrame extends JFrame {
         index++;
     }
 
+    @Subscribe
+    public void handleScreenEvent(ScreenEvent screenEvent) {
+        if (getScreenType().equals(screenEvent.getScreenType())) {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }
+
     /**
      * Agrega los distintos presenters a la ventana
      */
     protected abstract void initContent();
+
+    protected abstract ScreenEvent.ScreenType getScreenType();
 }

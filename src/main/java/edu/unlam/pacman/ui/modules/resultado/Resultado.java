@@ -4,9 +4,7 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
-import com.google.common.eventbus.Subscribe;
-
-import edu.unlam.pacman.comunication.bus.events.modules.ResultadoEvent;
+import edu.unlam.pacman.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.ui.modules.BaseFrame;
 import edu.unlam.pacman.ui.modules.login.LoginConstants;
 import edu.unlam.pacman.ui.modules.resultado.resultado.ResultadoPresenter;
@@ -34,8 +32,8 @@ public class Resultado extends BaseFrame {
         addComponent(new ResultadoPresenter());
     }
 
-    @Subscribe
-    public void handleScreenEvent(ResultadoEvent resultadoEvent) {
-        setVisible(true);
+    @Override
+    protected ScreenEvent.ScreenType getScreenType() {
+        return ScreenEvent.ScreenType.RESULTADO;
     }
 }
