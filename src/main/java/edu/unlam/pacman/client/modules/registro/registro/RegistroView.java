@@ -1,6 +1,8 @@
 package edu.unlam.pacman.client.modules.registro.registro;
 
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import edu.unlam.pacman.client.mvp.View;
 
 public class RegistroView extends View<RegistroView.MyView> {
     interface MyView extends UiHandler {
+        void register(String username, String password, String passwordConfirmation);
     }
 
     private JTextField txtUsuario;
@@ -44,6 +47,12 @@ public class RegistroView extends View<RegistroView.MyView> {
 
         JButton btnAceptar = new JButton("Aceptar");
         btnAceptar.setBounds(172, 104, 137, 23);
+        btnAceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiHandler().register(txtUsuario.getText(), txtPass.getText(), txtPassConfirm.getText());
+            }
+        });
         add(btnAceptar);
 
         JLabel lbUsuario = new JLabel("Usuario:");
@@ -62,6 +71,12 @@ public class RegistroView extends View<RegistroView.MyView> {
     @Override
     public void paintComponent(Graphics2D g2) {
 
+    }
+
+    public void clear() {
+        txtUsuario.setText("");
+        txtPass.setText("");
+        txtPassConfirm.setText("");
     }
 
     @Override

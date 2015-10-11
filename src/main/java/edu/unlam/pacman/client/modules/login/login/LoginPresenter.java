@@ -19,4 +19,9 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
     public void aceptar() {
         eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.MENU));
     }
+
+    @Override
+    public void registro() {
+        eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.REGISTRO));
+    }
 }

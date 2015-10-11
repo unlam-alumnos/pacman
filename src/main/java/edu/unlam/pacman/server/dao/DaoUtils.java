@@ -13,10 +13,10 @@ public class DaoUtils {
 
     private DaoUtils() {
         // TODO: Sacar credenciales a un properties file
-        this.db = Database.forUrlAndCredentials("jdbc:mysql://crismiranda.net:3336/PACMAN", "root", "");
+        this.db = Database.forUrlAndCredentials("jdbc:mysql://crismiranda.net:3306/PACMAN", "root", "");
     }
 
-    public Database get() {
+    public static Database get() {
         if (instance == null) {
             instance = new DaoUtils();
         }

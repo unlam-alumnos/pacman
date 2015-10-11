@@ -3,6 +3,7 @@ package edu.unlam.pacman.client.mvp;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -25,6 +26,14 @@ public abstract class View<M extends UiHandler> extends JPanel {
 
         this.g2 = (Graphics2D) g;
         paintComponent(g2);
+    }
+
+    public void info(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    public void error(String message) {
+        JOptionPane.showMessageDialog(null, "( ! ) - " + message);
     }
 
     protected M uiHandler() {
