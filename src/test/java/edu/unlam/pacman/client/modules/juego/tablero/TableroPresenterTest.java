@@ -3,12 +3,12 @@ package edu.unlam.pacman.client.modules.juego.tablero;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import edu.unlam.pacman.shared.common.Coordenada;
-import edu.unlam.pacman.shared.common.Direction;
+import edu.unlam.pacman.client.modules.BasePresenterTest;
+import edu.unlam.pacman.shared.Coordenada;
+import edu.unlam.pacman.shared.Direction;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
-import edu.unlam.pacman.client.modules.BasePresenterTest;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;

@@ -3,7 +3,7 @@ package edu.unlam.pacman.client.modules.juego.pacman;
 import java.util.UUID;
 
 import edu.unlam.pacman.client.mvp.Model;
-import edu.unlam.pacman.shared.common.Direction;
+import edu.unlam.pacman.shared.Direction;
 
 /**
  * @author Cristian Miranda

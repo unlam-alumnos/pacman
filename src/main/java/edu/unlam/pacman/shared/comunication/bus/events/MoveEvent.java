@@ -1,7 +1,7 @@
 package edu.unlam.pacman.shared.comunication.bus.events;
 
-import edu.unlam.pacman.shared.common.Coordenada;
-import edu.unlam.pacman.shared.common.Direction;
+import edu.unlam.pacman.shared.Coordenada;
+import edu.unlam.pacman.shared.Direction;
 
 /**
  * @author Cristian Miranda

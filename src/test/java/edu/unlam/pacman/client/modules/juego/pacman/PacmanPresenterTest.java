@@ -3,7 +3,7 @@ package edu.unlam.pacman.client.modules.juego.pacman;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import edu.unlam.pacman.shared.common.Direction;
+import edu.unlam.pacman.shared.Direction;
 import edu.unlam.pacman.client.modules.BasePresenterTest;
 
 import static org.mockito.Matchers.any;

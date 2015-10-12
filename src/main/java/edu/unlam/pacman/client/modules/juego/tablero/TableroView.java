@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
-import edu.unlam.pacman.shared.common.Coordenada;
+import edu.unlam.pacman.shared.Coordenada;
 
 public class TableroView extends View<TableroView.MyView> {
     interface MyView extends UiHandler{
