@@ -1,9 +1,11 @@
-package edu.unlam.pacman.shared.common;
+package edu.unlam.pacman.shared;
 
 /**
  * @author Cristian Miranda
  * @since 10/5/15 - 14:03
  */
 public class SharedConstants {
-
+    public static final String DB_URL = "db.url";
+    public static final String DB_USERNAME = "db.username";
+    public static final String DB_PASSWORD = "db.password";
 }

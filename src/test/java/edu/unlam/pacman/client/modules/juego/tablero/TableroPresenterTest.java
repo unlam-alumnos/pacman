@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import edu.unlam.pacman.client.modules.BasePresenterTest;
-import edu.unlam.pacman.shared.Coordenada;
-import edu.unlam.pacman.shared.Direction;
+import edu.unlam.pacman.shared.model.Coordenada;
+import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;

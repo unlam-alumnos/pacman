@@ -1,5 +1,7 @@
 package edu.unlam.pacman.server.dao;
 
+import edu.unlam.pacman.shared.SharedConstants;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 import fi.evident.dalesbred.Database;
 
 /**
@@ -12,8 +14,11 @@ public class DaoUtils {
     private static DaoUtils instance;
 
     private DaoUtils() {
-        // TODO: Sacar credenciales a un properties file
-        this.db = Database.forUrlAndCredentials("jdbc:mysql://crismiranda.net:3306/PACMAN", "root", "");
+        this.db = Database.forUrlAndCredentials(
+                PropertiesUtils.pref().get(SharedConstants.DB_URL, null),
+                PropertiesUtils.pref().get(SharedConstants.DB_USERNAME, null),
+                PropertiesUtils.pref().get(SharedConstants.DB_PASSWORD, null)
+        );
     }
 
     public static Database get() {

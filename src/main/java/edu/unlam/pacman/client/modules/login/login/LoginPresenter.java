@@ -2,7 +2,7 @@ package edu.unlam.pacman.client.modules.login.login;
 
 import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.server.service.JugadorService;
-import edu.unlam.pacman.shared.JugadorActual;
+import edu.unlam.pacman.shared.model.JugadorActual;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.exception.ServiceException;

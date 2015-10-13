@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
-import edu.unlam.pacman.shared.Direction;
+import edu.unlam.pacman.shared.model.Direction;
 
 public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     interface MyView extends UiHandler {

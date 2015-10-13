@@ -2,8 +2,6 @@ package edu.unlam.pacman.shared.model;
 
 import javax.swing.ImageIcon;
 
-import edu.unlam.pacman.shared.Coordenada;
-
 public abstract class Personaje {
 
 	protected int velocidad;

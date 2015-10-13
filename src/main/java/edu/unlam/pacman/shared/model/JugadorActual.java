@@ -1,4 +1,4 @@
-package edu.unlam.pacman.shared;
+package edu.unlam.pacman.shared.model;
 
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 

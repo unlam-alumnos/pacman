@@ -1,4 +1,4 @@
-package edu.unlam.pacman.shared;
+package edu.unlam.pacman.shared.model;
 
 /**
  * @author Cristian Miranda

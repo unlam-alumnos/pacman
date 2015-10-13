@@ -8,12 +8,21 @@ import edu.unlam.pacman.client.modules.login.Login;
 import edu.unlam.pacman.client.modules.menu.Menu;
 import edu.unlam.pacman.client.modules.registro.Registro;
 import edu.unlam.pacman.client.modules.resultado.Resultado;
+import edu.unlam.pacman.shared.SharedConstants;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 /**
  * @author Cristian Miranda
  * @since 10/2/15 - 17:35
  */
 public class Launcher {
+
+    static {
+        PropertiesUtils.pref().put(SharedConstants.DB_URL, "jdbc:mysql://crismiranda.net:3306/PACMAN");
+        PropertiesUtils.pref().put(SharedConstants.DB_USERNAME, "root");
+        PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "");
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

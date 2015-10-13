@@ -1,6 +1,6 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
-import edu.unlam.pacman.shared.Coordenada;
+import edu.unlam.pacman.shared.model.Coordenada;
 
 public class Casillero {
 	public enum Tipo {
