@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import org.junit.Before;
 
+import edu.unlam.pacman.Launcher;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.comunication.bus.Bus;
@@ -26,6 +27,7 @@ public abstract class BasePresenterTest<P extends Presenter, V extends View> {
 
     @Before
     public void setup() {
+        Launcher.initProperties();
         this.presenter = getPresenter();
         this.view = (V) spy(presenter.getView());
         when(view.graphics()).thenReturn(mock(Graphics2D.class));

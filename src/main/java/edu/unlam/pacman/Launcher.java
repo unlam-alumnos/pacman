@@ -16,14 +16,8 @@ import edu.unlam.pacman.shared.util.PropertiesUtils;
  * @since 10/2/15 - 17:35
  */
 public class Launcher {
-
-    static {
-        PropertiesUtils.pref().put(SharedConstants.DB_URL, "jdbc:mysql://crismiranda.net:3306/PACMAN");
-        PropertiesUtils.pref().put(SharedConstants.DB_USERNAME, "root");
-        PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "");
-    }
-
     public static void main(String[] args) {
+        initProperties();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -35,5 +29,11 @@ public class Launcher {
                 new Resultado().setVisible(false);
             }
         });
+    }
+
+    public static void initProperties() {
+        PropertiesUtils.pref().put(SharedConstants.DB_URL, "jdbc:mysql://crismiranda.net:3306/PACMAN");
+        PropertiesUtils.pref().put(SharedConstants.DB_USERNAME, "root");
+        PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "");
     }
 }
