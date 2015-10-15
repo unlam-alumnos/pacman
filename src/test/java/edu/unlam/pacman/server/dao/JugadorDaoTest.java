@@ -11,12 +11,13 @@ import edu.unlam.pacman.shared.exception.ServiceException;
  * @author Cristian Miranda
  * @since 10/11/15 - 18:38
  */
-public class JugadorDaoTest {
+public class JugadorDaoTest extends BaseDaoTest {
 
     private JugadorDao dao;
 
     @Before
     public void setup() {
+        super.setup();
         this.dao = JugadorDao.getInstance();
     }
 

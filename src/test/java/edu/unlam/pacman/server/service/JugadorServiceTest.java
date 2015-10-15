@@ -16,13 +16,14 @@ import static org.mockito.Mockito.verify;
  * @author Cristian Miranda
  * @since 10/11/15 - 18:26
  */
-public class JugadorServiceTest {
+public class JugadorServiceTest extends BaseServiceTest {
 
     private JugadorService service;
     private JugadorDao jugadorDao;
 
     @Before
     public void setup() {
+        super.setup();
         this.service = JugadorService.getInstance();
         this.jugadorDao = Mockito.mock(JugadorDao.class);
         this.service.setDao(jugadorDao);
