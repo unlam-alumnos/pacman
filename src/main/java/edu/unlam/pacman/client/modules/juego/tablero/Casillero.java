@@ -4,7 +4,7 @@ import edu.unlam.pacman.shared.model.Coordenada;
 
 public class Casillero {
 	public enum Tipo {
-		FRUTA, FRUTA_ESPECIAL, PARED, PISO
+		FRUTA, FRUTA_ESPECIAL, PARED, PISO, CRONOMETRO
 	}
 
 	private Coordenada origen;

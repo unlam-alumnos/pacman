@@ -1,15 +1,12 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
-import java.awt.Graphics2D;
-
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-
 import edu.unlam.pacman.client.modules.menu.MenuConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
@@ -29,11 +26,11 @@ public class MenuView extends View<MenuView.MyView> {
         add(btnCrearPartida);
 
         JButton btnUnirseAPartida = new JButton("Unirse a Partida");
-        btnUnirseAPartida.setBounds(10, 45, 137, 23);
+        btnUnirseAPartida.setBounds(10, 114, 137, 23);
         add(btnUnirseAPartida);
 
         JButton btnVerPartida = new JButton("Ver Partida");
-        btnVerPartida.setBounds(10, 79, 137, 23);
+        btnVerPartida.setBounds(10, 45, 137, 23);
         add(btnVerPartida);
 
         JButton btnEstadisticas = new JButton("Estadisticas");
@@ -47,9 +44,15 @@ public class MenuView extends View<MenuView.MyView> {
         JList listJugadores = new JList();
         scrollPane.setViewportView(listJugadores);
 
-        JButton btnNewButton = new JButton("Empezar Partida!");
-        btnNewButton.setBounds(157, 114, 267, 34);
-        add(btnNewButton);
+        JButton btnEmpezarPartida = new JButton("Empezar Partida");
+        btnEmpezarPartida.setBounds(10, 79, 137, 23);
+        add(btnEmpezarPartida);
+
+        JTextField txtIpServidor = new JTextField();
+        txtIpServidor.setText("000.000.000.000");
+        txtIpServidor.setBounds(157, 115, 267, 20);
+        add(txtIpServidor);
+        txtIpServidor.setColumns(10);
     }
 
     @Override

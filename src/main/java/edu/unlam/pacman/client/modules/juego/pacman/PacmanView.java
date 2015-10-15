@@ -1,14 +1,13 @@
 package edu.unlam.pacman.client.modules.juego.pacman;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Direction;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     interface MyView extends UiHandler {
