@@ -14,6 +14,7 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
         void move(Direction direction);
         void paintPacman();
     }
+    private boolean flag = true;
 
     @Override
     protected void onBind() {
