@@ -1,9 +1,9 @@
 package edu.unlam.pacman.client.modules.juego.pacman;
 
-import java.util.UUID;
-
 import edu.unlam.pacman.client.mvp.Model;
 import edu.unlam.pacman.shared.model.Direction;
+
+import java.util.UUID;
 
 /**
  * @author Cristian Miranda
@@ -17,6 +17,7 @@ public class Pacman implements Model {
     private int y = 50;
     private int height = 50;
     private int width = 50;
+    private int speed = 130;
     private Direction direction = Direction.RIGHT;
 
     public Pacman() {
@@ -65,5 +66,9 @@ public class Pacman implements Model {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

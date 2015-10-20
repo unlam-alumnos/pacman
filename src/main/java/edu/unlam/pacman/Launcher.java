@@ -23,9 +23,9 @@ public class Launcher {
             public void run() {
                 new Login().setVisible(false);
                 new Registro().setVisible(false);
-                new Menu().setVisible(true);
+                new Menu().setVisible(false);
                 new Estadisticas().setVisible(false);
-                new Juego().setVisible(false);
+                new Juego().setVisible(true);
                 new Resultado().setVisible(false);
             }
         });
@@ -35,5 +35,6 @@ public class Launcher {
         PropertiesUtils.pref().put(SharedConstants.DB_URL, "jdbc:mysql://crismiranda.net:3306/PACMAN");
         PropertiesUtils.pref().put(SharedConstants.DB_USERNAME, "root");
         PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "");
+        PropertiesUtils.pref().put(SharedConstants.GAME_LENGTH, "60");
     }
 }

@@ -3,11 +3,15 @@ package edu.unlam.pacman.client.modules.juego.pacman;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.model.Coordenada;
-import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
+import edu.unlam.pacman.shared.model.Coordenada;
+import edu.unlam.pacman.shared.model.Direction;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -20,6 +24,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
         super(new PacmanView());
         this.pacman = new Pacman();
         this.pacman.setActive(true);
+        initConstantMovement();
     }
 
     @Override
@@ -61,7 +66,6 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
             pacman.setX(moveEvent.getOrigen().getX() + x);
             pacman.setY(moveEvent.getOrigen().getY() + y);
             pacman.setDirection(direction);
-            paintPacman();
         }
     }
 
@@ -69,5 +73,15 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     public void paintPacman() {
         getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection());
         getView().repaint();
+    }
+
+    private void initConstantMovement(){
+        ActionListener animate = new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                move(pacman.getDirection());
+            }
+        };
+        Timer timer = new Timer(pacman.getSpeed(), animate);
+        timer.start();
     }
 }
