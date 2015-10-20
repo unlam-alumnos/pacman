@@ -8,4 +8,5 @@ public class SharedConstants {
     public static final String DB_URL = "db.url";
     public static final String DB_USERNAME = "db.username";
     public static final String DB_PASSWORD = "db.password";
+    public static final String GAME_LENGTH = "game.length";
 }

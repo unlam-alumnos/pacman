@@ -3,11 +3,15 @@ package edu.unlam.pacman.client.modules.juego.pacman;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.model.Coordenada;
-import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
+import edu.unlam.pacman.shared.model.Coordenada;
+import edu.unlam.pacman.shared.model.Direction;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -15,17 +19,22 @@ import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
  */
 public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView.MyView {
     private Pacman pacman;
+    private Timer moveLoop;
 
     public PacmanPresenter() {
         super(new PacmanView());
         this.pacman = new Pacman();
         this.pacman.setActive(true);
+        movimientoConstante();
+        moveLoop.start();
     }
 
     @Override
     public void move(Direction direction) {
+        // Este sigue ejcutandose constantemente, por ende anula en cierta forma el Timer.
         if (pacman.isActive()) {
             eventBus.post(new Request<>(new MoveEvent(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction)));
+            System.out.println("eventBus.post()");
         }
     }
 
@@ -61,7 +70,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
             pacman.setX(moveEvent.getOrigen().getX() + x);
             pacman.setY(moveEvent.getOrigen().getY() + y);
             pacman.setDirection(direction);
-            paintPacman();
+            //paintPacman();
         }
     }
 
@@ -69,5 +78,16 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     public void paintPacman() {
         getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection());
         getView().repaint();
+        move(pacman.getDirection());
     }
+
+    private void movimientoConstante(){
+        moveLoop = new Timer(100, new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                paintPacman();
+                System.out.println("movete puto!");
+            }
+        });
+    }
+
 }

@@ -3,12 +3,14 @@ package edu.unlam.pacman.client.modules.juego.tablero;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.mvp.Presenter;
+import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,13 +22,13 @@ import java.awt.event.ActionListener;
  */
 public class TableroPresenter extends Presenter<TableroView> implements TableroView.MyView {
     private Casillero[][] casilleros;
-    private Timer timer;
-    private Integer tiempo = 60;
+    private Timer cronometro;
+    private Integer duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
 
     public TableroPresenter() {
         super(new TableroView());
         construirTablero();
-        timer.start();
+        cronometro.start();
     }
 
     @Override
@@ -43,7 +45,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarPiso(coordenada);
                 } else if (Casillero.Tipo.CRONOMETRO.equals(tipo)) {
-                    getView().dibujarTimer(casillero.getOrigen(), tiempo);
+                    getView().dibujarTimer(casillero.getOrigen(), duracion);
                 }
             }
         }
@@ -139,13 +141,13 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
             y += size;
         }
 
-        timer = new Timer(1000, new ActionListener()
+        cronometro = new Timer(1000, new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                tiempo--;
-                if (tiempo == 0){
-                    timer.stop();
+                duracion--;
+                if (duracion == 0){
+                    cronometro.stop();
                     eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.RESULTADO));
                 }
             }
