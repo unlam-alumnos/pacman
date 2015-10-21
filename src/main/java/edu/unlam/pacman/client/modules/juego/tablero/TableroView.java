@@ -5,6 +5,7 @@ import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Coordenada;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -29,11 +30,15 @@ public class TableroView extends View<TableroView.MyView> {
     public void dibujarPared(Coordenada coordenada, int ancho, int alto) {
         int x = coordenada.getX();
         int y = coordenada.getY();
+        // Si saco el bloque este dejan de funcionar bien las frutas comunes
         graphics().setColor(Color.GRAY);
         graphics().fill(new Rectangle2D.Double(x, y, ancho, alto));
         graphics().setColor(Color.BLACK);
         graphics().setStroke(new BasicStroke(2f));
         graphics().drawRect(x, y, ancho, alto);
+
+        ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/pared.png");
+        graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
     }
 
     public void dibujarPiso(Coordenada coordenada) {
@@ -47,11 +52,11 @@ public class TableroView extends View<TableroView.MyView> {
         graphics().drawOval(x, y, radio, radio);
     }
 
-    public void dibujarFrutaEspecial(Coordenada coordenada) {
+    public void dibujarFrutaEspecial(Coordenada coordenada, int ancho, int alto) {
         int x = coordenada.getX();
         int y = coordenada.getY();
-        graphics().setColor(Color.RED);
-        graphics().drawOval(x, y, 2, 2);
+        ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/fruta_especial.png");
+        graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
     }
 
     public void dibujarTimer(Coordenada coordenada, Integer tiempo){

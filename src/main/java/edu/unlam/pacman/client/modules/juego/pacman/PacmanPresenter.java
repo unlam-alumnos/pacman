@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
  */
 public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView.MyView {
     private Pacman pacman;
+    private String animacionBoca;
+    private short turnoBoca=1;
 
     public PacmanPresenter() {
         super(new PacmanView());
@@ -71,7 +73,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
 
     @Override
     public void paintPacman() {
-        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection());
+        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection(), animacionBoca);
         getView().repaint();
     }
 
@@ -83,6 +85,19 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
         ActionListener animate = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 move(pacman.getDirection());
+                if (turnoBoca == 1){
+                    animacionBoca = "uno";
+                    turnoBoca++;
+                }else if(turnoBoca == 2){
+                    animacionBoca = "dos";
+                    turnoBoca++;
+                }else if(turnoBoca == 3){
+                    animacionBoca = "tres";
+                    turnoBoca++;
+                }else{
+                    animacionBoca = "cero";
+                    turnoBoca=1;
+                }
             }
         };
         Timer timer = new Timer(pacman.getSpeed(), animate);
