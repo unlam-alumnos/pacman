@@ -22,7 +22,7 @@ public class PacmanPresenterTest extends BasePresenterTest<PacmanPresenter, Pacm
         presenter.paintPacman();
 
         // Then
-        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt(), any(Direction.class), "uno");
+        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt(), any(Direction.class), 1);
     }
 
     @Override

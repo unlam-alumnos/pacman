@@ -29,8 +29,20 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
         uiHandler().paintPacman();
     }
 
-    public void paintPacman(int x, int y, int width, int height, Direction direction, String animacionBoca) {
+    public void paintPacman(int x, int y, int width, int height, Direction direction, int turnoBoca) {
         ImageIcon sprite;
+        String animacionBoca;
+
+        switch (turnoBoca){
+            case 1: animacionBoca = "uno";
+                break;
+            case 2: animacionBoca = "dos";
+                break;
+            case 3: animacionBoca = "tres";
+                break;
+            default: animacionBoca = "cero";
+        }
+
         sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
         if (Direction.LEFT.equals(direction)) {
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca +"/left.gif");
