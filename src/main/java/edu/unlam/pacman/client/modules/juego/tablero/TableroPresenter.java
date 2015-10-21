@@ -48,7 +48,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     getView().dibujarTimer(casillero.getOrigen(), duracion);
                 } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
-                    getView().dibujarFrutaEspecial(coordenada);
+                    getView().dibujarFrutaEspecial(casillero.getOrigen(), casillero.getAncho(), casillero.getAlto());
                 }
             }
         }

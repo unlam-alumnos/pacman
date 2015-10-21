@@ -5,6 +5,7 @@ import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Direction;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,17 +29,17 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
         uiHandler().paintPacman();
     }
 
-    public void paintPacman(int x, int y, int width, int height, Direction direction) {
-        graphics().setColor(Color.YELLOW);
-        int angle = 30;
+    public void paintPacman(int x, int y, int width, int height, Direction direction, String animacionBoca) {
+        ImageIcon sprite;
+        sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
         if (Direction.LEFT.equals(direction)) {
-            angle = 210;
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca +"/left.gif");
         } else if (Direction.UP.equals(direction)) {
-            angle = 120;
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/up.gif");
         } else if (Direction.DOWN.equals(direction)) {
-            angle = 300;
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/down.gif");
         }
-        graphics().fillArc(x, y, width, height, angle, 300);
+        graphics().drawImage(sprite.getImage(), x, y, width, height, this);
     }
 
     @Override
