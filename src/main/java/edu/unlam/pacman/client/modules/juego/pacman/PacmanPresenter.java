@@ -75,6 +75,10 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
         getView().repaint();
     }
 
+    /**
+    * Inicia el Timer que movera constantemente al pacman, en la direccion seteada.
+    */
+
     private void initConstantMovement(){
         ActionListener animate = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {

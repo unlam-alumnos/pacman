@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class TableroView extends View<TableroView.MyView> {
+
+
     interface MyView extends UiHandler{
         void paint();
     }
@@ -37,11 +39,19 @@ public class TableroView extends View<TableroView.MyView> {
     public void dibujarPiso(Coordenada coordenada) {
         dibujarFruta(coordenada,0);
     }
+
     public void dibujarFruta(Coordenada coordenada, int radio) {
         int x = coordenada.getX();
         int y = coordenada.getY();
         graphics().setColor(Color.YELLOW);
         graphics().drawOval(x, y, radio, radio);
+    }
+
+    public void dibujarFrutaEspecial(Coordenada coordenada) {
+        int x = coordenada.getX();
+        int y = coordenada.getY();
+        graphics().setColor(Color.RED);
+        graphics().drawOval(x, y, 2, 2);
     }
 
     public void dibujarTimer(Coordenada coordenada, Integer tiempo){

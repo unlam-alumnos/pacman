@@ -5,6 +5,6 @@ package edu.unlam.pacman.client.modules.juego;
  * @since 10/10/15 - 13:17
  */
 public class JuegoConstants {
-    public static final Integer MAX_WIDTH = 860;
-    public static final Integer MAX_HEIGHT = 590;
+    public static final Integer MAX_WIDTH = 566;
+    public static final Integer MAX_HEIGHT = 588;
 }

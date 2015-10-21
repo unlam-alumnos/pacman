@@ -46,6 +46,9 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     getView().dibujarPiso(coordenada);
                 } else if (Casillero.Tipo.CRONOMETRO.equals(tipo)) {
                     getView().dibujarTimer(casillero.getOrigen(), duracion);
+                } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(tipo)) {
+                    Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
+                    getView().dibujarFrutaEspecial(coordenada);
                 }
             }
         }
@@ -89,7 +92,9 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         if (Casillero.Tipo.FRUTA.equals(siguiente.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                             casilleros[x][y].setTipo(Casillero.Tipo.PISO);
-
+                        }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(siguiente.getTipo())) {
+                            eventBus.post(new Callback<>(moveEvent));
+                            casilleros[x][y].setTipo(Casillero.Tipo.PISO);
                         }else if(Casillero.Tipo.PISO.equals(siguiente.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                         }
@@ -107,6 +112,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
      * Crea los casilleros del tablero a partir de la matriz dada
      */
     private void construirTablero() {
+        /*
         int[][] board = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -119,6 +125,20 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 {1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        };
+        */
+        int[][] board = {
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1},
+                {1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, -1, 0, 0, 2, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1},
+                {1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
         this.casilleros = new Casillero[board.length][board[0].length];
 
@@ -134,6 +154,8 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA);
                 } else if (row[j] == -1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.CRONOMETRO);
+                } else if (row[j] == 2) {
+                    casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA_ESPECIAL);
                 }
                 x += size;
             }

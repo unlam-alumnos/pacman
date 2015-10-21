@@ -50,7 +50,6 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             uiHandler().move(Direction.UP);
-
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             uiHandler().move(Direction.RIGHT);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
