@@ -1,13 +1,13 @@
 package edu.unlam.pacman.client.modules.juego;
 
-import java.awt.HeadlessException;
-
-import javax.swing.JFrame;
-
-import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.client.modules.BaseFrame;
-import edu.unlam.pacman.client.modules.juego.pacman.PacmanPresenter;
+import edu.unlam.pacman.client.modules.juego.personaje.fantasma.FantasmaPresenter;
+import edu.unlam.pacman.client.modules.juego.personaje.pacman.PacmanPresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.TableroPresenter;
+import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Cristian Miranda
@@ -29,6 +29,7 @@ public class Juego extends BaseFrame {
     @Override
     protected void initContent() {
         addComponent(new TableroPresenter());
+        addComponent(new FantasmaPresenter());
         addComponent(new PacmanPresenter());
     }
 
