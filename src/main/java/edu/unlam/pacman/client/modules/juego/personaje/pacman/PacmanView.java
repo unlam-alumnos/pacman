@@ -1,16 +1,15 @@
 package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
+import java.awt.Graphics2D;
+
+import javax.swing.ImageIcon;
+
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Direction;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
+public class PacmanView extends View<PacmanView.MyView> {
     interface MyView extends UiHandler {
         void move(Direction direction);
         void changeDirection(Direction direction);
@@ -21,8 +20,6 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     @Override
     protected void onBind() {
         setOpaque(false);
-        setFocusable(true);
-        addKeyListener(this);
     }
 
     @Override
@@ -66,29 +63,6 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + directionFolder + "/right.gif");
         }
         graphics().drawImage(sprite.getImage(), x, y, width, height, this);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            uiHandler().changeDirection(Direction.UP);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            uiHandler().changeDirection(Direction.RIGHT);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            uiHandler().changeDirection(Direction.LEFT);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            uiHandler().changeDirection(Direction.DOWN);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 
     @Override

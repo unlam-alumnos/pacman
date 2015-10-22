@@ -1,17 +1,20 @@
 package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -38,6 +41,20 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     public void changeDirection(Direction direction){
         if (pacman.isActive()) {
             pacman.setDirection(direction);
+        }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleKeyEventCallback(KeyEvent e) {
+        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_UP) {
+            changeDirection(Direction.UP);
+        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_RIGHT) {
+            changeDirection(Direction.RIGHT);
+        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_LEFT) {
+            changeDirection(Direction.LEFT);
+        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_DOWN) {
+            changeDirection(Direction.DOWN);
         }
     }
 
