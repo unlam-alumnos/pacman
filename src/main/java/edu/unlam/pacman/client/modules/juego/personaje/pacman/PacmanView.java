@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.pacman;
+package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;

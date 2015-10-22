@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.pacman;
+package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
 import org.junit.Test;
 import org.mockito.Mockito;
