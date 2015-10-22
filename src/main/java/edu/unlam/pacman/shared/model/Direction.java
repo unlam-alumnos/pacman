@@ -5,5 +5,5 @@ package edu.unlam.pacman.shared.model;
  * @since 10/7/15 - 20:57
  */
 public enum Direction {
-    LEFT, RIGHT, UP, DOWN
+    LEFT, RIGHT, UP, DOWN, NONE
 }

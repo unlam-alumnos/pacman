@@ -61,6 +61,10 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
                     x = offset;
                     y = 0;
                     break;
+                case NONE:
+                    x = 0;
+                    y = 0;
+                    break;
                 default:
                     break;
             }

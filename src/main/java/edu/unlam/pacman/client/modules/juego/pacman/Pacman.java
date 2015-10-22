@@ -18,7 +18,7 @@ public class Pacman implements Model {
     private int height = 50;
     private int width = 50;
     private int speed = 130;
-    private Direction direction = Direction.RIGHT;
+    private Direction direction = Direction.NONE;
 
     public Pacman() {
         this.id = UUID.randomUUID().toString();
