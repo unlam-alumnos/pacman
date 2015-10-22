@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     interface MyView extends UiHandler {
         void move(Direction direction);
+        void changeDirection(Direction direction);
         void paintPacman();
     }
     private boolean flag = true;
@@ -75,13 +76,13 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            uiHandler().move(Direction.UP);
+            uiHandler().changeDirection(Direction.UP);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            uiHandler().move(Direction.RIGHT);
+            uiHandler().changeDirection(Direction.RIGHT);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            uiHandler().move(Direction.LEFT);
+            uiHandler().changeDirection(Direction.LEFT);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            uiHandler().move(Direction.DOWN);
+            uiHandler().changeDirection(Direction.DOWN);
         }
     }
 

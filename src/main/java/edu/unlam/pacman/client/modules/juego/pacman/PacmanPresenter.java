@@ -34,6 +34,13 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
         }
     }
 
+    @Override
+    public void changeDirection(Direction direction){
+        if (pacman.isActive()) {
+            pacman.setDirection(direction);
+        }
+    }
+
     @Subscribe
     @AllowConcurrentEvents
     public void handleMoveEventCallback(Callback<MoveEvent> callback) {
