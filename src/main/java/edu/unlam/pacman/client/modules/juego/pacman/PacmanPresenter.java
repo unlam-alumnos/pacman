@@ -19,7 +19,6 @@ import java.awt.event.ActionListener;
  */
 public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView.MyView {
     private Pacman pacman;
-    private short turnoBoca=1;
 
     public PacmanPresenter() {
         super(new PacmanView());
@@ -76,7 +75,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
 
     @Override
     public void paintPacman() {
-        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection(), turnoBoca);
+        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection(), pacman.getImageIndex());
         getView().repaint();
     }
 
@@ -88,18 +87,18 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
         ActionListener animate = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 move(pacman.getDirection());
-                if (turnoBoca == 1){
-                    turnoBoca++;
-                }else if(turnoBoca == 2){
-                    turnoBoca++;
-                }else if(turnoBoca == 3){
-                    turnoBoca++;
-                }else if(turnoBoca == 4){
-                    turnoBoca++;
-                }else if(turnoBoca == 5){
-                    turnoBoca++;
+                if (pacman.getImageIndex() == 1){
+                    pacman.addImageIndex();
+                }else if(pacman.getImageIndex() == 2){
+                    pacman.addImageIndex();
+                }else if(pacman.getImageIndex() == 3){
+                    pacman.addImageIndex();
+                }else if(pacman.getImageIndex() == 4){
+                    pacman.addImageIndex();
+                }else if(pacman.getImageIndex() == 5){
+                    pacman.addImageIndex();
                 }else{
-                    turnoBoca=1;
+                    pacman.setImageIndex((short)1);
                 }
             }
         };

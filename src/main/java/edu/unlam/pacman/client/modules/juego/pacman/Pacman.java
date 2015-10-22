@@ -18,6 +18,7 @@ public class Pacman implements Model {
     private int height = 50;
     private int width = 50;
     private int speed = 130;
+    private short imageIndex = 1;
     private Direction direction = Direction.NONE;
 
     public Pacman() {
@@ -70,5 +71,17 @@ public class Pacman implements Model {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public void setImageIndex(short i){
+        this.imageIndex = i;
+    }
+
+    public void addImageIndex(){
+        this.imageIndex++;
+    }
+
+    public short getImageIndex(){
+        return imageIndex;
     }
 }

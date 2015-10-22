@@ -29,43 +29,42 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
         uiHandler().paintPacman();
     }
 
-    public void paintPacman(int x, int y, int width, int height, Direction direction, int turnoBoca) {
+    public void paintPacman(int x, int y, int width, int height, Direction direction, int imageIndex) {
         ImageIcon sprite = null;
-        String animacionBoca;
+        String directionFolder;
 
-        switch (turnoBoca) {
+        switch (imageIndex) {
             case 1:
-                animacionBoca = "uno";
+                directionFolder = "uno";
                 break;
             case 2:
-                animacionBoca = "dos";
+                directionFolder = "dos";
                 break;
             case 3:
-                animacionBoca = "tres";
+                directionFolder = "tres";
                 break;
             case 4:
-                animacionBoca = "dos";
+                directionFolder = "dos";
                 break;
             case 5:
-                animacionBoca = "uno";
+                directionFolder = "uno";
                 break;
             default:
-                animacionBoca = "cero";
+                directionFolder = "cero";
         }
 
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
+        sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + directionFolder + "/right.gif");
         if (Direction.LEFT.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca +"/left.gif");
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + directionFolder +"/left.gif");
         } else if (Direction.UP.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/up.gif");
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + directionFolder + "/up.gif");
         } else if (Direction.DOWN.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/down.gif");
-        }else  if(direction==Direction.NONE) {
-            animacionBoca = "uno";
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
-
-
-        }graphics().drawImage(sprite.getImage(), x, y, width, height, this);
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + directionFolder + "/down.gif");
+        } else if(Direction.NONE.equals(direction)) {
+            directionFolder = "uno";
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + directionFolder + "/right.gif");
+        }
+        graphics().drawImage(sprite.getImage(), x, y, width, height, this);
     }
 
     @Override
