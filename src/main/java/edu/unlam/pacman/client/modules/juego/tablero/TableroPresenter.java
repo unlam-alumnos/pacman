@@ -87,8 +87,12 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         } else if (Direction.RIGHT.equals(direccion)) {
                             x = i;
                             y = j + 1;
+                        } else if (Direction.NONE.equals(direccion)) {
+                            x=i;
+                            y=j;
                         }
-                        siguiente = casilleros[x][y];
+
+                            siguiente = casilleros[x][y];
                         if (Casillero.Tipo.FRUTA.equals(siguiente.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                             casilleros[x][y].setTipo(Casillero.Tipo.PISO);
