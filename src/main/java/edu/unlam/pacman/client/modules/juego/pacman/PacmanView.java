@@ -43,8 +43,14 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
             case 3:
                 animacionBoca = "tres";
                 break;
-            default:
+            case 4:
                 animacionBoca = "dos";
+                break;
+            case 5:
+                animacionBoca = "uno";
+                break;
+            default:
+                animacionBoca = "cero";
         }
 
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");

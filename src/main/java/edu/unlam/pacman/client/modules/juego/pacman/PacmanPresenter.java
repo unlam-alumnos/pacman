@@ -94,6 +94,10 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
                     turnoBoca++;
                 }else if(turnoBoca == 3){
                     turnoBoca++;
+                }else if(turnoBoca == 4){
+                    turnoBoca++;
+                }else if(turnoBoca == 5){
+                    turnoBoca++;
                 }else{
                     turnoBoca=1;
                 }

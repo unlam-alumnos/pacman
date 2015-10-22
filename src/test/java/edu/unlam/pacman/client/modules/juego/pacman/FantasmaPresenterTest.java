@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
  * @author Cristian Miranda
  * @since 10/5/15 - 23:59
  */
-public class PacmanPresenterTest extends BasePresenterTest<PacmanPresenter, PacmanView> {
+public class FantasmaPresenterTest extends BasePresenterTest<PacmanPresenter, PacmanView> {
     @Test
     public void paintPacman() {
         // Given
