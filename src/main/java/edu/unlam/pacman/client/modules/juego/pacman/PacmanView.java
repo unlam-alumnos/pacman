@@ -30,28 +30,36 @@ public class PacmanView extends View<PacmanView.MyView> implements KeyListener {
     }
 
     public void paintPacman(int x, int y, int width, int height, Direction direction, int turnoBoca) {
-        ImageIcon sprite;
+        ImageIcon sprite = null;
         String animacionBoca;
 
-        switch (turnoBoca){
-            case 1: animacionBoca = "uno";
+        switch (turnoBoca) {
+            case 1:
+                animacionBoca = "uno";
                 break;
-            case 2: animacionBoca = "dos";
+            case 2:
+                animacionBoca = "dos";
                 break;
-            case 3: animacionBoca = "tres";
+            case 3:
+                animacionBoca = "tres";
                 break;
-            default: animacionBoca = "cero";
+            default:
+                animacionBoca = "dos";
         }
 
-        sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
         if (Direction.LEFT.equals(direction)) {
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca +"/left.gif");
         } else if (Direction.UP.equals(direction)) {
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/up.gif");
         } else if (Direction.DOWN.equals(direction)) {
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/down.gif");
-        }
-        graphics().drawImage(sprite.getImage(), x, y, width, height, this);
+        }else  if(direction==Direction.NONE) {
+            animacionBoca = "uno";
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + animacionBoca + "/right.gif");
+
+
+        }graphics().drawImage(sprite.getImage(), x, y, width, height, this);
     }
 
     @Override
