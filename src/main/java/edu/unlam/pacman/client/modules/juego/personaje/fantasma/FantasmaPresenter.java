@@ -32,7 +32,7 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
     @Override
     public void move(Direction direction) {
         if (fantasma.isActive()) {
-            eventBus.post(new Request<>(new MoveEvent(fantasma.getId(), new Coordenada(fantasma.getX(), fantasma.getY()), direction)));
+            eventBus.post(new Request<>(new MoveEvent(fantasma.getId(), new Coordenada(fantasma.getX(), fantasma.getY()), direction, "fantasma")));
         }
     }
 

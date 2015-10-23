@@ -10,11 +10,13 @@ import edu.unlam.pacman.shared.model.Direction;
 public class MoveEvent extends GameEvent {
     private Coordenada origen;
     private Direction direccion;
+    private String personajeType;
 
-    public MoveEvent(String subject, Coordenada origen, Direction direccion) {
+    public MoveEvent(String subject, Coordenada origen, Direction direccion, String tipo) {
         super(subject);
         this.origen = origen;
         this.direccion = direccion;
+        this.personajeType = tipo;
     }
 
     public Coordenada getOrigen() {
@@ -23,5 +25,9 @@ public class MoveEvent extends GameEvent {
 
     public Direction getDireccion() {
         return direccion;
+    }
+
+    public String getPersonajeType() {
+        return personajeType;
     }
 }

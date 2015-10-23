@@ -33,7 +33,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     @Override
     public void move(Direction direction) {
         if (pacman.isActive()) {
-            eventBus.post(new Request<>(new MoveEvent(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction)));
+            eventBus.post(new Request<>(new MoveEvent(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction, "pacman")));
         }
     }
 

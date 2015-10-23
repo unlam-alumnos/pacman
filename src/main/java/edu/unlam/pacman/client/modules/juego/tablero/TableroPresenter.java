@@ -104,7 +104,9 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                         if (Casillero.Tipo.FRUTA.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
-                            casilleros[x][y].setTipo(Casillero.Tipo.PISO);
+                            if (moveEvent.getPersonajeType().equals("pacman")){
+                                casilleros[x][y].setTipo(Casillero.Tipo.PISO);
+                            }
                         }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                             eventBus.post(new HunterEvent(moveEvent.getSubject()));
@@ -112,6 +114,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         }else if(Casillero.Tipo.PISO.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                         }
+
                     } catch (Exception e) {
                         System.out.println("Se pasó!");
                     }

@@ -32,7 +32,7 @@ public class TableroPresenterTest extends BasePresenterTest<TableroPresenter, Ta
     @Test
     public void canMove() {
         // Given
-        MoveEvent moveEvent = new MoveEvent("1", new Coordenada(50, 50), Direction.RIGHT);
+        MoveEvent moveEvent = new MoveEvent("1", new Coordenada(50, 50), Direction.RIGHT, "personaje");
         Request<MoveEvent> request = new Request<>(moveEvent);
 
         // When
@@ -45,7 +45,7 @@ public class TableroPresenterTest extends BasePresenterTest<TableroPresenter, Ta
     @Test
     public void canNotMove() {
         // Given
-        MoveEvent moveEvent = new MoveEvent("1", new Coordenada(50, 50), Direction.LEFT);
+        MoveEvent moveEvent = new MoveEvent("1", new Coordenada(50, 50), Direction.LEFT, "personaje");
         Request<MoveEvent> request = new Request<>(moveEvent);
 
         // When
