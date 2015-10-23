@@ -25,7 +25,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
     private Casillero[][] casilleros;
     private Timer cronometro;
     private Integer duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
-
+    private int contadorFrutas=0;
     public TableroPresenter() {
         super(new TableroView());
         construirTablero();
@@ -42,6 +42,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 } else if (Casillero.Tipo.FRUTA.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarFruta(coordenada, 2);
+
                 } else if (Casillero.Tipo.PISO.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarPiso(coordenada);
@@ -50,6 +51,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarFrutaEspecial(casillero.getOrigen(), casillero.getAncho(), casillero.getAlto());
+
                 }
             }
         }
@@ -106,15 +108,19 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                             eventBus.post(new Callback<>(moveEvent));
                             if (moveEvent.getPersonajeType().equals("pacman")){
                                 casilleros[x][y].setTipo(Casillero.Tipo.PISO);
+                                contadorFrutas--;
                             }
                         }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                             eventBus.post(new HunterEvent(moveEvent.getSubject()));
                             casilleros[x][y].setTipo(Casillero.Tipo.PISO);
+                            contadorFrutas--;
                         }else if(Casillero.Tipo.PISO.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                         }
-
+                        if (contadorFrutas==0) {
+                            eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.RESULTADO));
+                        }
                     } catch (Exception e) {
                         System.out.println("Se pasó!");
                     }
@@ -154,10 +160,12 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.PARED);
                 } else if (row[j] == 0) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA);
+                    contadorFrutas++;
                 } else if (row[j] == -1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.CRONOMETRO);
                 } else if (row[j] == 2) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA_ESPECIAL);
+                    contadorFrutas++;
                 }
                 x += size;
             }
