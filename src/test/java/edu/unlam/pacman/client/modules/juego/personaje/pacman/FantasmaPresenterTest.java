@@ -1,5 +1,6 @@
 package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
+import edu.unlam.pacman.shared.model.Status;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -22,7 +23,7 @@ public class FantasmaPresenterTest extends BasePresenterTest<PacmanPresenter, Pa
         presenter.paintPacman();
 
         // Then
-        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt(), any(Direction.class), 1);
+        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt(), any(Direction.class), 1, any(Status.class));
     }
 
     @Override

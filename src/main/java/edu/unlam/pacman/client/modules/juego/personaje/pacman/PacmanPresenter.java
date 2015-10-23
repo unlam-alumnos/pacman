@@ -1,20 +1,20 @@
 package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -41,6 +41,14 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     public void changeDirection(Direction direction){
         if (pacman.isActive()) {
             pacman.setDirection(direction);
+        }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleKeyEventCallback(HunterEvent e) {
+        if (!e.getSubject().equals(pacman.getId())){
+            pacman.setStatus(Status.VICTIM);
         }
     }
 
@@ -99,7 +107,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
 
     @Override
     public void paintPacman() {
-        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection(), pacman.getImageIndex());
+        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection(), pacman.getImageIndex(), pacman.getStatus());
         getView().repaint();
     }
 

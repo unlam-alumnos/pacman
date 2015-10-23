@@ -2,6 +2,7 @@ package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
 
 /**
  * @author Cristian Miranda
@@ -14,5 +15,6 @@ public class Fantasma extends Personaje {
         setX(300);
         setY(300);
         setDirection(Direction.LEFT);
+        setStatus(Status.NORMAL);
     }
 }

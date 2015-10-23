@@ -5,9 +5,11 @@ import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -38,6 +40,14 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
     public void changeDirection(Direction direction){
         if (fantasma.isActive()) {
             fantasma.setDirection(direction);
+        }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleKeyEventCallback(HunterEvent e) {
+        if (!e.getSubject().equals(fantasma.getId())){
+            fantasma.setStatus(Status.VICTIM);
         }
     }
 
@@ -82,9 +92,10 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
 
     @Override
     public void paintFantasma() {
-        getView().paintFantasma(fantasma.getX(), fantasma.getY(), fantasma.getWidth(), fantasma.getHeight(), fantasma.getDirection());
+        getView().paintFantasma(fantasma.getX(), fantasma.getY(), fantasma.getWidth(), fantasma.getHeight(), fantasma.getDirection(), fantasma.getStatus());
         getView().repaint();
     }
+
 
     /**
     * Inicia el Timer que movera constantemente al pacman, en la direccion seteada.

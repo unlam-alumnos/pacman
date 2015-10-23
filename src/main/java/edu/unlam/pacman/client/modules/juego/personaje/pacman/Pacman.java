@@ -2,6 +2,7 @@ package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
 
 /**
  * @author Cristian Miranda
@@ -16,6 +17,7 @@ public class Pacman extends Personaje {
         setX(50);
         setY(50);
         setDirection(Direction.NONE);
+        setStatus(Status.NORMAL);
     }
 
     public void setImageIndex(short i){

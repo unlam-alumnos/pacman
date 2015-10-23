@@ -6,6 +6,7 @@ import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
@@ -72,34 +73,43 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
             for (Casillero casillero : fila) {
                 Coordenada proyeccion = new Coordenada(moveEvent.getOrigen().getX() + casillero.getAncho() / 2, moveEvent.getOrigen().getY() + casillero.getAlto() / 2);
                 if (casillero.contains(proyeccion)) {
-                    Casillero siguiente = null;
-                    Direction direccion = moveEvent.getDireccion();
+                    Casillero next = null;
+                    Direction direction = moveEvent.getDireccion();
                     try {
-                        if (Direction.UP.equals(direccion)) {
-                            x = i - 1;
-                            y = j;
-                        } else if (Direction.DOWN.equals(direccion)) {
-                            x = i + 1;
-                            y = j;
-                        } else if (Direction.LEFT.equals(direccion)) {
-                            x = i;
-                            y = j - 1;
-                        } else if (Direction.RIGHT.equals(direccion)) {
-                            x = i;
-                            y = j + 1;
-                        } else if (Direction.NONE.equals(direccion)) {
-                            x=i;
-                            y=j;
+
+                        switch (direction){
+                            case RIGHT:
+                                x = i;
+                                y = j + 1;
+                                break;
+                            case LEFT:
+                                x = i;
+                                y = j - 1;
+                                break;
+                            case UP:
+                                x = i - 1;
+                                y = j;
+                                break;
+                            case DOWN:
+                                x = i + 1;
+                                y = j;
+                                break;
+                            default:
+                                x = i;
+                                y = j;
+                                break;
                         }
 
-                            siguiente = casilleros[x][y];
-                        if (Casillero.Tipo.FRUTA.equals(siguiente.getTipo())) {
+                        next = casilleros[x][y];
+
+                        if (Casillero.Tipo.FRUTA.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                             casilleros[x][y].setTipo(Casillero.Tipo.PISO);
-                        }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(siguiente.getTipo())) {
+                        }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
+                            eventBus.post(new HunterEvent(moveEvent.getSubject()));
                             casilleros[x][y].setTipo(Casillero.Tipo.PISO);
-                        }else if(Casillero.Tipo.PISO.equals(siguiente.getTipo())) {
+                        }else if(Casillero.Tipo.PISO.equals(next.getTipo())) {
                             eventBus.post(new Callback<>(moveEvent));
                         }
                     } catch (Exception e) {

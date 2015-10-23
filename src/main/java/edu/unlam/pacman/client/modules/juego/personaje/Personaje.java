@@ -1,6 +1,7 @@
 package edu.unlam.pacman.client.modules.juego.personaje;
 
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
 
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public abstract class Personaje {
     private int width = 50;
     private int speed;
     private Direction direction;
+    private Status status;
 
     public Personaje() {
         this.id = UUID.randomUUID().toString();
@@ -70,8 +72,16 @@ public abstract class Personaje {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
     public int getSpeed() {
         return speed;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

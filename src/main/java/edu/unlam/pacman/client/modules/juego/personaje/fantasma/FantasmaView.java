@@ -4,6 +4,7 @@ import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,19 +28,30 @@ public class FantasmaView extends View<FantasmaView.MyView> {
         uiHandler().paintFantasma();
     }
 
-    public void paintFantasma(int x, int y, int width, int height, Direction direction) {
+    public void paintFantasma(int x, int y, int width, int height, Direction direction, Status status) {
         ImageIcon sprite = null;
-        String directionFolder = "celeste";
+        String colorGhost = "celeste";
 
-        sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + directionFolder + "/right.png");
-        if (Direction.LEFT.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + directionFolder +"/left.png");
-        } else if (Direction.UP.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + directionFolder + "/up.png");
-        } else if (Direction.DOWN.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + directionFolder + "/down.png");
-        } else if(Direction.NONE.equals(direction)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + directionFolder + "/right.png");
+        if(Status.VICTIM.equals(status)) {
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/victim.png");
+        }else{
+            switch (direction){
+                case RIGHT:
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/right.png");
+                    break;
+                case LEFT:
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost +"/left.png");
+                    break;
+                case UP:
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/up.png");
+                    break;
+                case DOWN:
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/down.png");
+                    break;
+                default:
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/right.png");
+                    break;
+            }
         }
         graphics().drawImage(sprite.getImage(), x, y, width, height, this);
     }
