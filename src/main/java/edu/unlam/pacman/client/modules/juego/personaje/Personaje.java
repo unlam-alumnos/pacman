@@ -15,8 +15,8 @@ public abstract class Personaje {
 
     private int x;
     private int y;
-    private int height = 50;
-    private int width = 50;
+    private int height = 25;
+    private int width = 25;
     private int speed;
     private Direction direction;
     private Status status;

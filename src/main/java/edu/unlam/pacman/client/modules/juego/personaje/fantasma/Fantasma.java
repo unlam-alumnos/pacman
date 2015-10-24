@@ -12,9 +12,9 @@ public class Fantasma extends Personaje {
 
     public Fantasma() {
         setSpeed(150);
-        setX(300);
-        setY(300);
-        setDirection(Direction.LEFT);
+        setX(150);
+        setY(150);
+        setDirection(Direction.NONE);
         setStatus(Status.NORMAL);
     }
 }

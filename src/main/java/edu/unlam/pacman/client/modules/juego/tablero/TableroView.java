@@ -68,9 +68,9 @@ public class TableroView extends View<TableroView.MyView> {
         graphics().setColor(tiempo < 10 ? Color.RED : Color.WHITE);
 
         graphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        Font font = new Font("Calibri", Font.BOLD, 50);
+        Font font = new Font("Calibri", Font.BOLD, 25);
         graphics().setFont(font);
-        graphics().drawString(cronometro, x, y+41);
+        graphics().drawString(cronometro, x, y+19);
     }
 
     @Override
