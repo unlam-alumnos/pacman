@@ -35,10 +35,10 @@ public class TableroView extends View<TableroView.MyView> {
         graphics().fill(new Rectangle2D.Double(x, y, ancho, alto));
         graphics().setColor(Color.BLACK);
         graphics().setStroke(new BasicStroke(2f));
-        graphics().drawRect(x, y, ancho, alto);
-
         ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/pared.png");
-        graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
+
+        graphics().drawRect(x, y, ancho, alto);
+        //graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
     }
 
     public void dibujarPiso(Coordenada coordenada) {
@@ -59,18 +59,14 @@ public class TableroView extends View<TableroView.MyView> {
         graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
     }
 
-    public void dibujarTimer(Coordenada coordenada, Integer tiempo){
+    public void dibujarCronometro(Coordenada coordenada, String tiempo){
         int x = coordenada.getX();
         int y = coordenada.getY();
-        String cronometro = tiempo.toString();
 
-        cronometro = tiempo < 10 ? "0" + cronometro : cronometro;
-        graphics().setColor(tiempo < 10 ? Color.RED : Color.WHITE);
-
-        graphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        Font font = new Font("Calibri", Font.BOLD, 25);
-        graphics().setFont(font);
-        graphics().drawString(cronometro, x, y+19);
+        ImageIcon sprite1 = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + tiempo.charAt(0) + ".png");
+        ImageIcon sprite2 = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + tiempo.charAt(1) + ".png");
+        graphics().drawImage(sprite1.getImage(), x, y, 50, 50, this);
+        graphics().drawImage(sprite2.getImage(), x+50, y+5, 50, 50, this);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleKeyEventCallback(HunterEvent e) {
+    public void handleHunterEventCallback(HunterEvent e) {
         if (!e.getSubject().equals(fantasma.getId())){
             fantasma.setStatus(Status.VICTIM);
         }

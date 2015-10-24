@@ -13,7 +13,7 @@ public class Pacman extends Personaje {
     private short imageIndex = 1;
 
     public Pacman() {
-        setSpeed(100);
+        setSpeed(140);
         setX(25);
         setY(25);
         setDirection(Direction.NONE);

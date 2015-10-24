@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.events.DirectionEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
@@ -40,13 +41,23 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     @Override
     public void changeDirection(Direction direction){
         if (pacman.isActive()) {
-            pacman.setDirection(direction);
+            eventBus.post(new Request<>(new DirectionEvent(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction)));
+        }
+    }
+
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleDirectionEventCallback(Callback<DirectionEvent> callback) {
+        DirectionEvent e = callback.getEvent();
+        if (e.getSubject().equals(pacman.getId())){
+            pacman.setDirection(e.getDireccion());
         }
     }
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleKeyEventCallback(HunterEvent e) {
+    public void handleHunterEventCallback(HunterEvent e) {
         if (!e.getSubject().equals(pacman.getId())){
             pacman.setStatus(Status.VICTIM);
         }
