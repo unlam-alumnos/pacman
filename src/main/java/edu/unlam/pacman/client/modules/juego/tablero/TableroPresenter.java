@@ -2,7 +2,8 @@ package edu.unlam.pacman.client.modules.juego.tablero;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.Timer;
 
@@ -17,6 +18,7 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
@@ -29,7 +31,7 @@ import edu.unlam.pacman.shared.util.PropertiesUtils;
 public class TableroPresenter extends Presenter<TableroView> implements TableroView.MyView {
     private final int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
 
-    private List<Personaje> personajes;
+    private Set<Personaje> personajes;
     private Casillero[][] casilleros;
 
     private Timer cronometro;
@@ -41,6 +43,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         super(new TableroView());
         construirTablero();
         cronometro.start();
+        this.personajes = new HashSet<>();
     }
 
     @Override
@@ -170,7 +173,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                         next = casilleros[x][y];
 
-                        MoveEventCallback callback = new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(), moveEvent.getPersonajeType());
+                        MoveEventCallback callback = new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(), moveEvent.getPersonajeType(), moveEvent.getPersonaje());
 
                         if (Casillero.Tipo.FRUTA.equals(next.getTipo())) {
                             eventBus.post(callback);
@@ -189,6 +192,9 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         if (contadorFrutas==0) {
                             eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.RESULTADO));
                         }
+
+                        checkCollision(moveEvent.getPersonaje());
+
                     } catch (Exception e) {
                         System.out.println("Se pasó!");
                     }
@@ -196,6 +202,22 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 j++;
             }
             i++;
+        }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handlePaintEvent(PaintEvent event) {
+        personajes.add(event.getPersonaje());
+    }
+
+    private void checkCollision(Personaje personaje) {
+        for (Personaje pj : personajes) {
+            if (!pj.equals(personaje)) {
+                if (pj.getX() == personaje.getX() && pj.getY() == personaje.getY()) {
+                    System.out.println(pj.getId() + " chocó con " + personaje.getId() + " en (" + pj.getX() + "," + pj.getY() + ")");
+                }
+            }
         }
     }
 

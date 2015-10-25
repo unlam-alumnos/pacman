@@ -10,6 +10,7 @@ import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -28,7 +29,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Override
     public void move(Direction direction) {
         if (personaje.isActive()) {
-            eventBus.post(new MoveEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), direction, "pacman"));
+            eventBus.post(new MoveEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), direction, "pacman", personaje));
         }
     }
 
@@ -41,6 +42,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
 
     @Override
     public void paintPersonaje() {
+        eventBus.post(new PaintEvent(personaje));
         getView().paintPersonaje(personaje);
         getView().repaint();
     }
