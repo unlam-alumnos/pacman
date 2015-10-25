@@ -11,7 +11,7 @@ import edu.unlam.pacman.shared.model.Status;
 public class Fantasma extends Personaje {
 
     public Fantasma() {
-        setSpeed(150);
+        setSpeed(130);
         setX(100);
         setY(100);
         setDirection(Direction.NONE);

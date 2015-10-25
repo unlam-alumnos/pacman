@@ -6,6 +6,7 @@ import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.async.Callback;
 import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.events.DirectionEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
@@ -23,8 +24,11 @@ import java.awt.event.ActionListener;
  */
 public class TableroPresenter extends Presenter<TableroView> implements TableroView.MyView {
     private Casillero[][] casilleros;
+
     private Timer cronometro;
-    private Integer duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
+    private int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
+    private Cronometro timekeeper = new Cronometro(duracion);
+
     private int contadorFrutas=0;
     public TableroPresenter() {
         super(new TableroView());
@@ -47,13 +51,76 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarPiso(coordenada);
                 } else if (Casillero.Tipo.CRONOMETRO.equals(tipo)) {
-                    getView().dibujarTimer(casillero.getOrigen(), duracion);
+                    //getView().dibujarTimer(casillero.getOrigen(), timekeeper.getValue());
+                    getView().dibujarCronometro(casillero.getOrigen(), timekeeper.getValueString());
+
+                } else if (Casillero.Tipo.BLOCK.equals(tipo)) {
+                    Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
+                    getView().dibujarPiso(coordenada);
                 } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarFrutaEspecial(casillero.getOrigen(), casillero.getAncho(), casillero.getAlto());
 
                 }
             }
+        }
+    }
+
+    /**
+     * Verifica la validez del cambio de direccion y responde solo si es válido
+     *
+     * @param request
+     */
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleDirectionEventRequest(Request<DirectionEvent> request){
+        DirectionEvent directionEvent = request.getEvent();
+        int i = 0;
+        int x = 0;
+        int y = 0;
+
+        for (Casillero[] fila : casilleros) {
+            int j = 0;
+            for (Casillero casillero : fila) {
+                Coordenada proyeccion = new Coordenada(directionEvent.getOrigen().getX() + casillero.getAncho() / 2, directionEvent.getOrigen().getY() + casillero.getAlto() / 2);
+                if (casillero.contains(proyeccion)) {
+                    Casillero next = null;
+                    Direction direction = directionEvent.getDireccion();
+                    try {
+
+                        switch (direction){
+                            case RIGHT:
+                                x = i;
+                                y = j + 1;
+                                break;
+                            case LEFT:
+                                x = i;
+                                y = j - 1;
+                                break;
+                            case UP:
+                                x = i - 1;
+                                y = j;
+                                break;
+                            case DOWN:
+                                x = i + 1;
+                                y = j;
+                                break;
+                            default:
+                                x = i;
+                                y = j;
+                                break;
+                        }
+                        next = casilleros[x][y];
+                        if (!Casillero.Tipo.PARED.equals(next.getTipo()) && !Casillero.Tipo.CRONOMETRO.equals(next.getTipo())) {
+                            eventBus.post(new Callback<>(directionEvent));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Se pasó!");
+                    }
+                }
+                j++;
+            }
+            i++;
         }
     }
 
@@ -135,28 +202,25 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
      * Crea los casilleros del tablero a partir de la matriz dada
      */
     private void construirTablero() {
-        int[][] board = {
-                {1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 2, 1},
-                {1, 0, 1, 1, 0,  1, 1, 1, 1, 1, 1, 1, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  1, 1, 1, 1, 1, 1, 1, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 1},
-                {1, 0, 1, 1, 1,  0, 1, 1, 1, 1, 1, 1, 1, 0,  1, 1, 1, 0, 1},
-                {1, 0, 0, 0, 1,  0, 1, 1, 1, 1, 1, 1, 1, 0,  1, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1,  0, 0, 0, 0, 0, 0, 0, 0, 0,  1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1,  0, 1, 1, 1, 1, 1, 1, 1, 0,  1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1,  0, 0, 0, 0, 0, 0, 0, 0, 0,  1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0,  0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 1, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  1, 1, 1, 1, 0, 1, 1, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  1, 1, 1, 1, 0, 1, 1, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  1, 1, 0, 0, 0, 0, 0, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  1, 1, 0, 1, 1, 1, 0, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 0, 0, 0,  1, 1, 0, 1, 1, 1, 0, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0,  1, 1, 1, 1, 1, 1, 1, 1, 1,  0, 1, 1, 0, 1},
-                {1, 0, 0, 0, 0,  1, 1, 1, 1, 1, 1, 1, 1, 1,  0, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1}
+        int[][] board = { //19x19//
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1},
+                {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 1, 0, 1,-1,-2,-2,-2, 1, 0, 1, 0, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 1, 0, 1,-2,-2,-2,-2, 1, 0, 1, 0, 0, 0, 0, 1},
+                {1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
+                {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
         this.casilleros = new Casillero[board.length][board[0].length];
 
@@ -173,7 +237,9 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     contadorFrutas++;
                 } else if (row[j] == -1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.CRONOMETRO);
-                } else if (row[j] == 2) {
+                } else if (row[j] == -2) {
+                    casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.BLOCK);
+                }  else if (row[j] == 2) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA_ESPECIAL);
                     contadorFrutas++;
                 }
@@ -187,8 +253,8 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         {
             public void actionPerformed(ActionEvent e)
             {
-                duracion--;
-                if (duracion == 0){
+                timekeeper.less();
+                if (timekeeper.getValue() == 0){
                     cronometro.stop();
                     eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.RESULTADO));
                 }
