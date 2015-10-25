@@ -1,21 +1,23 @@
 package edu.unlam.pacman.client.modules.juego.personaje.pacman;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.comunication.bus.async.Callback;
-import edu.unlam.pacman.shared.comunication.bus.async.Request;
-import edu.unlam.pacman.shared.comunication.bus.events.DirectionEvent;
+import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -34,24 +36,23 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     @Override
     public void move(Direction direction) {
         if (pacman.isActive()) {
-            eventBus.post(new Request<>(new MoveEvent(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction, "pacman")));
+            eventBus.post(new MoveEventRequest(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction, "pacman"));
         }
     }
 
     @Override
     public void changeDirection(Direction direction){
         if (pacman.isActive()) {
-            eventBus.post(new Request<>(new DirectionEvent(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction)));
+            eventBus.post(new DirectionEventRequest(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction));
         }
     }
 
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleDirectionEventCallback(Callback<DirectionEvent> callback) {
-        DirectionEvent e = callback.getEvent();
-        if (e.getSubject().equals(pacman.getId())){
-            pacman.setDirection(e.getDireccion());
+    public void handleDirectionEventCallback(DirectionEventCallback directionEventCallback) {
+        if (directionEventCallback.getSubject().equals(pacman.getId())){
+            pacman.setDirection(directionEventCallback.getDireccion());
         }
     }
 
@@ -79,8 +80,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleMoveEventCallback(Callback<MoveEvent> callback) {
-        MoveEvent moveEvent = callback.getEvent();
+    public void handleMoveEventCallback(MoveEventCallback moveEvent) {
         if (pacman.getId().equals(moveEvent.getSubject())) {
             int x = 0;
             int y = 0;

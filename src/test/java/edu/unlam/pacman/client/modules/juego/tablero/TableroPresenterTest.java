@@ -4,11 +4,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import edu.unlam.pacman.client.modules.BasePresenterTest;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
-import edu.unlam.pacman.shared.comunication.bus.async.Callback;
-import edu.unlam.pacman.shared.comunication.bus.async.Request;
-import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -32,27 +31,25 @@ public class TableroPresenterTest extends BasePresenterTest<TableroPresenter, Ta
     @Test
     public void canMove() {
         // Given
-        MoveEvent moveEvent = new MoveEvent("1", new Coordenada(50, 50), Direction.RIGHT, "personaje");
-        Request<MoveEvent> request = new Request<>(moveEvent);
+        MoveEventRequest moveEvent = new MoveEventRequest("1", new Coordenada(25, 25), Direction.RIGHT, "personaje");
 
         // When
-        presenter.handleMoveEventRequest(request);
+        presenter.handleMoveEventRequest(moveEvent);
 
         // Then
-        verify(presenter.getEventBus()).post(new Callback<>(moveEvent));
+        verify(presenter.getEventBus()).post(new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(), moveEvent.getPersonajeType()));
     }
 
     @Test
     public void canNotMove() {
         // Given
-        MoveEvent moveEvent = new MoveEvent("1", new Coordenada(50, 50), Direction.LEFT, "personaje");
-        Request<MoveEvent> request = new Request<>(moveEvent);
+        MoveEventRequest moveEvent = new MoveEventRequest("1", new Coordenada(25, 25), Direction.LEFT, "personaje");
 
         // When
-        presenter.handleMoveEventRequest(request);
+        presenter.handleMoveEventRequest(moveEvent);
 
         // Then
-        verify(presenter.getEventBus(), Mockito.never()).post(new Callback<>(moveEvent));
+        verify(presenter.getEventBus(), Mockito.never()).post(new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(), moveEvent.getPersonajeType()));
     }
 
     @Override

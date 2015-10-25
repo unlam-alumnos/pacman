@@ -1,19 +1,20 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.comunication.bus.async.Callback;
-import edu.unlam.pacman.shared.comunication.bus.async.Request;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -32,7 +33,7 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
     @Override
     public void move(Direction direction) {
         if (fantasma.isActive()) {
-            eventBus.post(new Request<>(new MoveEvent(fantasma.getId(), new Coordenada(fantasma.getX(), fantasma.getY()), direction, "fantasma")));
+            eventBus.post(new MoveEventRequest(fantasma.getId(), new Coordenada(fantasma.getX(), fantasma.getY()), direction, "fantasma"));
         }
     }
 
@@ -53,8 +54,7 @@ public class FantasmaPresenter extends Presenter<FantasmaView> implements Fantas
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleMoveEventCallback(Callback<MoveEvent> callback) {
-        MoveEvent moveEvent = callback.getEvent();
+    public void handleMoveEventCallback(MoveEventCallback moveEvent) {
         if (fantasma.getId().equals(moveEvent.getSubject())) {
             int x = 0;
             int y = 0;

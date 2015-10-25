@@ -1,22 +1,24 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
-import edu.unlam.pacman.shared.comunication.bus.async.Callback;
-import edu.unlam.pacman.shared.comunication.bus.async.Request;
-import edu.unlam.pacman.shared.comunication.bus.events.DirectionEvent;
+import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Cristian Miranda
@@ -68,13 +70,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
     /**
      * Verifica la validez del cambio de direccion y responde solo si es válido
-     *
-     * @param request
      */
     @Subscribe
     @AllowConcurrentEvents
-    public void handleDirectionEventRequest(Request<DirectionEvent> request){
-        DirectionEvent directionEvent = request.getEvent();
+    public void handleDirectionEventRequest(DirectionEventRequest directionEvent){
         int i = 0;
         int x = 0;
         int y = 0;
@@ -112,7 +111,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         }
                         next = casilleros[x][y];
                         if (!Casillero.Tipo.PARED.equals(next.getTipo()) && !Casillero.Tipo.CRONOMETRO.equals(next.getTipo())) {
-                            eventBus.post(new Callback<>(directionEvent));
+                            eventBus.post(new DirectionEventCallback(directionEvent.getSubject(), directionEvent.getOrigen(), directionEvent.getDireccion()));
                         }
                     } catch (Exception e) {
                         System.out.println("Se pasó!");
@@ -126,13 +125,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
     /**
      * Verifica la validez del movimiento pedido y responde solo si es válido
-     *
-     * @param request
      */
     @Subscribe
     @AllowConcurrentEvents
-    public void handleMoveEventRequest(Request<MoveEvent> request) {
-        MoveEvent moveEvent = request.getEvent();
+    public void handleMoveEventRequest(MoveEventRequest moveEvent) {
         int i = 0;
         int x = 0;
         int y = 0;
@@ -171,19 +167,21 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                         next = casilleros[x][y];
 
+                        MoveEventCallback callback = new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(), moveEvent.getPersonajeType());
+
                         if (Casillero.Tipo.FRUTA.equals(next.getTipo())) {
-                            eventBus.post(new Callback<>(moveEvent));
+                            eventBus.post(callback);
                             if (moveEvent.getPersonajeType().equals("pacman")){
                                 casilleros[x][y].setTipo(Casillero.Tipo.PISO);
                                 contadorFrutas--;
                             }
                         }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(next.getTipo())) {
-                            eventBus.post(new Callback<>(moveEvent));
+                            eventBus.post(callback);
                             eventBus.post(new HunterEvent(moveEvent.getSubject()));
                             casilleros[x][y].setTipo(Casillero.Tipo.PISO);
                             contadorFrutas--;
                         }else if(Casillero.Tipo.PISO.equals(next.getTipo())) {
-                            eventBus.post(new Callback<>(moveEvent));
+                            eventBus.post(callback);
                         }
                         if (contadorFrutas==0) {
                             eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.RESULTADO));
