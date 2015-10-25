@@ -4,11 +4,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import edu.unlam.pacman.client.modules.BasePresenterTest;
-import edu.unlam.pacman.shared.model.Direction;
-import edu.unlam.pacman.shared.model.Status;
+import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -20,10 +18,10 @@ public class FantasmaPresenterTest extends BasePresenterTest<PacmanPresenter, Pa
     public void paintPacman() {
         // Given
         // When
-        presenter.paintPacman();
+        presenter.paintPersonaje();
 
         // Then
-        verify(view, Mockito.atLeast(1)).paintPacman(anyInt(), anyInt(), anyInt(), anyInt(), any(Direction.class), anyInt(), any(Status.class));
+        verify(view, Mockito.atLeast(1)).paintPersonaje(any(Personaje.class));
     }
 
     @Override

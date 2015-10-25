@@ -5,121 +5,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.Subscribe;
-
-import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
-import edu.unlam.pacman.shared.model.Coordenada;
-import edu.unlam.pacman.shared.model.Direction;
-import edu.unlam.pacman.shared.model.Status;
+import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 
 /**
  * @author Cristian Miranda
  * @since 10/5/15 - 15:31
  */
-public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView.MyView {
-    private Pacman pacman;
-
+public class PacmanPresenter extends PersonajePresenter<PacmanView> implements PacmanView.MyView {
     public PacmanPresenter() {
         super(new PacmanView());
-        this.pacman = new Pacman();
-        this.pacman.setActive(true);
+        super.personaje = new Pacman();
+        super.personaje.setActive(true);
         initConstantMovement();
-    }
-
-    @Override
-    public void move(Direction direction) {
-        if (pacman.isActive()) {
-            eventBus.post(new MoveEventRequest(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction, "pacman"));
-        }
-    }
-
-    @Override
-    public void changeDirection(Direction direction){
-        if (pacman.isActive()) {
-            eventBus.post(new DirectionEventRequest(pacman.getId(), new Coordenada(pacman.getX(), pacman.getY()), direction));
-        }
-    }
-
-
-    @Subscribe
-    @AllowConcurrentEvents
-    public void handleDirectionEventCallback(DirectionEventCallback directionEventCallback) {
-        if (directionEventCallback.getSubject().equals(pacman.getId())){
-            pacman.setDirection(directionEventCallback.getDireccion());
-        }
-    }
-
-    @Subscribe
-    @AllowConcurrentEvents
-    public void handleHunterEventCallback(HunterEvent e) {
-        if (!e.getSubject().equals(pacman.getId())){
-            pacman.setStatus(Status.VICTIM);
-        }
-    }
-
-    @Subscribe
-    @AllowConcurrentEvents
-    public void handleKeyEventCallback(KeyEvent e) {
-        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_UP) {
-            changeDirection(Direction.UP);
-        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_RIGHT) {
-            changeDirection(Direction.RIGHT);
-        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_LEFT) {
-            changeDirection(Direction.LEFT);
-        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_DOWN) {
-            changeDirection(Direction.DOWN);
-        }
-    }
-
-    @Subscribe
-    @AllowConcurrentEvents
-    public void handleMoveEventCallback(MoveEventCallback moveEvent) {
-        if (pacman.getId().equals(moveEvent.getSubject())) {
-            int x = 0;
-            int y = 0;
-            Direction direction = moveEvent.getDireccion();
-            int offset = 25;
-            switch (direction) {
-                case UP:
-                    x = 0;
-                    y = -offset;
-                    break;
-                case DOWN:
-                    x = 0;
-                    y = offset;
-                    break;
-                case LEFT:
-                    x = -offset;
-                    y = 0;
-                    break;
-                case RIGHT:
-                    x = offset;
-                    y = 0;
-                    break;
-                case NONE:
-                    x = 0;
-                    y = 0;
-                    break;
-                default:
-                    break;
-            }
-            pacman.setX(moveEvent.getOrigen().getX() + x);
-            pacman.setY(moveEvent.getOrigen().getY() + y);
-            pacman.setDirection(direction);
-        }
-    }
-
-    @Override
-    public void paintPacman() {
-        getView().paintPacman(pacman.getX(), pacman.getY(), pacman.getWidth(), pacman.getHeight(), pacman.getDirection(), pacman.getImageIndex(), pacman.getStatus());
-        getView().repaint();
     }
 
     /**
@@ -129,6 +26,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
     private void initConstantMovement(){
         ActionListener animate = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
+                Pacman pacman = (Pacman) personaje;
                 move(pacman.getDirection());
                 if (pacman.getImageIndex() == 1){
                     pacman.addImageIndex();
@@ -145,7 +43,7 @@ public class PacmanPresenter extends Presenter<PacmanView> implements PacmanView
                 }
             }
         };
-        Timer timer = new Timer(pacman.getSpeed(), animate);
+        Timer timer = new Timer(personaje.getSpeed(), animate);
         timer.start();
     }
 }

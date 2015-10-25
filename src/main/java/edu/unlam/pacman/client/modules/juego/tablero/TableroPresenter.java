@@ -2,12 +2,14 @@ package edu.unlam.pacman.client.modules.juego.tablero;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.Timer;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
+import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
@@ -25,13 +27,16 @@ import edu.unlam.pacman.shared.util.PropertiesUtils;
  * @since 10/5/15 - 15:25
  */
 public class TableroPresenter extends Presenter<TableroView> implements TableroView.MyView {
+    private final int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
+
+    private List<Personaje> personajes;
     private Casillero[][] casilleros;
 
     private Timer cronometro;
-    private int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
     private Cronometro timekeeper = new Cronometro(duracion);
 
-    private int contadorFrutas=0;
+    private int contadorFrutas = 0;
+
     public TableroPresenter() {
         super(new TableroView());
         construirTablero();
@@ -53,7 +58,6 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarPiso(coordenada);
                 } else if (Casillero.Tipo.CRONOMETRO.equals(tipo)) {
-                    //getView().dibujarTimer(casillero.getOrigen(), timekeeper.getValue());
                     getView().dibujarCronometro(casillero.getOrigen(), timekeeper.getValueString());
 
                 } else if (Casillero.Tipo.BLOCK.equals(tipo)) {
@@ -62,7 +66,6 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarFrutaEspecial(casillero.getOrigen(), casillero.getAncho(), casillero.getAlto());
-
                 }
             }
         }
@@ -138,7 +141,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
             for (Casillero casillero : fila) {
                 Coordenada proyeccion = new Coordenada(moveEvent.getOrigen().getX() + casillero.getAncho() / 2, moveEvent.getOrigen().getY() + casillero.getAlto() / 2);
                 if (casillero.contains(proyeccion)) {
-                    Casillero next = null;
+                    Casillero next;
                     Direction direction = moveEvent.getDireccion();
                     try {
 
