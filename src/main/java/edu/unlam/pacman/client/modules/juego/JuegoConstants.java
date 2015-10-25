@@ -8,5 +8,5 @@ public class JuegoConstants {
     public static final Integer MAX_WIDTH = 516;
     public static final Integer MAX_HEIGHT = 488;
     public static final String[] PACMAN_ANIMATION = {"uno","dos","tres","dos","uno","cero"};
-    public static final String SPRITES_PATH = "src/main/java/edu/unlam/pacman/shared/sprites/";
+    public static final String SPRITES_PATH = "src/main/java/edu/unlam/pacman/client/sprites/";
 }

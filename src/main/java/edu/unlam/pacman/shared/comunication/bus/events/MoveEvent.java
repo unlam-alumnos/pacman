@@ -30,4 +30,32 @@ public class MoveEvent extends GameEvent {
     public String getPersonajeType() {
         return personajeType;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        MoveEvent moveEvent = (MoveEvent) o;
+
+        if (origen != null ? !origen.equals(moveEvent.origen) : moveEvent.origen != null) {
+            return false;
+        }
+        if (direccion != moveEvent.direccion) {
+            return false;
+        }
+        return !(personajeType != null ? !personajeType.equals(moveEvent.personajeType) : moveEvent.personajeType != null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = origen != null ? origen.hashCode() : 0;
+        result = 31 * result + (direccion != null ? direccion.hashCode() : 0);
+        result = 31 * result + (personajeType != null ? personajeType.hashCode() : 0);
+        return result;
+    }
 }

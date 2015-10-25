@@ -23,4 +23,28 @@ public class DirectionEvent extends GameEvent {
     public Direction getDireccion() {
         return direccion;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DirectionEvent that = (DirectionEvent) o;
+
+        if (origen != null ? !origen.equals(that.origen) : that.origen != null) {
+            return false;
+        }
+        return direccion == that.direccion;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = origen != null ? origen.hashCode() : 0;
+        result = 31 * result + (direccion != null ? direccion.hashCode() : 0);
+        return result;
+    }
 }
