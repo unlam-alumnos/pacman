@@ -31,4 +31,9 @@ public class Pacman extends Personaje {
     public short getImageIndex(){
         return imageIndex;
     }
+
+    @Override
+    public String getTipoPersonaje() {
+        return this.getClass().toString().substring(61).toString();
+    }
 }

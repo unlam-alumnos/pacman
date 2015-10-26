@@ -5,5 +5,5 @@ package edu.unlam.pacman.shared.model;
  * @since 10/7/15 - 20:57
  */
 public enum Status {
-    NORMAL, HUNTER, VICTIM
+    NORMAL, HUNTER, VICTIM, BLOCK
 }

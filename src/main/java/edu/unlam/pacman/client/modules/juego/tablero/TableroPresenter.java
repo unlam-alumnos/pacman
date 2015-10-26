@@ -1,15 +1,7 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.swing.Timer;
-
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
@@ -22,7 +14,14 @@ import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.Status;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Cristian Miranda
@@ -216,6 +215,28 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
             if (!pj.equals(personaje)) {
                 if (pj.getX() == personaje.getX() && pj.getY() == personaje.getY()) {
                     System.out.println(pj.getId() + " chocó con " + personaje.getId() + " en (" + pj.getX() + "," + pj.getY() + ")");
+
+                    /**
+                     * Identifico el Tipo de Personaje que corresponde a cada participe de la colision
+                     */
+                    System.out.println(pj.getTipoPersonaje() + " chocó con " + personaje.getTipoPersonaje() + " en (" + pj.getX() + "," + pj.getY() + ")");
+
+                    if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
+                        System.out.println(pj.getTipoPersonaje() + " se comió a " + personaje.getTipoPersonaje());
+                    } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
+                        System.out.println(personaje.getTipoPersonaje() + " se comió a " + pj.getTipoPersonaje());
+                    } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
+                        // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
+                        pj.setStatus(Status.BLOCK);
+                        personaje.setStatus(Status.BLOCK);
+                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
+                        // Choco 1 pacman con algun fantasma, sin estar en modo cazador
+                        if (pj.getTipoPersonaje().equals("Pacman")){
+                            pj.dead();
+                        }else{
+                            personaje.dead();
+                        }
+                    }
                 }
             }
         }
@@ -225,7 +246,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
      * Crea los casilleros del tablero a partir de la matriz dada
      */
     private void construirTablero() {
-        int[][] board = { //19x19//
+        int[][] board = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1},
                 {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},

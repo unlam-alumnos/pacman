@@ -84,4 +84,11 @@ public abstract class Personaje {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public abstract String getTipoPersonaje();
+
+    public void dead(){
+        setX(25);
+        setY(25);
+    }
 }

@@ -60,6 +60,8 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     public void handleHunterEventCallback(HunterEvent e) {
         if (!e.getSubject().equals(personaje.getId())){
             personaje.setStatus(Status.VICTIM);
+        } else {
+            personaje.setStatus(Status.HUNTER);
         }
     }
 
