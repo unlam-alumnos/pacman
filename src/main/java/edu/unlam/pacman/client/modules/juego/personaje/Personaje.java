@@ -1,5 +1,6 @@
 package edu.unlam.pacman.client.modules.juego.personaje;
 
+import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
 
@@ -87,9 +88,9 @@ public abstract class Personaje {
 
     public abstract String getTipoPersonaje();
 
-    public void dead(){
-        setX(25);
-        setY(25);
+    public void dead(Coordenada coordenada){
+        setX(coordenada.getX());
+        setY(coordenada.getY());
         setStatus(Status.NORMAL);
     }
 }
