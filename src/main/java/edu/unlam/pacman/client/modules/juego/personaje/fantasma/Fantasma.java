@@ -22,4 +22,11 @@ public class Fantasma extends Personaje {
     public String getTipoPersonaje() {
         return this.getClass().toString().substring(63).toString();
     }
+
+    @Override
+    public void dead(){
+        setX(150);
+        setY(200);
+        setStatus(Status.NORMAL);
+    }
 }

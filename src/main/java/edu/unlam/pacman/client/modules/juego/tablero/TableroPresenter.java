@@ -223,8 +223,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                     if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
                         System.out.println(pj.getTipoPersonaje() + " se comió a " + personaje.getTipoPersonaje());
+                        personaje.dead();
                     } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
                         System.out.println(personaje.getTipoPersonaje() + " se comió a " + pj.getTipoPersonaje());
+                        pj.dead();
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
                         pj.setStatus(Status.BLOCK);

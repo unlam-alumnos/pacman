@@ -90,5 +90,6 @@ public abstract class Personaje {
     public void dead(){
         setX(25);
         setY(25);
+        setStatus(Status.NORMAL);
     }
 }
