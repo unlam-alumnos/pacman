@@ -17,4 +17,9 @@ public class Fantasma extends Personaje {
         setDirection(Direction.NONE);
         setStatus(Status.NORMAL);
     }
+
+    @Override
+    public String getTipoPersonaje() {
+        return this.getClass().toString().substring(63).toString();
+    }
 }
