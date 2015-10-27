@@ -22,14 +22,7 @@ public abstract class Personaje {
     private Direction direction;
     private Status status;
     private int kills=0;
-
-    public int getKills (){
-        return this.kills;
-    }
-
-    public void increaseKill(){
-        kills++;
-    }
+    private Coordenada coordenadaPuntaje;
 
     public Personaje() {
         this.id = UUID.randomUUID().toString();
@@ -101,5 +94,21 @@ public abstract class Personaje {
         setX(coordenada.getX());
         setY(coordenada.getY());
         setStatus(Status.NORMAL);
+    }
+
+    public int getKills (){
+        return this.kills;
+    }
+
+    public void increaseKill(){
+        kills++;
+    }
+
+    public Coordenada getCoordenadaPuntaje() {
+        return coordenadaPuntaje;
+    }
+
+    public void setCoordenadaPuntaje(Coordenada coordenadaPuntaje) {
+        this.coordenadaPuntaje = coordenadaPuntaje;
     }
 }

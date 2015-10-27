@@ -11,6 +11,7 @@ import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
@@ -248,6 +249,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 }
             }
         }
+        eventBus.post(new ScoreEvent(personajes));
     }
 
     public Coordenada siteToRevive(Personaje victim){

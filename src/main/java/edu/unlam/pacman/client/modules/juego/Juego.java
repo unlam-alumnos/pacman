@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import edu.unlam.pacman.client.modules.BaseFrame;
 import edu.unlam.pacman.client.modules.juego.personaje.fantasma.FantasmaPresenter;
 import edu.unlam.pacman.client.modules.juego.personaje.pacman.PacmanPresenter;
+import edu.unlam.pacman.client.modules.juego.puntaje.PuntajePresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.TableroPresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.glass.GlassPresenter;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
@@ -31,6 +32,7 @@ public class Juego extends BaseFrame {
     @Override
     protected void initContent() {
         addComponent(new TableroPresenter());
+        addComponent(new PuntajePresenter());
         addComponent(new PacmanPresenter());
         addComponent(new FantasmaPresenter());
         addComponent(new GlassPresenter());
