@@ -21,6 +21,15 @@ public abstract class Personaje {
     private int speed;
     private Direction direction;
     private Status status;
+    private int kills=0;
+
+    public int getKills (){
+        return this.kills;
+    }
+
+    public void increaseKill(){
+        kills++;
+    }
 
     public Personaje() {
         this.id = UUID.randomUUID().toString();
