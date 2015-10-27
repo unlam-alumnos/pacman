@@ -6,7 +6,7 @@ package edu.unlam.pacman.client.modules.juego;
  */
 public class JuegoConstants {
     public static final Integer MAX_WIDTH = 516;
-    public static final Integer MAX_HEIGHT = 538;
+    public static final Integer MAX_HEIGHT = 513;
     public static final String[] PACMAN_ANIMATION = {"uno","dos","tres","dos","uno","cero"};
     public static final String SPRITES_PATH = "src/main/java/edu/unlam/pacman/client/sprites/";
 }

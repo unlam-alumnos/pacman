@@ -11,13 +11,24 @@ import edu.unlam.pacman.shared.model.Status;
  */
 public class Fantasma extends Personaje {
 
+    private String color;
+
     public Fantasma() {
         setSpeed(130);
         setX(100);
         setY(100);
         setDirection(Direction.NONE);
         setStatus(Status.NORMAL);
-        setCoordenadaPuntaje(new Coordenada(50,450));
+        setCoordenadaPuntaje(new Coordenada(100,450));
+        setColor("celeste");
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Override

@@ -23,26 +23,25 @@ public class FantasmaView extends PersonajeView<FantasmaView.MyView> {
         Status status = personaje.getStatus();
 
         ImageIcon sprite;
-        String colorGhost = "celeste";
 
         if(Status.VICTIM.equals(status)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/victim.png");
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/victim.png");
         }else{
             switch (direction){
                 case RIGHT:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/right.png");
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/right.png");
                     break;
                 case LEFT:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost +"/left.png");
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() +"/left.png");
                     break;
                 case UP:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/up.png");
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/up.png");
                     break;
                 case DOWN:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/down.png");
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/down.png");
                     break;
                 default:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + colorGhost + "/right.png");
+                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/right.png");
                     break;
             }
         }

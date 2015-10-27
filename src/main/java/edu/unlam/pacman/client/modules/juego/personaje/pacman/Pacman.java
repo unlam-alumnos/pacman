@@ -19,7 +19,7 @@ public class Pacman extends Personaje {
         setY(25);
         setDirection(Direction.NONE);
         setStatus(Status.NORMAL);
-        setCoordenadaPuntaje(new Coordenada(25,450));
+        setCoordenadaPuntaje(new Coordenada(0,450));
     }
 
     public void setImageIndex(short i){

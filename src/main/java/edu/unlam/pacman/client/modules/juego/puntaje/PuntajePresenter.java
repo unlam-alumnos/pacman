@@ -22,7 +22,6 @@ public class PuntajePresenter extends Presenter<PuntajeView> implements PuntajeV
     @Subscribe
     @AllowConcurrentEvents
     public void handleScoreEventCallback(ScoreEvent e) {
-        System.out.println("Callback ScoreEvent");
         personajes  = e.getPersonajes();
         paint();
     }
@@ -31,7 +30,7 @@ public class PuntajePresenter extends Presenter<PuntajeView> implements PuntajeV
     public void paint() {
         if (personajes != null){
             for (Personaje personaje : personajes){
-                getView().paint(personaje.getCoordenadaPuntaje().getX(), personaje.getCoordenadaPuntaje().getY(), personaje.getKills());
+                getView().paint(personaje);
             }
         }
 
