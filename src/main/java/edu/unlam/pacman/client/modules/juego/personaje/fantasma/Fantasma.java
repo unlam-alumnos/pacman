@@ -1,6 +1,7 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
+import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
 
@@ -16,6 +17,7 @@ public class Fantasma extends Personaje {
         setY(100);
         setDirection(Direction.NONE);
         setStatus(Status.NORMAL);
+        setCoordenadaPuntaje(new Coordenada(50,450));
     }
 
     @Override
