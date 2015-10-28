@@ -13,7 +13,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 /**
- *
  * @author Cristian Miranda
  * @since 10/11/15 - 18:26
  */
