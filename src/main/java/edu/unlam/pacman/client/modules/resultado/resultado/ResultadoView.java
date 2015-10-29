@@ -62,10 +62,12 @@ public class ResultadoView extends View<ResultadoView.MyView> {
 
         ImageIcon letras = new ImageIcon(JuegoConstants.SPRITES_PATH + "/letras.png");
         ImageIcon numeros = new ImageIcon(JuegoConstants.SPRITES_PATH + "/numeros.png");
+
         String texto = "ganador usuario";
         int sizeLetra = 25;
         int y = 140;
         int dirImgY = 0;
+
         int tamImgSprite = 8;
         int asciia = (int)'a';
         int asciiz = (int)'z';
