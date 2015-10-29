@@ -60,38 +60,35 @@ public class ResultadoView extends View<ResultadoView.MyView> {
 
         // TODO: esto se ejecuta constantemente, podemos adaptarlo para que se imprima cuando se crea unicamente ¿?
 
-        ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "/letras.png");
+        ImageIcon letras = new ImageIcon(JuegoConstants.SPRITES_PATH + "/letras.png");
+        ImageIcon numeros = new ImageIcon(JuegoConstants.SPRITES_PATH + "/numeros.png");
         String texto = "ganador usuario";
         int sizeLetra = 25;
         int y = 140;
         int dirImgY = 0;
-        int tamImgY = 8;
-        int espacio = 0;
+        int tamImgSprite = 8;
+        int asciia = (int)'a';
+        int asciiz = (int)'z';
+        int ascii0 = (int)'0';
+        int ascii9 = (int)'9';
 
         for (int i = 0; i < texto.length(); i++){
             int letra = (int)texto.charAt(i);
-            int x = 10 + espacio + i*sizeLetra;
-            if (letra == 32){
-                espacio = 12;
-            }else{
-                graphics().drawImage(sprite.getImage(), x, y, x+sizeLetra, y+25, 8*(letra-97), dirImgY, 8*(letra-96), tamImgY , this);
-            }
+            int x = 10 + i*sizeLetra;
+            graphics().drawImage(letras.getImage(), x, y, x+sizeLetra, y+sizeLetra, tamImgSprite*(letra-asciia), dirImgY, tamImgSprite*(letra-(asciia-1)), tamImgSprite , this);
         }
 
-        texto = "tiempo xx segundos";
+        texto = "tiempo 35 segundos";
         y = 180;
-        espacio = 0;
         for (int i = 0; i < texto.length(); i++){
             int letra = (int)texto.charAt(i);
-            int x = 10 + espacio + i*sizeLetra;
-            if (letra == 32){
-                espacio = 12;
-            }else{
-                graphics().drawImage(sprite.getImage(), x, y, x+sizeLetra, y+25, 8*(letra-97), dirImgY, 8*(letra-96), tamImgY , this);
+            int x = 10 + i*sizeLetra;
+            if (letra >= asciia && letra <= asciiz){
+                graphics().drawImage(letras.getImage(), x, y, x+sizeLetra, y+sizeLetra, tamImgSprite*(letra-asciia), dirImgY, tamImgSprite*(letra-(asciia-1)), tamImgSprite , this);
+            }else if (letra >= ascii0 && letra <= ascii9){
+                graphics().drawImage(numeros.getImage(), x, y, x+sizeLetra, y+sizeLetra, tamImgSprite*(letra-ascii0), dirImgY, tamImgSprite*(letra-(ascii0-1)), tamImgSprite , this);
             }
         }
-        // alt 97 --> a
-        // alt 122 --> z
     }
 
     @Override
