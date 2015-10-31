@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
@@ -25,49 +27,61 @@ public class MenuView extends View<MenuView.MyView> {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(null);
 
+        final JButton btnCrearPartida = new JButton("Crear Partida");
+        final JButton btnUnirseAPartida = new JButton("Unirse a Partida");
+        final JTextField txtIpServidor = new JTextField("000.000.000.000");
+        final JButton btnVerPartida = new JButton("Ver Partida");
+        final JButton btnEstadisticas = new JButton("Estadisticas");
+        final JButton btnEmpezarPartida = new JButton("Empezar Partida");
+        final JList listJugadores = new JList();
+        final JScrollPane scrollPane = new JScrollPane();
 
-        final JTextField txtIpServidor = new JTextField();
-        txtIpServidor.setText("000.000.000.000");
-        txtIpServidor.setBounds(157, 115, 267, 20);
-        add(txtIpServidor);
-        txtIpServidor.setColumns(10);
-
-        JButton btnCrearPartida = new JButton("Crear Partida");
         btnCrearPartida.setBounds(10, 11, 137, 23);
         btnCrearPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 uiHandler().crearPartida(8888);
+                btnCrearPartida.setEnabled(false);
             }
         });
         add(btnCrearPartida);
 
-        JButton btnUnirseAPartida = new JButton("Unirse a Partida");
         btnUnirseAPartida.setBounds(10, 114, 137, 23);
         btnUnirseAPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 uiHandler().unirseAPartida(txtIpServidor.getText(),8888);
+                btnUnirseAPartida.setEnabled(false);
+                txtIpServidor.setEnabled(false);
             }
         });
         add(btnUnirseAPartida);
 
-        JButton btnVerPartida = new JButton("Ver Partida");
+        txtIpServidor.setBounds(157, 115, 267, 20);
+        add(txtIpServidor);
+        txtIpServidor.setColumns(10);
+        txtIpServidor.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+                    uiHandler().unirseAPartida(txtIpServidor.getText(),8888);
+                    btnUnirseAPartida.setEnabled(false);
+                    txtIpServidor.setEnabled(false);
+                }
+            }
+        });
+
         btnVerPartida.setBounds(10, 45, 137, 23);
         add(btnVerPartida);
 
-        JButton btnEstadisticas = new JButton("Estadisticas");
         btnEstadisticas.setBounds(10, 228, 137, 23);
         add(btnEstadisticas);
 
-        JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(157, 11, 267, 92);
         add(scrollPane);
 
-        JList listJugadores = new JList();
         scrollPane.setViewportView(listJugadores);
 
-        JButton btnEmpezarPartida = new JButton("Empezar Partida");
         btnEmpezarPartida.setBounds(10, 79, 137, 23);
         add(btnEmpezarPartida);
 

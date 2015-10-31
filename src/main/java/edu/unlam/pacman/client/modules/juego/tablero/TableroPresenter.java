@@ -1,7 +1,17 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.swing.Timer;
+
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
@@ -9,19 +19,16 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.*;
+import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Cristian Miranda
@@ -30,7 +37,7 @@ import java.util.Set;
 public class TableroPresenter extends Presenter<TableroView> implements TableroView.MyView {
     private final int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
 
-    private List<Coordenada> toRevive;
+    private List<Coordenada> camino;
     private Set<Personaje> personajes;
     private Casillero[][] casilleros;
 
@@ -220,10 +227,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                      */
 
                     if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
-                        eventBus.post(new DeadEvent(personaje.getId(),siteToRevive(personaje)));
+                        eventBus.post(new DeadEvent(personaje.getId(), dondeRevivir(personaje)));
                         pj.increaseKill();
                     } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
-                        eventBus.post(new DeadEvent(pj.getId(), siteToRevive(pj)));
+                        eventBus.post(new DeadEvent(pj.getId(), dondeRevivir(pj)));
                         personaje.increaseKill();
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
@@ -238,13 +245,16 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         eventBus.post(new BlockEvent(personaje.getId(), true, Status.NORMAL));
                         eventBus.post(new BlockEvent(pj.getId(), true, Status.NORMAL));
                     } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
+                        pj.setStatus(Status.BLOCK);
+                        personaje.setStatus(Status.BLOCK);
+                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
 
                         if (pj.getTipoPersonaje().equals("Pacman")){
-                            eventBus.post(new DeadEvent(pj.getId(), siteToRevive(pj)));
+                            eventBus.post(new DeadEvent(pj.getId(), dondeRevivir(pj)));
                             personaje.increaseKill();
                         }else{
-                            eventBus.post(new DeadEvent(personaje.getId(), siteToRevive(personaje)));
+                            eventBus.post(new DeadEvent(personaje.getId(), dondeRevivir(personaje)));
                             pj.increaseKill();
                         }
                     }
@@ -254,13 +264,13 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         eventBus.post(new ScoreEvent(personajes));
     }
 
-    public Coordenada siteToRevive(Personaje victim){
+    public Coordenada dondeRevivir(Personaje victim){
         double distanciaProm = 0;
         boolean first = true;
         Coordenada aux = new Coordenada(25, 25);
         double max = 0;
 
-        for(Coordenada posible : toRevive){
+        for(Coordenada posible : camino){
             for (Personaje personaje : personajes){
                 if (!personaje.equals(victim)){
                     distanciaProm += posible.distancia(new Coordenada(personaje.getX(), personaje.getY()));
@@ -311,7 +321,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         int x = 0;
         int y = 0;
         int size = 25;
-        this.toRevive = new ArrayList<Coordenada>();
+        this.camino = new ArrayList<Coordenada>();
 
         for (int i = 0; i < board.length; i++) {
             int[] row = board[i];
@@ -321,7 +331,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 } else if (row[j] == 0) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA);
                     contadorFrutas++;
-                    toRevive.add(new Coordenada(x, y));
+                    camino.add(new Coordenada(x, y));
                 } else if (row[j] == -1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.CRONOMETRO);
                 } else if (row[j] == -2) {
@@ -329,7 +339,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 }  else if (row[j] == 2) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA_ESPECIAL);
                     contadorFrutas++;
-                    toRevive.add(new Coordenada(x, y));
+                    camino.add(new Coordenada(x, y));
                 }
                 x += size;
             }

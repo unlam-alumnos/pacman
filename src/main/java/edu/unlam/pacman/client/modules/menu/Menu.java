@@ -1,13 +1,12 @@
 package edu.unlam.pacman.client.modules.menu;
 
-import java.awt.HeadlessException;
-
-import javax.swing.JFrame;
-
-import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.client.modules.BaseFrame;
 import edu.unlam.pacman.client.modules.login.LoginConstants;
 import edu.unlam.pacman.client.modules.menu.menu.MenuPresenter;
+import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Cristian Miranda
@@ -25,6 +24,7 @@ public class Menu extends BaseFrame {
         // Display the window.
         setSize(MenuConstants.MAX_WIDTH, LoginConstants.MAX_HEIGHT);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     @Override
