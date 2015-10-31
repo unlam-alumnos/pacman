@@ -6,9 +6,10 @@ import java.net.Socket;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import com.google.gson.Gson;
 
 import edu.unlam.pacman.shared.comunication.bus.Bus;
-import edu.unlam.pacman.shared.comunication.bus.events.MessageEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
 
 public class Cliente {
     private Bus eventBus;
@@ -27,10 +28,10 @@ public class Cliente {
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleCommunicationEvent(MessageEvent event) {
+    public void handleCommunicationEvent(GameMessage event) {
         try {
             PrintStream ps = new PrintStream(client.getOutputStream());
-            ps.println(event.getData());
+            ps.println(new Gson().toJson(event));
         } catch (IOException e) {
             e.printStackTrace();
         }

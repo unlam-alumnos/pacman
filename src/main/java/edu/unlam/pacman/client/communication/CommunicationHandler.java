@@ -1,8 +1,14 @@
 package edu.unlam.pacman.client.communication;
 
+import com.google.common.eventbus.Subscribe;
+
+import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.server.service.CommunicationService;
 import edu.unlam.pacman.shared.comunication.bus.Bus;
-import edu.unlam.pacman.shared.comunication.bus.events.MessageEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ClientEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ServerEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.BaseMessage;
+import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
 
 /**
  * @author Cristian Miranda
@@ -27,7 +33,18 @@ public class CommunicationHandler {
         return instance;
     }
 
-    public void send(String message) {
-        eventBus.post(new MessageEvent(message));
+    @Subscribe
+    public void handleServerEvent(ServerEvent event) {
+        communicationService.initServer();
+    }
+
+    @Subscribe
+    public void handleClientEvent(ClientEvent event) {
+        communicationService.initClient();
+    }
+
+    public <T extends BaseMessage> void send(T message) {
+        Jugador currentPlayer = new Jugador(); // JugadorActual.get();
+        eventBus.post(new GameMessage(currentPlayer, message));
     }
 }

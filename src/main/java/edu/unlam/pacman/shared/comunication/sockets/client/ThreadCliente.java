@@ -4,7 +4,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.google.gson.Gson;
+
 import edu.unlam.pacman.shared.comunication.bus.Bus;
+import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
 
 public class ThreadCliente extends Thread{
     private Bus eventBus;
@@ -13,21 +16,25 @@ public class ThreadCliente extends Thread{
     public ThreadCliente(Socket socket) {
         super("ThreadCliente");
         this.socket = socket;
+        this.eventBus = Bus.getInstance();
+        this.eventBus.register(this);
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
         DataInputStream data;
-        String temp = null;
+        String message = null;
 
         try {
             do {
-                if (temp != null){
-                    System.out.println("Mensaje: " + temp);
+                if (message != null){
+                    System.out.println(">>>> " + message);
+                    GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
+                    eventBus.post(gameMessage.getMessage());
                 }
                 data = new DataInputStream(socket.getInputStream());
-            } while ((temp = data.readLine()) != null);
+            } while ((message = data.readLine()) != null);
         } catch (IOException e) {
             try {
                 socket.close();

@@ -8,7 +8,12 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.*;
+import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.DirectionMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -35,7 +40,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     public void changeDirection(Direction direction){
         if (personaje.isActive()) {
             eventBus.post(new DirectionEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), direction));
-            communicationHandler.send(direction.name());
+            communicationHandler.send(new DirectionMessage(direction, personaje));
         }
     }
 
@@ -130,6 +135,14 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
             personaje.setX(moveEvent.getOrigen().getX() + x);
             personaje.setY(moveEvent.getOrigen().getY() + y);
             personaje.setDirection(direction);
+        }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleDirectionMessage(DirectionMessage directionMessage) {
+        if (directionMessage != null && personaje.equals(directionMessage.getPersonaje())) {
+            personaje.setDirection(directionMessage.getDirection());
         }
     }
 }
