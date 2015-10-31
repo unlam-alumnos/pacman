@@ -1,23 +1,19 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
 import edu.unlam.pacman.client.modules.menu.MenuConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
-        void crearPartida();
-        void unirseAPartida();
+        void crearPartida(int port);
+        void unirseAPartida(String ipServer, int portServer);
     }
 
     @Override
@@ -29,12 +25,19 @@ public class MenuView extends View<MenuView.MyView> {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(null);
 
+
+        final JTextField txtIpServidor = new JTextField();
+        txtIpServidor.setText("000.000.000.000");
+        txtIpServidor.setBounds(157, 115, 267, 20);
+        add(txtIpServidor);
+        txtIpServidor.setColumns(10);
+
         JButton btnCrearPartida = new JButton("Crear Partida");
         btnCrearPartida.setBounds(10, 11, 137, 23);
         btnCrearPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().crearPartida();
+                uiHandler().crearPartida(8888);
             }
         });
         add(btnCrearPartida);
@@ -44,7 +47,7 @@ public class MenuView extends View<MenuView.MyView> {
         btnUnirseAPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().unirseAPartida();
+                uiHandler().unirseAPartida(txtIpServidor.getText(),8888);
             }
         });
         add(btnUnirseAPartida);
@@ -68,11 +71,6 @@ public class MenuView extends View<MenuView.MyView> {
         btnEmpezarPartida.setBounds(10, 79, 137, 23);
         add(btnEmpezarPartida);
 
-        JTextField txtIpServidor = new JTextField();
-        txtIpServidor.setText("000.000.000.000");
-        txtIpServidor.setBounds(157, 115, 267, 20);
-        add(txtIpServidor);
-        txtIpServidor.setColumns(10);
     }
 
     @Override

@@ -35,12 +35,12 @@ public class CommunicationHandler {
 
     @Subscribe
     public void handleServerEvent(ServerEvent event) {
-        communicationService.initServer();
+        communicationService.initServer(event.getPort());
     }
 
     @Subscribe
     public void handleClientEvent(ClientEvent event) {
-        communicationService.initClient();
+        communicationService.initClient(event.getIpServer(),event.getPortServer());
     }
 
     public <T extends BaseMessage> void send(T message) {

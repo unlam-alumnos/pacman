@@ -14,12 +14,12 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
     }
 
     @Override
-    public void crearPartida() {
-        eventBus.post(new ServerEvent());
+    public void crearPartida(int port) {
+        eventBus.post(new ServerEvent(port));
     }
 
     @Override
-    public void unirseAPartida() {
-        eventBus.post(new ClientEvent());
+    public void unirseAPartida(String ipServer, int portServer) {
+        eventBus.post(new ClientEvent(ipServer,portServer));
     }
 }

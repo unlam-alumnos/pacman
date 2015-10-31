@@ -1,11 +1,11 @@
 package edu.unlam.pacman.server.service;
 
-import java.net.Socket;
-
 import edu.unlam.pacman.shared.comunication.sockets.client.Cliente;
 import edu.unlam.pacman.shared.comunication.sockets.client.ThreadCliente;
 import edu.unlam.pacman.shared.comunication.sockets.server.Server;
 import edu.unlam.pacman.shared.comunication.sockets.server.ThreadServer;
+
+import java.net.Socket;
 
 /**
  * @author Cristian Miranda
@@ -24,12 +24,12 @@ public class CommunicationService {
         return instance;
     }
 
-    public void initServer() {
+    public void initServer(int port) {
         Server server;
         Socket socket;
         boolean flag = true;
 
-        server = new Server(8888, 5, 3);
+        server = new Server(port, 5, 3);
 
         server.printInfo();
 
@@ -44,9 +44,9 @@ public class CommunicationService {
         // server.stop();
     }
 
-    public void initClient() {
+    public void initClient(String ipServer, int portServer) {
 
-        Cliente cliente = new Cliente("localhost", 8888);
+        Cliente cliente = new Cliente(ipServer, portServer);
 
         new ThreadCliente(cliente.getSocket()).start();
 
