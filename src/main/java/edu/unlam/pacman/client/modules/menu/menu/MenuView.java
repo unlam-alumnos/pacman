@@ -1,15 +1,23 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import edu.unlam.pacman.client.modules.menu.MenuConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
+        void crearPartida();
+        void unirseAPartida();
     }
 
     @Override
@@ -23,10 +31,22 @@ public class MenuView extends View<MenuView.MyView> {
 
         JButton btnCrearPartida = new JButton("Crear Partida");
         btnCrearPartida.setBounds(10, 11, 137, 23);
+        btnCrearPartida.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiHandler().crearPartida();
+            }
+        });
         add(btnCrearPartida);
 
         JButton btnUnirseAPartida = new JButton("Unirse a Partida");
         btnUnirseAPartida.setBounds(10, 114, 137, 23);
+        btnUnirseAPartida.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiHandler().unirseAPartida();
+            }
+        });
         add(btnUnirseAPartida);
 
         JButton btnVerPartida = new JButton("Ver Partida");

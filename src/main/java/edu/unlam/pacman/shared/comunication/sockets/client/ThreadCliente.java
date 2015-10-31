@@ -4,7 +4,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import edu.unlam.pacman.shared.comunication.bus.Bus;
+
 public class ThreadCliente extends Thread{
+    private Bus eventBus;
     private Socket socket;
 
     public ThreadCliente(Socket socket) {
@@ -21,7 +24,7 @@ public class ThreadCliente extends Thread{
         try {
             do {
                 if (temp != null){
-                    System.out.println(temp);
+                    System.out.println("Mensaje: " + temp);
                 }
                 data = new DataInputStream(socket.getInputStream());
             } while ((temp = data.readLine()) != null);

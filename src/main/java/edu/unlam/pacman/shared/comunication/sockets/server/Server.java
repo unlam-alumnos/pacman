@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Server {
-
     private String hostName;
     private String ipAddress;
     private ServerSocket server;
@@ -103,26 +102,5 @@ public class Server {
         System.out.println("Hostname:\t" + this.getHostName());
         System.out.println("IP:\t" + this.getIpAddress());
         System.out.println("Puerto:\t" + this.getPort());
-    }
-
-    public static void main(String[] args) {
-        Server server;
-        Socket socket;
-        boolean flag = true;
-
-        server = new Server(8888, 5, 3);
-
-        server.printInfo();
-
-        System.out.println("\nServidor escuchando...");
-
-        while (flag) {
-            socket = server.accept();
-            if (socket != null){
-                new ThreadServer(socket, server.getConnections()).start();
-            }
-        }
-
-        server.stop();
     }
 }
