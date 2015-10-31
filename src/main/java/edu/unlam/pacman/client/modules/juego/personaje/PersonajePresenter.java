@@ -8,6 +8,7 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
@@ -45,6 +46,16 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
         eventBus.post(new PaintEvent(personaje));
         getView().paintPersonaje(personaje);
         getView().repaint();
+    }
+
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleDeadEventCallback(DeadEvent e) {
+        if (e.getSubject().equals(personaje.getId())){
+            personaje.dead(e.getCoordenada());
+            System.out.println("Handle Event --> Tengo que revivir en : " + e.getCoordenada().toString());
+        }
     }
 
     @Subscribe

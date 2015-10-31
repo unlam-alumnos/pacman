@@ -25,8 +25,8 @@ public class Launcher {
                 new Registro().setVisible(false);
                 new Menu().setVisible(false);
                 new Estadisticas().setVisible(false);
-                new Juego().setVisible(false);
-                new Resultado().setVisible(true);
+                new Juego().setVisible(true);
+                new Resultado().setVisible(false);
             }
         });
     }

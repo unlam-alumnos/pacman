@@ -9,20 +9,19 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.*;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Cristian Miranda
@@ -225,11 +224,15 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                     if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
                         System.out.println(pj.getTipoPersonaje() + " se comió a " + personaje.getTipoPersonaje());
-                        personaje.dead(siteToRevive(personaje));
+
+                        //personaje.dead(siteToRevive(personaje));
+                        eventBus.post(new DeadEvent(personaje.getId(),siteToRevive(personaje)));
                         pj.increaseKill();
                     } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
                         System.out.println(personaje.getTipoPersonaje() + " se comió a " + pj.getTipoPersonaje());
-                        pj.dead(siteToRevive(pj));
+
+                        //pj.dead(siteToRevive(pj));
+                        eventBus.post(new DeadEvent(pj.getId(), siteToRevive(pj)));
                         personaje.increaseKill();
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
@@ -239,10 +242,14 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
                         if (pj.getTipoPersonaje().equals("Pacman")){
-                            pj.dead(siteToRevive(pj));
+
+                            //pj.dead(siteToRevive(pj));
+                            eventBus.post(new DeadEvent(pj.getId(), siteToRevive(pj)));
                             personaje.increaseKill();
                         }else{
-                            personaje.dead(siteToRevive(personaje));
+
+                            //personaje.dead(siteToRevive(personaje));
+                            eventBus.post(new DeadEvent(personaje.getId(), siteToRevive(personaje)));
                             pj.increaseKill();
                         }
                     }
@@ -279,7 +286,6 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         }
         System.out.println("Revive en : " + aux.toString());
         return aux;
-
     }
 
     /**
