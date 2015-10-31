@@ -94,6 +94,7 @@ public abstract class Personaje {
         setX(coordenada.getX());
         setY(coordenada.getY());
         setStatus(Status.NORMAL);
+        System.out.println("Tengo que revivir en " + coordenada.toString());
     }
 
     public int getKills (){
