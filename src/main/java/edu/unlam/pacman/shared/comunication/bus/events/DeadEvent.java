@@ -10,7 +10,7 @@ public class DeadEvent extends GameEvent {
 
     public DeadEvent(String subject, Coordenada coordenada){
         super(subject);
-        coordenada = coordenada;
+        this.coordenada = coordenada;
     }
 
     public Coordenada getCoordenada() {
