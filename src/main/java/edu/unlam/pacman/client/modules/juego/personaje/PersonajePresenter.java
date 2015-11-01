@@ -137,12 +137,4 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
             personaje.setDirection(direction);
         }
     }
-
-    @Subscribe
-    @AllowConcurrentEvents
-    public void handleDirectionMessage(DirectionMessage directionMessage) {
-        if (directionMessage != null && personaje.equals(directionMessage.getPersonaje())) {
-            personaje.setDirection(directionMessage.getDirection());
-        }
-    }
 }

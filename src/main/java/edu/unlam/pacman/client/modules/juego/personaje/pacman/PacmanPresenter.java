@@ -5,7 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
+import edu.unlam.pacman.shared.comunication.bus.messages.DirectionMessage;
 
 /**
  * @author Cristian Miranda
@@ -19,10 +23,18 @@ public class PacmanPresenter extends PersonajePresenter<PacmanView> implements P
         initConstantMovement();
     }
 
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleDirectionMessage(DirectionMessage directionMessage) {
+        // TODO: Identificar personajes
+        if (directionMessage != null) {
+            personaje.setDirection(directionMessage.getDirection());
+        }
+    }
+
     /**
     * Inicia el Timer que movera constantemente al pacman, en la direccion seteada.
     */
-
     private void initConstantMovement(){
         ActionListener animate = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
