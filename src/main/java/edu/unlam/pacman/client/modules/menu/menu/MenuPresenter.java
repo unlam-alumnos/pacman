@@ -1,6 +1,8 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
 import edu.unlam.pacman.client.mvp.Presenter;
+import edu.unlam.pacman.shared.comunication.bus.events.ClientEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ServerEvent;
 
 /**
  * @author Cristian Miranda
@@ -9,5 +11,15 @@ import edu.unlam.pacman.client.mvp.Presenter;
 public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyView {
     public MenuPresenter() {
         super(new MenuView());
+    }
+
+    @Override
+    public void crearPartida(int port) {
+        eventBus.post(new ServerEvent(port));
+    }
+
+    @Override
+    public void unirseAPartida(String ipServer, int portServer) {
+        eventBus.post(new ClientEvent(ipServer,portServer));
     }
 }

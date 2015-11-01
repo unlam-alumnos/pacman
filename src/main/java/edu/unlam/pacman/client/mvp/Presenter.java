@@ -1,5 +1,6 @@
 package edu.unlam.pacman.client.mvp;
 
+import edu.unlam.pacman.client.communication.CommunicationHandler;
 import edu.unlam.pacman.shared.comunication.bus.Bus;
 
 /**
@@ -8,6 +9,7 @@ import edu.unlam.pacman.shared.comunication.bus.Bus;
  */
 public abstract class Presenter<V extends View<? extends UiHandler>> {
     protected Bus eventBus;
+    protected CommunicationHandler communicationHandler;
     private V view;
 
     public Presenter(V view) {
@@ -19,6 +21,7 @@ public abstract class Presenter<V extends View<? extends UiHandler>> {
         this.view.setUiHandler((UiHandler) this);
         this.eventBus = Bus.getInstance();
         this.eventBus.register(this);
+        this.communicationHandler = CommunicationHandler.getInstance();
     }
 
     public V getView() {
