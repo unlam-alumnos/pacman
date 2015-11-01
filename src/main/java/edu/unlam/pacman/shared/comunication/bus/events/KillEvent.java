@@ -1,0 +1,10 @@
+package edu.unlam.pacman.shared.comunication.bus.events;
+
+/**
+ * Created by gmartin on 30/10/2015.
+ */
+public class KillEvent extends GameEvent {
+    public KillEvent(String subject){
+        super(subject);
+    }
+}

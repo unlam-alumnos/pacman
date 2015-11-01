@@ -8,10 +8,7 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.*;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -48,6 +45,14 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
         getView().repaint();
     }
 
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleKillEventCallback(KillEvent e) {
+        if (e.getSubject().equals(personaje.getId())){
+            personaje.increaseKill();
+        }
+    }
 
     @Subscribe
     @AllowConcurrentEvents
