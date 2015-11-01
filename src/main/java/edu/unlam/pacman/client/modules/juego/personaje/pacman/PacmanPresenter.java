@@ -9,7 +9,9 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
+import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.messages.DirectionMessage;
+import edu.unlam.pacman.shared.model.Coordenada;
 
 /**
  * @author Cristian Miranda
@@ -28,7 +30,7 @@ public class PacmanPresenter extends PersonajePresenter<PacmanView> implements P
     public void handleDirectionMessage(DirectionMessage directionMessage) {
         // TODO: Identificar personajes
         if (directionMessage != null) {
-            personaje.setDirection(directionMessage.getDirection());
+            eventBus.post(new DirectionEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), directionMessage.getDirection()));
         }
     }
 
