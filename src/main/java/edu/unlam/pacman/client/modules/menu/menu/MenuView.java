@@ -1,25 +1,22 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
-import java.awt.Graphics2D;
+import edu.unlam.pacman.client.modules.menu.MenuConstants;
+import edu.unlam.pacman.client.mvp.UiHandler;
+import edu.unlam.pacman.client.mvp.View;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-import edu.unlam.pacman.client.modules.menu.MenuConstants;
-import edu.unlam.pacman.client.mvp.UiHandler;
-import edu.unlam.pacman.client.mvp.View;
-
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
         void crearPartida(int port);
         void unirseAPartida(String ipServer, int portServer);
+        void empezarPartida();
     }
 
     @Override
@@ -87,6 +84,12 @@ public class MenuView extends View<MenuView.MyView> {
         scrollPane.setViewportView(listJugadores);
 
         btnEmpezarPartida.setBounds(10, 79, 137, 23);
+        btnEmpezarPartida.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiHandler().empezarPartida();
+            }
+        });
         add(btnEmpezarPartida);
 
     }
