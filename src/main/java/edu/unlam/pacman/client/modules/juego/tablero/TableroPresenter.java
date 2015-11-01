@@ -279,7 +279,6 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
             }
             distanciaProm = 0;
         }
-        System.out.println("Revive en : " + aux.toString());
         return aux;
     }
 

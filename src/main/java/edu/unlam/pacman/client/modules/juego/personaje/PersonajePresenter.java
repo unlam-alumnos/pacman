@@ -59,7 +59,6 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     public void handleDeadEventCallback(DeadEvent e) {
         if (e.getSubject().equals(personaje.getId())){
             personaje.dead(e.getCoordenada());
-            System.out.println("Handle Event --> Tengo que revivir en : " + e.getCoordenada().toString());
         }
     }
 
