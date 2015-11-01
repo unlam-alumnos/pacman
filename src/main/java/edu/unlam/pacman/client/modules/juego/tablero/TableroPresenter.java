@@ -1,17 +1,7 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.swing.Timer;
-
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
@@ -19,16 +9,19 @@ import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.*;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Cristian Miranda
@@ -244,9 +237,6 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         }
                         eventBus.post(new BlockEvent(personaje.getId(), true, Status.NORMAL));
                         eventBus.post(new BlockEvent(pj.getId(), true, Status.NORMAL));
-                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
-                        pj.setStatus(Status.BLOCK);
-                        personaje.setStatus(Status.BLOCK);
                     } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
 
