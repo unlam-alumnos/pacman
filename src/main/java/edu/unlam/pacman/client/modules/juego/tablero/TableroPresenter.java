@@ -221,10 +221,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                     if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
                         eventBus.post(new DeadEvent(personaje.getId(), dondeRevivir(personaje)));
-                        pj.increaseKill();
+                        eventBus.post(new KillEvent(pj.getId()));
                     } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
                         eventBus.post(new DeadEvent(pj.getId(), dondeRevivir(pj)));
-                        personaje.increaseKill();
+                        eventBus.post(new KillEvent(personaje.getId()));
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
 
@@ -242,10 +242,10 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 
                         if (pj.getTipoPersonaje().equals("Pacman")){
                             eventBus.post(new DeadEvent(pj.getId(), dondeRevivir(pj)));
-                            personaje.increaseKill();
+                            eventBus.post(new KillEvent(personaje.getId()));
                         }else{
                             eventBus.post(new DeadEvent(personaje.getId(), dondeRevivir(personaje)));
-                            pj.increaseKill();
+                            eventBus.post(new KillEvent(pj.getId()));
                         }
                     }
                 }
