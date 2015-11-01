@@ -1,12 +1,12 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
-import javax.swing.ImageIcon;
-
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajeView;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
+
+import javax.swing.*;
 
 public class FantasmaView extends PersonajeView<FantasmaView.MyView> {
     interface MyView extends PersonajeView.MyView {
@@ -26,6 +26,8 @@ public class FantasmaView extends PersonajeView<FantasmaView.MyView> {
 
         if(Status.VICTIM.equals(status)) {
             sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/victim.png");
+        }else if(Status.BLOCK.equals(status)) {
+            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/blocked.png");
         }else{
             switch (direction){
                 case RIGHT:

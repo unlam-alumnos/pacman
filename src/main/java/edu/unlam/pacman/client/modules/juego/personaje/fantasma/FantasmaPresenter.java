@@ -1,11 +1,13 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
+import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
+import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
-import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 
 /**
  * @author Cristian Miranda
@@ -17,6 +19,16 @@ public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implemen
         super.personaje = new Fantasma();
         super.personaje.setActive(false);
         initConstantMovement();
+    }
+
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleDeadEventCallback(BlockEvent e) {
+        if (e.getSubject().equals(personaje.getId())){
+            personaje.setActive(e.isActive());
+            personaje.setStatus(e.getStatus());
+        }
     }
 
     /**

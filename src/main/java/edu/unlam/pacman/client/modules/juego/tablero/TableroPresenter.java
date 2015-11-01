@@ -215,40 +215,35 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         for (Personaje pj : personajes) {
             if (!pj.equals(personaje)) {
                 if (pj.getX() == personaje.getX() && pj.getY() == personaje.getY()) {
-                    System.out.println(pj.getId() + " chocó con " + personaje.getId() + " en (" + pj.getX() + "," + pj.getY() + ")");
-
                     /**
                      * Identifico el Tipo de Personaje que corresponde a cada participe de la colision
                      */
-                    System.out.println(pj.getTipoPersonaje() + " chocó con " + personaje.getTipoPersonaje() + " en (" + pj.getX() + "," + pj.getY() + ")");
 
                     if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
-                        System.out.println(pj.getTipoPersonaje() + " se comió a " + personaje.getTipoPersonaje());
-
-                        //personaje.dead(siteToRevive(personaje));
                         eventBus.post(new DeadEvent(personaje.getId(),siteToRevive(personaje)));
                         pj.increaseKill();
                     } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
-                        System.out.println(personaje.getTipoPersonaje() + " se comió a " + pj.getTipoPersonaje());
-
-                        //pj.dead(siteToRevive(pj));
                         eventBus.post(new DeadEvent(pj.getId(), siteToRevive(pj)));
                         personaje.increaseKill();
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
-                        pj.setStatus(Status.BLOCK);
-                        personaje.setStatus(Status.BLOCK);
+
+                        eventBus.post(new BlockEvent(personaje.getId(), false, Status.BLOCK));
+                        eventBus.post(new BlockEvent(pj.getId(), false, Status.BLOCK));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        eventBus.post(new BlockEvent(personaje.getId(), true, Status.NORMAL));
+                        eventBus.post(new BlockEvent(pj.getId(), true, Status.NORMAL));
                     } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
-
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
-                        if (pj.getTipoPersonaje().equals("Pacman")){
 
-                            //pj.dead(siteToRevive(pj));
+                        if (pj.getTipoPersonaje().equals("Pacman")){
                             eventBus.post(new DeadEvent(pj.getId(), siteToRevive(pj)));
                             personaje.increaseKill();
                         }else{
-
-                            //personaje.dead(siteToRevive(personaje));
                             eventBus.post(new DeadEvent(personaje.getId(), siteToRevive(personaje)));
                             pj.increaseKill();
                         }
