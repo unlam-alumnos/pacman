@@ -40,7 +40,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     public void changeDirection(Direction direction){
         if (personaje.isActive()) {
             eventBus.post(new DirectionEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), direction));
-            communicationHandler.send(new DirectionMessage(direction, personaje));
+            communicationHandler.send(new DirectionMessage(direction, personaje), DirectionMessage.class);
         }
     }
 

@@ -1,16 +1,20 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
-import edu.unlam.pacman.client.modules.menu.MenuConstants;
-import edu.unlam.pacman.client.mvp.UiHandler;
-import edu.unlam.pacman.client.mvp.View;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import edu.unlam.pacman.client.modules.menu.MenuConstants;
+import edu.unlam.pacman.client.mvp.UiHandler;
+import edu.unlam.pacman.client.mvp.View;
 
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
@@ -29,7 +33,7 @@ public class MenuView extends View<MenuView.MyView> {
 
         final JButton btnCrearPartida = new JButton("Crear Partida");
         final JButton btnUnirseAPartida = new JButton("Unirse a Partida");
-        final JTextField txtIpServidor = new JTextField("000.000.000.000");
+        final JTextField txtIpServidor = new JTextField("127.0.0.1");
         final JButton btnVerPartida = new JButton("Ver Partida");
         final JButton btnEstadisticas = new JButton("Estadisticas");
         final JButton btnEmpezarPartida = new JButton("Empezar Partida");

@@ -6,7 +6,7 @@ import edu.unlam.pacman.shared.model.Direction;
 /**
  * Created by gmartin on 30/10/2015.
  */
-public class DirectionMessage extends BaseMessage {
+public class DirectionMessage implements BaseMessage {
     private Direction direction;
     private Personaje personaje;
 

@@ -2,6 +2,7 @@ package edu.unlam.pacman.shared.comunication.sockets.client;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.Socket;
 
 import com.google.gson.Gson;
@@ -28,14 +29,18 @@ public class ThreadCliente extends Thread{
 
         try {
             do {
-                if (message != null){
+                if (message != null) {
                     System.out.println(">>>> " + message);
                     GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
-                    eventBus.post(gameMessage.getMessage());
+                    Class clazz = Class.forName(gameMessage.getType());
+                    Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
+                    GameMessage completeMessage = new Gson().fromJson(message, type);
+                    eventBus.post(clazz.cast(completeMessage.getMessage()));
                 }
                 data = new DataInputStream(socket.getInputStream());
             } while ((message = data.readLine()) != null);
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             try {
                 socket.close();
             } catch (IOException e1) {

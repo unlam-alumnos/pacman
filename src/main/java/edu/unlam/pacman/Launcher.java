@@ -1,5 +1,7 @@
 package edu.unlam.pacman;
 
+import javax.swing.SwingUtilities;
+
 import edu.unlam.pacman.client.modules.estadisticas.Estadisticas;
 import edu.unlam.pacman.client.modules.juego.Juego;
 import edu.unlam.pacman.client.modules.login.Login;
@@ -8,8 +10,6 @@ import edu.unlam.pacman.client.modules.registro.Registro;
 import edu.unlam.pacman.client.modules.resultado.Resultado;
 import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
-
-import javax.swing.*;
 
 /**
  * @author Cristian Miranda
@@ -25,7 +25,7 @@ public class Launcher {
                 new Registro().setVisible(false);
                 new Menu().setVisible(true);
                 new Estadisticas().setVisible(false);
-                new Juego().setVisible(false);
+                new Juego().setVisible(true);
                 new Resultado().setVisible(false);
             }
         });

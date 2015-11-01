@@ -43,8 +43,8 @@ public class CommunicationHandler {
         communicationService.initClient(event.getIpServer(),event.getPortServer());
     }
 
-    public <T extends BaseMessage> void send(T message) {
+    public <T extends BaseMessage> void send(BaseMessage message, Class<T> type) {
         Jugador currentPlayer = new Jugador(); // JugadorActual.get();
-        eventBus.post(new GameMessage(currentPlayer, message));
+        eventBus.post(new GameMessage(currentPlayer, message, type.getName()));
     }
 }

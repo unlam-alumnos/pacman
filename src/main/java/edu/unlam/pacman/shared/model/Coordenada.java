@@ -1,12 +1,17 @@
 package edu.unlam.pacman.shared.model;
 
+import java.io.Serializable;
+
 /**
  * @author Cristian Miranda
  * @since 10/7/15 - 12:50
  */
-public class Coordenada {
+public class Coordenada implements Serializable {
     private int x;
     private int y;
+
+    public Coordenada() {
+    }
 
     public Coordenada(int x, int y) {
         this.x = x;

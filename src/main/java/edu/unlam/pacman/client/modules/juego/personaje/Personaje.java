@@ -1,15 +1,16 @@
 package edu.unlam.pacman.client.modules.juego.personaje;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
 
-import java.util.UUID;
-
 /**
  * Created by gmartin on 22/10/2015.
  */
-public abstract class Personaje {
+public class Personaje implements Serializable {
 
     private String id;
     private boolean active;
@@ -88,8 +89,6 @@ public abstract class Personaje {
         this.status = status;
     }
 
-    public abstract String getTipoPersonaje();
-
     public void dead(Coordenada coordenada){
         setX(coordenada.getX());
         setY(coordenada.getY());
@@ -111,5 +110,9 @@ public abstract class Personaje {
 
     public void setCoordenadaPuntaje(Coordenada coordenadaPuntaje) {
         this.coordenadaPuntaje = coordenadaPuntaje;
+    }
+
+    public String getTipoPersonaje() {
+        return null;
     }
 }
