@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.puntaje;
+package edu.unlam.pacman.client.modules.juego.tablero.puntaje;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
@@ -6,7 +6,6 @@ import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
 
-import java.util.HashSet;
 import java.util.Set;
 
 

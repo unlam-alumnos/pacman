@@ -1,9 +1,11 @@
 package edu.unlam.pacman.client.modules.juego;
 
+import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.modules.BaseFrame;
+import edu.unlam.pacman.client.modules.juego.tablero.cronometro.CronometroPresenter;
 import edu.unlam.pacman.client.modules.juego.personaje.fantasma.FantasmaPresenter;
 import edu.unlam.pacman.client.modules.juego.personaje.pacman.PacmanPresenter;
-import edu.unlam.pacman.client.modules.juego.puntaje.PuntajePresenter;
+import edu.unlam.pacman.client.modules.juego.tablero.puntaje.PuntajePresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.TableroPresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.glass.GlassPresenter;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
@@ -41,5 +43,17 @@ public class Juego extends BaseFrame {
     @Override
     protected ScreenEvent.ScreenType getScreenType() {
         return ScreenEvent.ScreenType.JUEGO;
+    }
+
+    @Subscribe
+    @Override
+    public void handleScreenEvent(ScreenEvent screenEvent) {
+        if (getScreenType().equals(screenEvent.getScreenType())) {
+            setVisible(true);
+            // TODO : Iniciar cronometro del tablero en este instante
+            addComponent(new CronometroPresenter());
+        } else {
+            setVisible(false);
+        }
     }
 }

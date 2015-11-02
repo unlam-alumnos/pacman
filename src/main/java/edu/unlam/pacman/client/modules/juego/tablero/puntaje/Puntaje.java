@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.puntaje;
+package edu.unlam.pacman.client.modules.juego.tablero.puntaje;
 
 /**
  * Created by gmartin on 27/10/2015.
