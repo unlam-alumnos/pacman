@@ -1,16 +1,13 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
-import javax.swing.ImageIcon;
-
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Coordenada;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class TableroView extends View<TableroView.MyView> {
 
@@ -60,16 +57,6 @@ public class TableroView extends View<TableroView.MyView> {
         int y = coordenada.getY();
         ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/fruta_especial.png");
         graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
-    }
-
-    public void dibujarCronometro(Coordenada coordenada, String tiempo) {
-        int x = coordenada.getX();
-        int y = coordenada.getY();
-
-        ImageIcon sprite1 = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + tiempo.charAt(0) + ".png");
-        ImageIcon sprite2 = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + tiempo.charAt(1) + ".png");
-        graphics().drawImage(sprite1.getImage(), x - 2, y + 3, 50, 50, this);
-        graphics().drawImage(sprite2.getImage(), x + 48, y + 3, 50, 50, this);
     }
 
     @Override
