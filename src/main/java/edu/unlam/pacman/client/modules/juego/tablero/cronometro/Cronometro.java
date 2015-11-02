@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.cronometro;
+package edu.unlam.pacman.client.modules.juego.tablero.cronometro;
 
 /**
  * Created by gmartin on 27/10/2015.

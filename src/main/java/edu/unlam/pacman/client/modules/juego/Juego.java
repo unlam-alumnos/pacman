@@ -2,10 +2,10 @@ package edu.unlam.pacman.client.modules.juego;
 
 import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.modules.BaseFrame;
-import edu.unlam.pacman.client.modules.juego.cronometro.CronometroPresenter;
+import edu.unlam.pacman.client.modules.juego.tablero.cronometro.CronometroPresenter;
 import edu.unlam.pacman.client.modules.juego.personaje.fantasma.FantasmaPresenter;
 import edu.unlam.pacman.client.modules.juego.personaje.pacman.PacmanPresenter;
-import edu.unlam.pacman.client.modules.juego.puntaje.PuntajePresenter;
+import edu.unlam.pacman.client.modules.juego.tablero.puntaje.PuntajePresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.TableroPresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.glass.GlassPresenter;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;

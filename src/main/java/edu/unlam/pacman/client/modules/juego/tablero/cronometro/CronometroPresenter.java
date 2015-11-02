@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.cronometro;
+package edu.unlam.pacman.client.modules.juego.tablero.cronometro;
 
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;

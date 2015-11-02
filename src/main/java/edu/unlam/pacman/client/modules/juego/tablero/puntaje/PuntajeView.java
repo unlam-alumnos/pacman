@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.modules.juego.puntaje;
+package edu.unlam.pacman.client.modules.juego.tablero.puntaje;
 
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
