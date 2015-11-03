@@ -50,7 +50,6 @@ public class Juego extends BaseFrame {
     public void handleScreenEvent(ScreenEvent screenEvent) {
         if (getScreenType().equals(screenEvent.getScreenType())) {
             setVisible(true);
-            // TODO : Iniciar cronometro del tablero en este instante
             addComponent(new CronometroPresenter());
         } else {
             setVisible(false);

@@ -20,7 +20,7 @@ public class CronometroView extends View<CronometroView.MyView> {
     @Override
     protected void onBind() {
         setOpaque(false);
-        setFocusable(true);
+        setFocusable(false);
     }
 
     @Override
