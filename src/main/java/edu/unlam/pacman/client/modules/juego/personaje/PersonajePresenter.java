@@ -13,7 +13,6 @@ import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
-import edu.unlam.pacman.shared.comunication.bus.messages.DirectionMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -31,16 +30,15 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
 
     @Override
     public void move(Direction direction) {
-        if (personaje.isActive()) {
-            eventBus.post(new MoveEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), direction, "pacman", personaje));
+        if (personaje != null && personaje.getJugador() != null && personaje.isActive()) {
+            eventBus.post(new MoveEventRequest(personaje.getJugador().getUsername(), new Coordenada(personaje.getX(), personaje.getY()), direction, "pacman", personaje));
         }
     }
 
     @Override
     public void changeDirection(Direction direction){
         if (personaje.isActive()) {
-            eventBus.post(new DirectionEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), direction));
-            communicationHandler.send(new DirectionMessage(direction, personaje), DirectionMessage.class);
+            eventBus.post(new DirectionEventRequest(personaje.getJugador().getUsername(), new Coordenada(personaje.getX(), personaje.getY()), direction));
         }
     }
 
@@ -55,7 +53,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleKillEventCallback(KillEvent e) {
-        if (e.getSubject().equals(personaje.getId())){
+        if (e.getSubject().equals(personaje.getJugador().getUsername())){
             personaje.increaseKill();
         }
     }
@@ -63,7 +61,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleDeadEventCallback(DeadEvent e) {
-        if (e.getSubject().equals(personaje.getId())){
+        if (e.getSubject().equals(personaje.getJugador().getUsername())){
             personaje.dead(e.getCoordenada());
         }
     }
@@ -71,7 +69,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleDirectionEventCallback(DirectionEventCallback directionEventCallback) {
-        if (directionEventCallback.getSubject().equals(personaje.getId())){
+        if (directionEventCallback.getSubject().equals(personaje.getJugador().getUsername())){
             personaje.setDirection(directionEventCallback.getDireccion());
         }
     }
@@ -79,7 +77,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleHunterEventCallback(HunterEvent e) {
-        if (!e.getSubject().equals(personaje.getId())){
+        if (!e.getSubject().equals(personaje.getJugador().getUsername())){
             personaje.setStatus(Status.VICTIM);
         } else {
             personaje.setStatus(Status.HUNTER);
@@ -103,7 +101,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleMoveEventCallback(MoveEventCallback moveEvent) {
-        if (personaje.getId().equals(moveEvent.getSubject())) {
+        if (personaje.getJugador().getUsername().equals(moveEvent.getSubject())) {
             int x = 0;
             int y = 0;
             Direction direction = moveEvent.getDireccion();
@@ -135,6 +133,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
             personaje.setX(moveEvent.getOrigen().getX() + x);
             personaje.setY(moveEvent.getOrigen().getY() + y);
             personaje.setDirection(direction);
+            //communicationHandler.send(new MovementMessage(personaje.getX(), personaje.getY(), direction), MovementMessage.class);
         }
     }
 }

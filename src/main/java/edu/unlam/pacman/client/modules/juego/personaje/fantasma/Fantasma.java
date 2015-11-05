@@ -1,6 +1,7 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
+import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -13,7 +14,7 @@ public class Fantasma extends Personaje {
 
     private String color;
 
-    public Fantasma() {
+    public Fantasma(Jugador jugador) {
         setSpeed(130);
         setX(100);
         setY(100);
@@ -21,6 +22,7 @@ public class Fantasma extends Personaje {
         setStatus(Status.NORMAL);
         setCoordenadaPuntaje(new Coordenada(100,450));
         setColor("celeste");
+        setJugador(jugador);
     }
 
     public String getColor() {

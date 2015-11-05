@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 
 import edu.unlam.pacman.client.modules.BasePresenterTest;
 import edu.unlam.pacman.client.modules.juego.personaje.pacman.Pacman;
+import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
 import edu.unlam.pacman.shared.model.Coordenada;
@@ -32,7 +33,7 @@ public class TableroPresenterTest extends BasePresenterTest<TableroPresenter, Ta
     @Test
     public void canMove() {
         // Given
-        MoveEventRequest moveEvent = new MoveEventRequest("1", new Coordenada(25, 25), Direction.RIGHT, "personaje", new Pacman());
+        MoveEventRequest moveEvent = new MoveEventRequest("1", new Coordenada(25, 25), Direction.RIGHT, "personaje", new Pacman(new Jugador()));
 
         // When
         presenter.handleMoveEventRequest(moveEvent);
@@ -44,7 +45,7 @@ public class TableroPresenterTest extends BasePresenterTest<TableroPresenter, Ta
     @Test
     public void canNotMove() {
         // Given
-        MoveEventRequest moveEvent = new MoveEventRequest("1", new Coordenada(25, 25), Direction.LEFT, "personaje", new Pacman());
+        MoveEventRequest moveEvent = new MoveEventRequest("1", new Coordenada(25, 25), Direction.LEFT, "personaje", new Pacman(new Jugador()));
 
         // When
         presenter.handleMoveEventRequest(moveEvent);

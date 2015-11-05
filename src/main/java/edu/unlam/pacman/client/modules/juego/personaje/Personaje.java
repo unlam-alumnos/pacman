@@ -1,8 +1,8 @@
 package edu.unlam.pacman.client.modules.juego.personaje;
 
 import java.io.Serializable;
-import java.util.UUID;
 
+import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -12,7 +12,7 @@ import edu.unlam.pacman.shared.model.Status;
  */
 public class Personaje implements Serializable {
 
-    private String id;
+    private Jugador jugador;
     private boolean active;
 
     private int x;
@@ -26,11 +26,15 @@ public class Personaje implements Serializable {
     private Coordenada coordenadaPuntaje;
 
     public Personaje() {
-        this.id = UUID.randomUUID().toString();
+
     }
 
-    public String getId() {
-        return id;
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
     }
 
     public boolean isActive() {
@@ -127,11 +131,52 @@ public class Personaje implements Serializable {
 
         Personaje personaje = (Personaje) o;
 
-        return !(id != null ? !id.equals(personaje.id) : personaje.id != null);
+        if (active != personaje.active) {
+            return false;
+        }
+        if (x != personaje.x) {
+            return false;
+        }
+        if (y != personaje.y) {
+            return false;
+        }
+        if (height != personaje.height) {
+            return false;
+        }
+        if (width != personaje.width) {
+            return false;
+        }
+        if (speed != personaje.speed) {
+            return false;
+        }
+        if (kills != personaje.kills) {
+            return false;
+        }
+        if (jugador != null ? !jugador.equals(personaje.jugador) : personaje.jugador != null) {
+            return false;
+        }
+        if (direction != personaje.direction) {
+            return false;
+        }
+        if (status != personaje.status) {
+            return false;
+        }
+        return !(coordenadaPuntaje != null ? !coordenadaPuntaje.equals(personaje.coordenadaPuntaje) : personaje.coordenadaPuntaje != null);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = jugador != null ? jugador.hashCode() : 0;
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + x;
+        result = 31 * result + y;
+        result = 31 * result + height;
+        result = 31 * result + width;
+        result = 31 * result + speed;
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + kills;
+        result = 31 * result + (coordenadaPuntaje != null ? coordenadaPuntaje.hashCode() : 0);
+        return result;
     }
 }

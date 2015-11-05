@@ -7,7 +7,7 @@ import edu.unlam.pacman.client.modules.login.login.Jugador;
  * @since 10/11/15 - 19:30
  */
 public class JugadorActual {
-    private static Jugador jugador;
+    private static Jugador jugador = new Jugador();
     private static JugadorActual instance;
 
     private JugadorActual() {

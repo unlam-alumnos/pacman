@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 
 import edu.unlam.pacman.client.modules.BasePresenterTest;
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
+import edu.unlam.pacman.client.modules.login.login.Jugador;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -26,6 +27,6 @@ public class FantasmaPresenterTest extends BasePresenterTest<PacmanPresenter, Pa
 
     @Override
     protected PacmanPresenter getPresenter() {
-        return new PacmanPresenter();
+        return new PacmanPresenter(new Jugador());
     }
 }

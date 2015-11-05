@@ -1,22 +1,29 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.*;
+import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Cristian Miranda
@@ -215,32 +222,32 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                      */
 
                     if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
-                        eventBus.post(new DeadEvent(personaje.getId(), dondeRevivir(personaje)));
-                        eventBus.post(new KillEvent(pj.getId()));
+                        eventBus.post(new DeadEvent(personaje.getJugador().getUsername(), dondeRevivir(personaje)));
+                        eventBus.post(new KillEvent(pj.getJugador().getUsername()));
                     } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
-                        eventBus.post(new DeadEvent(pj.getId(), dondeRevivir(pj)));
-                        eventBus.post(new KillEvent(personaje.getId()));
+                        eventBus.post(new DeadEvent(pj.getJugador().getUsername(), dondeRevivir(pj)));
+                        eventBus.post(new KillEvent(personaje.getJugador().getUsername()));
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
 
-                        eventBus.post(new BlockEvent(personaje.getId(), false, Status.BLOCK));
-                        eventBus.post(new BlockEvent(pj.getId(), false, Status.BLOCK));
+                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), false, Status.BLOCK));
+                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), false, Status.BLOCK));
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        eventBus.post(new BlockEvent(personaje.getId(), true, Status.NORMAL));
-                        eventBus.post(new BlockEvent(pj.getId(), true, Status.NORMAL));
+                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), true, Status.NORMAL));
+                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), true, Status.NORMAL));
                     } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
 
                         if (pj.getTipoPersonaje().equals("Pacman")){
-                            eventBus.post(new DeadEvent(pj.getId(), dondeRevivir(pj)));
-                            eventBus.post(new KillEvent(personaje.getId()));
+                            eventBus.post(new DeadEvent(pj.getJugador().getUsername(), dondeRevivir(pj)));
+                            eventBus.post(new KillEvent(personaje.getJugador().getUsername()));
                         }else{
-                            eventBus.post(new DeadEvent(personaje.getId(), dondeRevivir(personaje)));
-                            eventBus.post(new KillEvent(pj.getId()));
+                            eventBus.post(new DeadEvent(personaje.getJugador().getUsername(), dondeRevivir(personaje)));
+                            eventBus.post(new KillEvent(pj.getJugador().getUsername()));
                         }
                     }
                 }

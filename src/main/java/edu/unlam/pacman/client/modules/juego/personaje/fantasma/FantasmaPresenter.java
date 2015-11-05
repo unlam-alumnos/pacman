@@ -1,22 +1,25 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.Subscribe;
-import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
-import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
+
+import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
+import edu.unlam.pacman.client.modules.login.login.Jugador;
+import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
 
 /**
  * @author Cristian Miranda
  * @since 10/5/15 - 15:31
  */
 public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implements FantasmaView.MyView {
-    public FantasmaPresenter() {
+    public FantasmaPresenter(Jugador jugador) {
         super(new FantasmaView());
-        super.personaje = new Fantasma();
+        super.personaje = new Fantasma(jugador);
         super.personaje.setActive(false);
         initConstantMovement();
     }
@@ -25,7 +28,7 @@ public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implemen
     @Subscribe
     @AllowConcurrentEvents
     public void handleDeadEventCallback(BlockEvent e) {
-        if (e.getSubject().equals(personaje.getId())){
+        if (e.getSubject().equals(personaje.getJugador().getUsername())){
             personaje.setActive(e.isActive());
             personaje.setStatus(e.getStatus());
         }

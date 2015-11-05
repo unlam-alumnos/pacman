@@ -1,7 +1,17 @@
 package edu.unlam.pacman.shared.comunication.bus.messages;
 
-/**
- * Created by gmartin on 30/10/2015.
- */
+import java.util.List;
+
+import edu.unlam.pacman.client.modules.login.login.Jugador;
+
 public class StartMessage implements BaseMessage {
+    private List<Jugador> jugadores;
+
+    public StartMessage(List<Jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
+
+    public List<Jugador> getJugadores() {
+        return jugadores;
+    }
 }

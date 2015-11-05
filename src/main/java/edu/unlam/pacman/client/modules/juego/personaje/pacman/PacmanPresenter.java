@@ -9,28 +9,29 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
-import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.messages.DirectionMessage;
-import edu.unlam.pacman.shared.model.Coordenada;
+import edu.unlam.pacman.client.modules.login.login.Jugador;
+import edu.unlam.pacman.shared.comunication.bus.messages.MovementMessage;
 
 /**
  * @author Cristian Miranda
  * @since 10/5/15 - 15:31
  */
 public class PacmanPresenter extends PersonajePresenter<PacmanView> implements PacmanView.MyView {
-    public PacmanPresenter() {
+    public PacmanPresenter(Jugador jugador) {
         super(new PacmanView());
-        super.personaje = new Pacman();
+        super.personaje = new Pacman(jugador);
         super.personaje.setActive(true);
         initConstantMovement();
     }
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleDirectionMessage(DirectionMessage directionMessage) {
+    public void handleMoveMessage(MovementMessage moveMessage) {
         // TODO: Identificar personajes
-        if (directionMessage != null) {
-            eventBus.post(new DirectionEventRequest(personaje.getId(), new Coordenada(personaje.getX(), personaje.getY()), directionMessage.getDirection()));
+        if (moveMessage != null) {
+            personaje.setX(moveMessage.getX());
+            personaje.setY(moveMessage.getY());
+            personaje.setDirection(moveMessage.getDirection());
         }
     }
 
