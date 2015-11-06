@@ -53,11 +53,11 @@ public class Juego extends BaseFrame {
         if (getScreenType().equals(screenEvent.getScreenType())) {
             setVisible(true);
             initPlayers(screenEvent.getParams());
-            addComponent(new GlassPresenter());
             addComponent(new CronometroPresenter());
         } else {
             setVisible(false);
         }
+        addComponent(new GlassPresenter());
     }
 
     private void initPlayers(Map<String, Object> params) {
