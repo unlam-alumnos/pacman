@@ -11,6 +11,7 @@ import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
+import edu.unlam.pacman.shared.model.JugadorActual;
 
 /**
  * @author Cristian Miranda
@@ -20,7 +21,7 @@ public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implemen
     public FantasmaPresenter(Jugador jugador) {
         super(new FantasmaView());
         super.personaje = new Fantasma(jugador);
-        super.personaje.setActive(false);
+        super.personaje.setActive(JugadorActual.get().equals(jugador));
         initConstantMovement();
     }
 

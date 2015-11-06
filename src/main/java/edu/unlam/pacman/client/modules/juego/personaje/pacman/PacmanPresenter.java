@@ -11,6 +11,7 @@ import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.comunication.bus.messages.MovementMessage;
+import edu.unlam.pacman.shared.model.JugadorActual;
 
 /**
  * @author Cristian Miranda
@@ -20,7 +21,7 @@ public class PacmanPresenter extends PersonajePresenter<PacmanView> implements P
     public PacmanPresenter(Jugador jugador) {
         super(new PacmanView());
         super.personaje = new Pacman(jugador);
-        super.personaje.setActive(true);
+        super.personaje.setActive(JugadorActual.get().equals(jugador));
         initConstantMovement();
     }
 
