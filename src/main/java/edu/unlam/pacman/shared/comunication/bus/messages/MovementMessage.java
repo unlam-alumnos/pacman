@@ -1,30 +1,18 @@
 package edu.unlam.pacman.shared.comunication.bus.messages;
 
-import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 
 public class MovementMessage implements BaseMessage {
-    private int x;
-    private int y;
-    private Direction direction;
+    private Personaje personaje;
 
     public MovementMessage() {
     }
 
-    public MovementMessage(int x, int y, Direction direction) {
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
+    public MovementMessage(Personaje personaje) {
+        this.personaje = personaje;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Direction getDirection() {
-        return direction;
+    public Personaje getPersonaje() {
+        return personaje;
     }
 }

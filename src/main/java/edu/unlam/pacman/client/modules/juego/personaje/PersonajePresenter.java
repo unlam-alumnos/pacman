@@ -13,6 +13,7 @@ import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.MovementMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
@@ -36,7 +37,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     }
 
     @Override
-    public void changeDirection(Direction direction){
+    public void changeDirection(Direction direction) {
         if (personaje.isActive()) {
             eventBus.post(new DirectionEventRequest(personaje.getJugador().getUsername(), new Coordenada(personaje.getX(), personaje.getY()), direction));
         }
@@ -53,7 +54,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleKillEventCallback(KillEvent e) {
-        if (e.getSubject().equals(personaje.getJugador().getUsername())){
+        if (e.getSubject().equals(personaje.getJugador().getUsername())) {
             personaje.increaseKill();
         }
     }
@@ -61,7 +62,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleDeadEventCallback(DeadEvent e) {
-        if (e.getSubject().equals(personaje.getJugador().getUsername())){
+        if (e.getSubject().equals(personaje.getJugador().getUsername())) {
             personaje.dead(e.getCoordenada());
         }
     }
@@ -69,7 +70,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleDirectionEventCallback(DirectionEventCallback directionEventCallback) {
-        if (directionEventCallback.getSubject().equals(personaje.getJugador().getUsername())){
+        if (directionEventCallback.getSubject().equals(personaje.getJugador().getUsername())) {
             personaje.setDirection(directionEventCallback.getDireccion());
         }
     }
@@ -77,7 +78,7 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleHunterEventCallback(HunterEvent e) {
-        if (!e.getSubject().equals(personaje.getJugador().getUsername())){
+        if (!e.getSubject().equals(personaje.getJugador().getUsername())) {
             personaje.setStatus(Status.VICTIM);
         } else {
             personaje.setStatus(Status.HUNTER);
@@ -133,7 +134,20 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
             personaje.setX(moveEvent.getOrigen().getX() + x);
             personaje.setY(moveEvent.getOrigen().getY() + y);
             personaje.setDirection(direction);
-            //communicationHandler.send(new MovementMessage(personaje.getX(), personaje.getY(), direction), MovementMessage.class);
+            communicationHandler.send(new MovementMessage(personaje), MovementMessage.class);
+        }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleMoveMessage(MovementMessage moveMessage) {
+        // TODO: Identificar personajes
+        if (moveMessage != null
+                && moveMessage.getPersonaje() != null
+                && personaje.getJugador().equals(moveMessage.getPersonaje().getJugador())) {
+            personaje.setX(moveMessage.getPersonaje().getX());
+            personaje.setY(moveMessage.getPersonaje().getY());
+            personaje.setDirection(moveMessage.getPersonaje().getDirection());
         }
     }
 }

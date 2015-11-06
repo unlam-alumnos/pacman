@@ -5,12 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.Subscribe;
-
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
-import edu.unlam.pacman.shared.comunication.bus.messages.MovementMessage;
 import edu.unlam.pacman.shared.model.JugadorActual;
 
 /**
@@ -23,17 +19,6 @@ public class PacmanPresenter extends PersonajePresenter<PacmanView> implements P
         super.personaje = new Pacman(jugador);
         super.personaje.setActive(JugadorActual.get().equals(jugador));
         initConstantMovement();
-    }
-
-    @Subscribe
-    @AllowConcurrentEvents
-    public void handleMoveMessage(MovementMessage moveMessage) {
-        // TODO: Identificar personajes
-        if (moveMessage != null) {
-            personaje.setX(moveMessage.getX());
-            personaje.setY(moveMessage.getY());
-            personaje.setDirection(moveMessage.getDirection());
-        }
     }
 
     /**
