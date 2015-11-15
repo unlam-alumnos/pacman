@@ -24,20 +24,23 @@ public class ThreadCliente extends Thread{
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
-        DataInputStream data;
+        DataInputStream data = null;
         String message = null;
 
         try {
             do {
-                if (message != null) {
-                    System.out.println(">>>> " + message);
-                    GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
-                    Class clazz = Class.forName(gameMessage.getType());
-                    Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
-                    GameMessage completeMessage = new Gson().fromJson(message, type);
-                    eventBus.post(clazz.cast(completeMessage.getMessage()));
+                try {
+                    if (message != null) {
+                        GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
+                        Class clazz = Class.forName(gameMessage.getType());
+                        Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
+                        GameMessage completeMessage = new Gson().fromJson(message, type);
+                        eventBus.post(clazz.cast(completeMessage.getMessage()));
+                    }
+                    data = new DataInputStream(socket.getInputStream());
+                } catch (Exception e) {
+                    System.err.println("- Error en el parseo del mensaje: " + message);
                 }
-                data = new DataInputStream(socket.getInputStream());
             } while ((message = data.readLine()) != null);
         } catch (Exception e) {
             e.printStackTrace();

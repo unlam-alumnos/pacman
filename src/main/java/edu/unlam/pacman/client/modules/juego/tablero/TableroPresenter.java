@@ -59,7 +59,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 } else if (Casillero.Tipo.PISO.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarPiso(coordenada);
-                }  else if (Casillero.Tipo.CRONOMETRO.equals(tipo)) {
+                } else if (Casillero.Tipo.CRONOMETRO.equals(tipo)) {
                     Coordenada coordenada = new Coordenada(casillero.getOrigen().getX() + casillero.getAncho() / 2, casillero.getOrigen().getY() + casillero.getAlto() / 2);
                     getView().dibujarPiso(coordenada);
                 } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(tipo)) {
@@ -75,7 +75,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
      */
     @Subscribe
     @AllowConcurrentEvents
-    public void handleDirectionEventRequest(DirectionEventRequest directionEvent){
+    public void handleDirectionEventRequest(DirectionEventRequest directionEvent) {
         int i = 0;
         int x = 0;
         int y = 0;
@@ -89,7 +89,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     Direction direction = directionEvent.getDireccion();
                     try {
 
-                        switch (direction){
+                        switch (direction) {
                             case RIGHT:
                                 x = i;
                                 y = j + 1;
@@ -146,7 +146,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     Direction direction = moveEvent.getDireccion();
                     try {
 
-                        switch (direction){
+                        switch (direction) {
                             case RIGHT:
                                 x = i;
                                 y = j + 1;
@@ -172,36 +172,38 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         next = casilleros[x][y];
                         actual = casilleros[i][j];
 
-                        MoveEventCallback callback = new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(), moveEvent.getPersonajeType(), moveEvent.getPersonaje());
-
+                        // Frutas
                         if (Casillero.Tipo.FRUTA.equals(actual.getTipo())) {
-                            if (!Casillero.Tipo.PARED.equals(next.getTipo()))
-                                eventBus.post(callback);
-                            if (moveEvent.getPersonaje() instanceof Pacman){
+                            if (moveEvent.getPersonaje() instanceof Pacman) {
                                 casilleros[i][j].setTipo(Casillero.Tipo.PISO);
                                 contadorFrutas--;
                             }
-                        }else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(actual.getTipo())) {
-                            if (!Casillero.Tipo.PARED.equals(next.getTipo()))
-                                eventBus.post(callback);
+                        } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(actual.getTipo())) {
                             eventBus.post(new HunterEvent(moveEvent.getSubject()));
                             communicationHandler.send(new HunterMessage(JugadorActual.get()), HunterMessage.class);
                             casilleros[i][j].setTipo(Casillero.Tipo.PISO);
                             contadorFrutas--;
-                        }else if(Casillero.Tipo.PISO.equals(actual.getTipo())) {
-                            if (!Casillero.Tipo.PARED.equals(next.getTipo()))
-                                eventBus.post(callback);
                         }
 
-                        //NO HAY MAS FRUTAS EN EL MAPA
-                        if (contadorFrutas==0) {
+                        // Si puede avanzar...
+                        if ((Casillero.Tipo.FRUTA.equals(actual.getTipo())
+                                || Casillero.Tipo.FRUTA_ESPECIAL.equals(actual.getTipo())
+                                || Casillero.Tipo.PISO.equals(actual.getTipo()))
+                                && !Casillero.Tipo.PARED.equals(next.getTipo())) {
+                            eventBus.post(new MoveEventCallback(moveEvent.getSubject(), moveEvent.getOrigen(), moveEvent.getDireccion(),
+                                    moveEvent.getPersonajeType(), moveEvent.getPersonaje()));
+                        }
+
+                        // No hay más frutas en el mapa...
+                        if (contadorFrutas == 0) {
                             eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.RESULTADO));
                         }
 
+                        // Chequeo de colisión
                         checkCollision(moveEvent.getPersonaje());
 
                     } catch (Exception e) {
-                        System.out.println("Se pasó!");
+                        System.err.println("Se detectó una colisión inválida, omitiendo verificación...");
                     }
 
                 }
@@ -225,13 +227,13 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                      * Identifico el Tipo de Personaje que corresponde a cada participe de la colision
                      */
 
-                    if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)){
+                    if (pj.getStatus().equals(Status.HUNTER) && personaje.getStatus().equals(Status.VICTIM)) {
                         eventBus.post(new DeadEvent(personaje.getJugador().getUsername(), dondeRevivir(personaje)));
                         eventBus.post(new KillEvent(pj.getJugador().getUsername()));
-                    } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)){
+                    } else if (pj.getStatus().equals(Status.VICTIM) && personaje.getStatus().equals(Status.HUNTER)) {
                         eventBus.post(new DeadEvent(pj.getJugador().getUsername(), dondeRevivir(pj)));
                         eventBus.post(new KillEvent(personaje.getJugador().getUsername()));
-                    } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
+                    } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
 
                         eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), false, Status.BLOCK));
@@ -243,13 +245,13 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         }
                         eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), true, Status.NORMAL));
                         eventBus.post(new BlockEvent(pj.getJugador().getUsername(), true, Status.NORMAL));
-                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())){
+                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
 
-                        if (pj.getTipoPersonaje().equals("Pacman")){
+                        if (pj.getTipoPersonaje().equals("Pacman")) {
                             eventBus.post(new DeadEvent(pj.getJugador().getUsername(), dondeRevivir(pj)));
                             eventBus.post(new KillEvent(personaje.getJugador().getUsername()));
-                        }else{
+                        } else {
                             eventBus.post(new DeadEvent(personaje.getJugador().getUsername(), dondeRevivir(personaje)));
                             eventBus.post(new KillEvent(pj.getJugador().getUsername()));
                         }
@@ -260,25 +262,25 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
         eventBus.post(new ScoreEvent(personajes));
     }
 
-    public Coordenada dondeRevivir(Personaje victim){
+    public Coordenada dondeRevivir(Personaje victim) {
         double distanciaProm = 0;
         boolean first = true;
         Coordenada aux = new Coordenada(25, 25);
         double max = 0;
 
-        for(Coordenada posible : camino){
-            for (Personaje personaje : personajes){
-                if (!personaje.equals(victim)){
+        for (Coordenada posible : camino) {
+            for (Personaje personaje : personajes) {
+                if (!personaje.equals(victim)) {
                     distanciaProm += posible.distancia(new Coordenada(personaje.getX(), personaje.getY()));
                 }
             }
-            distanciaProm = distanciaProm/(personajes.size()-1);
-            if (first){
+            distanciaProm = distanciaProm / (personajes.size() - 1);
+            if (first) {
                 aux = posible;
                 max = distanciaProm;
                 first = false;
-            }else{
-                if (max < distanciaProm){
+            } else {
+                if (max < distanciaProm) {
                     max = distanciaProm;
                     aux = posible;
                 }
@@ -301,8 +303,8 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
                 {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
                 {1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1},
-                {1, 0, 1, 1, 0, 1, 0, 1,-1,-1,-1,-1, 1, 0, 1, 0, 1, 1, 0, 1},
-                {1, 0, 0, 0, 0, 1, 0, 1,-1,-1,-1,-1, 1, 0, 1, 0, 0, 0, 0, 1},
+                {1, 0, 1, 1, 0, 1, 0, 1, -1, -1, -1, -1, 1, 0, 1, 0, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 1, 0, 1, -1, -1, -1, -1, 1, 0, 1, 0, 0, 0, 0, 1},
                 {1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1},
                 {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
                 {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
@@ -330,7 +332,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     camino.add(new Coordenada(x, y));
                 } else if (row[j] == -1) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.CRONOMETRO);
-                }  else if (row[j] == 2) {
+                } else if (row[j] == 2) {
                     casilleros[i][j] = new Casillero(new Coordenada(x, y), size, size, Casillero.Tipo.FRUTA_ESPECIAL);
                     contadorFrutas++;
                     camino.add(new Coordenada(x, y));
