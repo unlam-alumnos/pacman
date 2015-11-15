@@ -22,6 +22,7 @@ import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.FruitMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.HunterMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
@@ -173,16 +174,18 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         actual = casilleros[i][j];
 
                         // Frutas
-                        if (Casillero.Tipo.FRUTA.equals(actual.getTipo())) {
-                            if (moveEvent.getPersonaje() instanceof Pacman) {
+                        if (Casillero.Tipo.FRUTA.equals(actual.getTipo()) || Casillero.Tipo.FRUTA_ESPECIAL.equals(actual.getTipo())) {
+                            if (Casillero.Tipo.FRUTA.equals(actual.getTipo()) && moveEvent.getPersonaje() instanceof Pacman) {
+                                communicationHandler.send(new FruitMessage(new Coordenada(i, j)), FruitMessage.class);
+                                casilleros[i][j].setTipo(Casillero.Tipo.PISO);
+                                contadorFrutas--;
+                            } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(actual.getTipo())) {
+                                eventBus.post(new HunterEvent(moveEvent.getSubject()));
+                                communicationHandler.send(new HunterMessage(JugadorActual.get()), HunterMessage.class);
+                                communicationHandler.send(new FruitMessage(new Coordenada(i, j)), FruitMessage.class);
                                 casilleros[i][j].setTipo(Casillero.Tipo.PISO);
                                 contadorFrutas--;
                             }
-                        } else if (Casillero.Tipo.FRUTA_ESPECIAL.equals(actual.getTipo())) {
-                            eventBus.post(new HunterEvent(moveEvent.getSubject()));
-                            communicationHandler.send(new HunterMessage(JugadorActual.get()), HunterMessage.class);
-                            casilleros[i][j].setTipo(Casillero.Tipo.PISO);
-                            contadorFrutas--;
                         }
 
                         // Si puede avanzar...
@@ -211,6 +214,13 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
             }
             i++;
         }
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleFruitMessage(FruitMessage fruitMessage) {
+        casilleros[fruitMessage.getCoordenada().getX()][fruitMessage.getCoordenada().getY()].setTipo(Casillero.Tipo.PISO);
+        contadorFrutas--;
     }
 
     @Subscribe
