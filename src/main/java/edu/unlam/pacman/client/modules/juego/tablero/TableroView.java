@@ -1,17 +1,18 @@
 package edu.unlam.pacman.client.modules.juego.tablero;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
+import javax.swing.ImageIcon;
+
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 import edu.unlam.pacman.shared.model.Coordenada;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-
 public class TableroView extends View<TableroView.MyView> {
-
-
     interface MyView extends UiHandler {
         void paint();
     }
@@ -20,6 +21,7 @@ public class TableroView extends View<TableroView.MyView> {
     protected void onBind() {
         setOpaque(true);
         setBackground(Color.BLACK);
+        setFocusable(true);
     }
 
     @Override
