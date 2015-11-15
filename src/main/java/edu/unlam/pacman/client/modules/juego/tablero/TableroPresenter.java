@@ -22,8 +22,10 @@ import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.HunterMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
+import edu.unlam.pacman.shared.model.JugadorActual;
 import edu.unlam.pacman.shared.model.Status;
 
 /**
@@ -183,6 +185,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                             if (!Casillero.Tipo.PARED.equals(next.getTipo()))
                                 eventBus.post(callback);
                             eventBus.post(new HunterEvent(moveEvent.getSubject()));
+                            communicationHandler.send(new HunterMessage(JugadorActual.get()), HunterMessage.class);
                             casilleros[i][j].setTipo(Casillero.Tipo.PISO);
                             contadorFrutas--;
                         }else if(Casillero.Tipo.PISO.equals(actual.getTipo())) {

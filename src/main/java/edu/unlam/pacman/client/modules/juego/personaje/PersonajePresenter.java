@@ -13,6 +13,7 @@ import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.HunterMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.MovementMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
@@ -78,7 +79,17 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleHunterEventCallback(HunterEvent e) {
-        if (!e.getSubject().equals(personaje.getJugador().getUsername())) {
+        updateHunter(e.getSubject());
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleHunterMessageCallback(HunterMessage hunterMessage) {
+        updateHunter(hunterMessage.getJugador().getUsername());
+    }
+
+    private void updateHunter(String jugadorUsername) {
+        if (!jugadorUsername.equals(personaje.getJugador().getUsername())) {
             personaje.setStatus(Status.VICTIM);
         } else {
             personaje.setStatus(Status.HUNTER);
