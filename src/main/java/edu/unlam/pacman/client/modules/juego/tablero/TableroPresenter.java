@@ -9,6 +9,7 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
+import edu.unlam.pacman.client.modules.juego.personaje.pacman.Pacman;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
@@ -174,7 +175,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         if (Casillero.Tipo.FRUTA.equals(actual.getTipo())) {
                             if (!Casillero.Tipo.PARED.equals(next.getTipo()))
                                 eventBus.post(callback);
-                            if (moveEvent.getPersonajeType().equals("pacman")){
+                            if (moveEvent.getPersonaje() instanceof Pacman){
                                 casilleros[i][j].setTipo(Casillero.Tipo.PISO);
                                 contadorFrutas--;
                             }
@@ -305,7 +306,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
                 {1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
         this.casilleros = new Casillero[board.length][board[0].length];
