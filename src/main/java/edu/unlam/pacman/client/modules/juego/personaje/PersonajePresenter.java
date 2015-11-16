@@ -3,7 +3,6 @@ package edu.unlam.pacman.client.modules.juego.personaje;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
-import edu.unlam.pacman.client.modules.juego.personaje.fantasma.Fantasma;
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
@@ -90,12 +89,10 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     }
 
     private void updateHunter(String jugadorUsername) {
-        if (personaje instanceof Fantasma) {
-            if (!jugadorUsername.equals(personaje.getJugador().getUsername())) {
-                personaje.setStatus(Status.VICTIM);
-            } else {
-                personaje.setStatus(Status.HUNTER);
-            }
+        if (!jugadorUsername.equals(personaje.getJugador().getUsername())) {
+            personaje.setStatus(Status.VICTIM);
+        } else {
+            personaje.setStatus(Status.HUNTER);
         }
     }
 
