@@ -32,8 +32,8 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
     }
 
     @Override
-    public void crearPartida(int port) {
-        eventBus.post(new ServerEvent(port));
+    public void crearPartida(String ipServer, int portServer) {
+        eventBus.post(new ServerEvent(ipServer, portServer));
     }
 
     @Override

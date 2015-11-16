@@ -4,6 +4,7 @@ public class Jugador {
     private Long id;
     private String username;
     private String password;
+    private Boolean admin;
 
     public Jugador() {
     }
@@ -16,10 +17,11 @@ public class Jugador {
     /**
      * Requerido por Dalesbred
      */
-    public Jugador(Long id, String username, String password) {
+    public Jugador(Long id, String username, String password, Boolean admin) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.admin = admin;
     }
 
     public Long getId() {
@@ -42,6 +44,14 @@ public class Jugador {
         this.password = password;
     }
 
+    public Boolean isAdmin() {
+        return Boolean.TRUE.equals(admin);
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -59,7 +69,10 @@ public class Jugador {
         if (username != null ? !username.equals(jugador.username) : jugador.username != null) {
             return false;
         }
-        return !(password != null ? !password.equals(jugador.password) : jugador.password != null);
+        if (password != null ? !password.equals(jugador.password) : jugador.password != null) {
+            return false;
+        }
+        return !(admin != null ? !admin.equals(jugador.admin) : jugador.admin != null);
     }
 
     @Override
@@ -67,6 +80,7 @@ public class Jugador {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (admin != null ? admin.hashCode() : 0);
         return result;
     }
 }

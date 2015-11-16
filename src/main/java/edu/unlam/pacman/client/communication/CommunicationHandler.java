@@ -37,12 +37,12 @@ public class CommunicationHandler {
 
     @Subscribe
     public void handleServerEvent(ServerEvent event) {
-        communicationService.initServer(event.getPort());
+        communicationService.initServer(event.getPortServer());
     }
 
     @Subscribe
     public void handleClientRequestEvent(ClientEventRequest event) {
-        communicationService.initClient(event.getIpServer(),event.getPortServer());
+        communicationService.initClient(event.getIpServer(), event.getPortServer());
         eventBus.post(new ClientEventCallback());
     }
 

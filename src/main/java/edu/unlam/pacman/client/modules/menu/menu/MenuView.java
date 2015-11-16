@@ -1,26 +1,51 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
-import edu.unlam.pacman.client.modules.menu.MenuConstants;
-import edu.unlam.pacman.client.mvp.UiHandler;
-import edu.unlam.pacman.client.mvp.View;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import edu.unlam.pacman.client.modules.menu.MenuConstants;
+import edu.unlam.pacman.client.mvp.UiHandler;
+import edu.unlam.pacman.client.mvp.View;
+import edu.unlam.pacman.shared.model.JugadorActual;
+
 public class MenuView extends View<MenuView.MyView> {
     interface MyView extends UiHandler {
-        void crearPartida(int port);
+        void crearPartida(String ipServer, int portServer);
+
         void unirseAPartida(String ipServer, int portServer);
+
         void empezarPartida();
     }
 
+    private JButton btnCrearPartida;
+    private JButton btnUnirseAPartida;
+    private JTextField txtIpServidor;
+    private JButton btnVerPartida;
+    private JButton btnEstadisticas;
+    private JButton btnEmpezarPartida;
+    private JList listJugadores;
+    private JScrollPane scrollPane;
+
     @Override
     protected void onBind() {
+        btnCrearPartida = new JButton("Crear Partida");
+        btnUnirseAPartida = new JButton("Unirse a Partida");
+        txtIpServidor = new JTextField("127.0.0.1");
+        btnVerPartida = new JButton("Ver Partida");
+        btnEstadisticas = new JButton("Estadisticas");
+        btnEmpezarPartida = new JButton("Empezar Partida");
+        listJugadores = new JList();
+        scrollPane = new JScrollPane();
+
         setOpaque(false);
         setFocusable(true);
 
@@ -28,20 +53,11 @@ public class MenuView extends View<MenuView.MyView> {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(null);
 
-        final JButton btnCrearPartida = new JButton("Crear Partida");
-        final JButton btnUnirseAPartida = new JButton("Unirse a Partida");
-        final JTextField txtIpServidor = new JTextField("127.0.0.1");
-        final JButton btnVerPartida = new JButton("Ver Partida");
-        final JButton btnEstadisticas = new JButton("Estadisticas");
-        final JButton btnEmpezarPartida = new JButton("Empezar Partida");
-        final JList listJugadores = new JList();
-        final JScrollPane scrollPane = new JScrollPane();
-
         btnCrearPartida.setBounds(10, 11, 137, 23);
         btnCrearPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().crearPartida(8888);
+                uiHandler().crearPartida(txtIpServidor.getText(), 8888);
                 btnCrearPartida.setEnabled(false);
             }
         });
@@ -51,7 +67,7 @@ public class MenuView extends View<MenuView.MyView> {
         btnUnirseAPartida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().unirseAPartida(txtIpServidor.getText(),8888);
+                uiHandler().unirseAPartida(txtIpServidor.getText(), 8888);
                 btnUnirseAPartida.setEnabled(false);
                 txtIpServidor.setEnabled(false);
             }
@@ -65,7 +81,7 @@ public class MenuView extends View<MenuView.MyView> {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_ENTER == e.getKeyCode()) {
-                    uiHandler().unirseAPartida(txtIpServidor.getText(),8888);
+                    uiHandler().unirseAPartida(txtIpServidor.getText(), 8888);
                     btnUnirseAPartida.setEnabled(false);
                     txtIpServidor.setEnabled(false);
                 }
@@ -91,12 +107,13 @@ public class MenuView extends View<MenuView.MyView> {
             }
         });
         add(btnEmpezarPartida);
-
     }
 
     @Override
     public void paintComponent(Graphics2D g2) {
-
+        boolean admin = JugadorActual.get().isAdmin();
+        btnCrearPartida.setEnabled(admin);
+        btnEmpezarPartida.setEnabled(admin);
     }
 
     @Override

@@ -5,13 +5,19 @@ package edu.unlam.pacman.shared.comunication.bus.events;
  * @since 10/5/15 - 14:46
  */
 public class ServerEvent extends GameEvent {
-    private int port;
+    private String ipServer;
+    private int portServer;
 
-    public ServerEvent(int port){
-        this.port = port;
+    public ServerEvent(String ipServer, int portServer) {
+        this.ipServer = ipServer;
+        this.portServer = portServer;
     }
 
-    public int getPort() {
-        return port;
+    public String getIpServer() {
+        return ipServer;
+    }
+
+    public int getPortServer() {
+        return portServer;
     }
 }
