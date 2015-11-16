@@ -3,9 +3,15 @@ package edu.unlam.pacman.shared.comunication.sockets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.Iterator;
+
+import com.google.gson.Gson;
+
+import edu.unlam.pacman.shared.comunication.bus.Bus;
+import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
 
 public class ThreadServer extends Thread {
 
@@ -30,7 +36,9 @@ public class ThreadServer extends Thread {
         try {
             do {
                 if (aux != null) {
-                    System.out.println(aux);
+                    if (aux.contains("JugadorMessage")) {
+                        pushMessage(aux);
+                    }
                     index = connections.iterator();
 
                     while (index.hasNext()) {
@@ -64,6 +72,18 @@ public class ThreadServer extends Thread {
                 e1.printStackTrace();
             }
             System.out.println("La conexion ha finalizado.");
+        }
+    }
+
+    private void pushMessage(String message) {
+        try {
+            GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
+            Class clazz = Class.forName(gameMessage.getType());
+            Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
+            GameMessage completeMessage = new Gson().fromJson(message, type);
+            Bus.getInstance().post(clazz.cast(completeMessage.getMessage()));
+        } catch (ClassNotFoundException e) {
+            System.err.println("Error pushing message: " + message);
         }
     }
 }

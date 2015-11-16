@@ -67,7 +67,6 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
 
     @Subscribe
     public void handleClientCallbackEvent(ClientEventCallback event) {
-        jugadores.add(JugadorActual.get());
         communicationHandler.send(new JugadorMessage(JugadorActual.get()), JugadorMessage.class);
     }
 
