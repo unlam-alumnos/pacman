@@ -16,7 +16,9 @@ import edu.unlam.pacman.client.modules.juego.tablero.cronometro.CronometroPresen
 import edu.unlam.pacman.client.modules.juego.tablero.glass.GlassPresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.puntaje.PuntajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
+import edu.unlam.pacman.client.sprites.fantasma.Color;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.model.Coordenada;
 
 /**
  * @author Cristian Miranda
@@ -67,7 +69,23 @@ public class Juego extends BaseFrame {
             if (i == 0) {
                 addComponent(new PacmanPresenter(jugador));
             } else {
-                addComponent(new FantasmaPresenter(jugador));
+                Coordenada origen = new Coordenada(100, 100);
+                Color color = Color.CELESTE;
+                switch (i) {
+                    case 2:
+                        color = Color.ROJO;
+                        origen = new Coordenada(150, 100);
+                        break;
+                    case 3:
+                        color = Color.VERDE;
+                        origen = new Coordenada(200, 100);
+                        break;
+                    case 4:
+                        color = Color.VIOLETA;
+                        origen = new Coordenada(250, 100);
+                        break;
+                }
+                addComponent(new FantasmaPresenter(jugador, origen, color));
             }
         }
     }

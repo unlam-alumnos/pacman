@@ -10,7 +10,9 @@ import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
+import edu.unlam.pacman.client.sprites.fantasma.Color;
 import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
+import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.JugadorActual;
 
 /**
@@ -18,9 +20,9 @@ import edu.unlam.pacman.shared.model.JugadorActual;
  * @since 10/5/15 - 15:31
  */
 public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implements FantasmaView.MyView {
-    public FantasmaPresenter(Jugador jugador) {
+    public FantasmaPresenter(Jugador jugador, Coordenada origen, Color color) {
         super(new FantasmaView());
-        super.personaje = new Fantasma(jugador);
+        super.personaje = new Fantasma(jugador, origen, color);
         super.personaje.setActive(JugadorActual.get().equals(jugador));
         initConstantMovement();
     }
