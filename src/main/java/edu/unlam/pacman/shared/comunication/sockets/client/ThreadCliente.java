@@ -31,11 +31,20 @@ public class ThreadCliente extends Thread{
             do {
                 try {
                     if (message != null) {
-                        GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
-                        Class clazz = Class.forName(gameMessage.getType());
-                        Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
-                        GameMessage completeMessage = new Gson().fromJson(message, type);
-                        eventBus.post(clazz.cast(completeMessage.getMessage()));
+                        String token = "\"}{\"}";
+                        String[] messages = {message};
+                        if (message.contains(token)) {
+                            messages = message.split(token);
+                            messages[0] += "\"}";
+                            messages[1] += "{\"";
+                        }
+                        for (String msg : messages) {
+                            GameMessage gameMessage = new Gson().fromJson(msg, GameMessage.class);
+                            Class clazz = Class.forName(gameMessage.getType());
+                            Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
+                            GameMessage completeMessage = new Gson().fromJson(msg, type);
+                            eventBus.post(clazz.cast(completeMessage.getMessage()));
+                        }
                     }
                     data = new DataInputStream(socket.getInputStream());
                 } catch (Exception e) {

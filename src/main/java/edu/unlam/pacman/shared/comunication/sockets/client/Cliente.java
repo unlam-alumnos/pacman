@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 
@@ -27,7 +26,6 @@ public class Cliente {
     }
 
     @Subscribe
-    @AllowConcurrentEvents
     public void handleCommunicationEvent(GameMessage event) {
         try {
             PrintStream ps = new PrintStream(client.getOutputStream());
