@@ -1,8 +1,7 @@
 package edu.unlam.pacman.client.modules.menu.menu;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
@@ -24,11 +23,11 @@ import edu.unlam.pacman.shared.model.JugadorActual;
  * @since 10/5/15 - 15:31
  */
 public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyView {
-    private List<Jugador> jugadores;
+    private LinkedHashSet<Jugador> jugadores;
 
     public MenuPresenter() {
         super(new MenuView());
-        this.jugadores = new ArrayList<>();
+        this.jugadores = new LinkedHashSet<>();
     }
 
     @Override
@@ -59,7 +58,7 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
         start(startMessage.getJugadores());
     }
 
-    private void start(List<Jugador> jugadores) {
+    private void start(LinkedHashSet<Jugador> jugadores) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("jugadores", jugadores);
         eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.JUEGO, parameters));

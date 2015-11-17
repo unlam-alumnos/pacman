@@ -1,17 +1,17 @@
 package edu.unlam.pacman.shared.comunication.bus.messages;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 
 public class StartMessage implements BaseMessage {
-    private List<Jugador> jugadores;
+    private LinkedHashSet<Jugador> jugadores;
 
-    public StartMessage(List<Jugador> jugadores) {
+    public StartMessage(LinkedHashSet<Jugador> jugadores) {
         this.jugadores = jugadores;
     }
 
-    public List<Jugador> getJugadores() {
+    public LinkedHashSet<Jugador> getJugadores() {
         return jugadores;
     }
 }

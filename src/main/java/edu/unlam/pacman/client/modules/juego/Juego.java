@@ -1,8 +1,8 @@
 package edu.unlam.pacman.client.modules.juego;
 
 import java.awt.HeadlessException;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFrame;
 
@@ -63,9 +63,9 @@ public class Juego extends BaseFrame {
     }
 
     private void initPlayers(Map<String, Object> params) {
-        List<Jugador> jugadores = (List<Jugador>) params.get("jugadores");
-        for (int i = 0; i < jugadores.size(); i++) {
-            Jugador jugador = jugadores.get(i);
+        Set<Jugador> jugadores = (Set<Jugador>) params.get("jugadores");
+        int i = 0;
+        for (Jugador jugador : jugadores) {
             if (i == 0) {
                 addComponent(new PacmanPresenter(jugador));
             } else {
@@ -87,6 +87,7 @@ public class Juego extends BaseFrame {
                 }
                 addComponent(new FantasmaPresenter(jugador, origen, color));
             }
+            i++;
         }
     }
 }
