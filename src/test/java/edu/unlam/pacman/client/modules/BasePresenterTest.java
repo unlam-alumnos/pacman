@@ -27,7 +27,8 @@ public abstract class BasePresenterTest<P extends Presenter, V extends View> {
 
     @Before
     public void setup() {
-        Launcher.initProperties();
+        String[] args = {"client"};
+        Launcher.initProperties(args);
         this.presenter = getPresenter();
         this.view = (V) spy(presenter.getView());
         when(view.graphics()).thenReturn(mock(Graphics2D.class));
