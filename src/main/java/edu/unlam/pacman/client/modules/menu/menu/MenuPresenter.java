@@ -12,7 +12,6 @@ import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.StartEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.async.ClientEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.messages.JugadorMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.StartMessage;
 import edu.unlam.pacman.shared.model.JugadorActual;
@@ -68,11 +67,6 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("jugadores", jugadores);
         eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.JUEGO, parameters));
-    }
-
-    @Subscribe
-    public void handleClientCallbackEvent(ClientEventCallback event) {
-
     }
 
     @Subscribe
