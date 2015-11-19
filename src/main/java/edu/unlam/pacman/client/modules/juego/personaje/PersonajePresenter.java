@@ -4,10 +4,10 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.DirectionEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.events.async.DirectionEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.events.async.DirectionEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.KeyEvent;

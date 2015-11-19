@@ -9,4 +9,6 @@ public class SharedConstants {
     public static final String DB_USERNAME = "db.username";
     public static final String DB_PASSWORD = "db.password";
     public static final String GAME_LENGTH = "game.length";
+    public static final String GAME_SERVER = "game.server";
+    public static final String CLIENT_ID = "client.id";
 }

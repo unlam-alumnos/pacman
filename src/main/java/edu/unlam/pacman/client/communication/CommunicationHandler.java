@@ -4,13 +4,16 @@ import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.server.service.CommunicationService;
+import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.Bus;
-import edu.unlam.pacman.shared.comunication.bus.async.ClientEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.ClientEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.events.async.ClientEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.events.async.ClientEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.ServerEvent;
 import edu.unlam.pacman.shared.comunication.bus.messages.BaseMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
+import edu.unlam.pacman.shared.comunication.bus.messages.async.AsyncMessage;
 import edu.unlam.pacman.shared.model.JugadorActual;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 /**
  * @author Cristian Miranda
@@ -48,6 +51,19 @@ public class CommunicationHandler {
 
     public <T extends BaseMessage> void send(BaseMessage message, Class<T> type) {
         Jugador currentPlayer = JugadorActual.get();
-        eventBus.post(new GameMessage(currentPlayer, message, type.getName()));
+        if (message instanceof AsyncMessage) {
+            AsyncMessage asyncMessage = (AsyncMessage) message;
+            if (asyncMessage.getSender() == null) {
+                asyncMessage.setSender(PropertiesUtils.pref().get(SharedConstants.CLIENT_ID));
+            }
+            if ("true".equals(PropertiesUtils.pref().get(SharedConstants.GAME_SERVER))
+                    && asyncMessage.getSender().equals(PropertiesUtils.pref().get(SharedConstants.CLIENT_ID))) {
+                eventBus.post(asyncMessage);
+            } else {
+                eventBus.post(new GameMessage(currentPlayer, type.cast(asyncMessage), type.getName()));
+            }
+        } else {
+            eventBus.post(new GameMessage(currentPlayer, message, type.getName()));
+        }
     }
 }

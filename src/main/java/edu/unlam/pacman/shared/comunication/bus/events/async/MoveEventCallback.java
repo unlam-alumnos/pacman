@@ -1,4 +1,4 @@
-package edu.unlam.pacman.shared.comunication.bus.async;
+package edu.unlam.pacman.shared.comunication.bus.events.async;
 
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.shared.comunication.bus.events.MoveEvent;

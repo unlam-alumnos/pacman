@@ -9,11 +9,9 @@ import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.client.mvp.Presenter;
-import edu.unlam.pacman.shared.comunication.bus.async.ClientEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.ClientEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ServerEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.StartEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.async.ClientEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.messages.JugadorMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.StartMessage;
 import edu.unlam.pacman.shared.model.JugadorActual;
@@ -32,12 +30,13 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
 
     @Override
     public void crearPartida(String ipServer, int portServer) {
-        eventBus.post(new ServerEvent(ipServer, portServer));
+        // TODO: Que hacemos? La partida ya la crea el server cuando inicia la app al levantar el socket
+        // eventBus.post(new ServerEvent(ipServer, portServer));
     }
 
     @Override
     public void unirseAPartida(String ipServer, int portServer) {
-        eventBus.post(new ClientEventRequest(ipServer,portServer));
+        // eventBus.post(new ClientEventRequest(ipServer,portServer));
     }
 
     @Override

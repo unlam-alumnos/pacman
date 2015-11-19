@@ -1,5 +1,7 @@
 package edu.unlam.pacman;
 
+import java.util.UUID;
+
 import javax.swing.SwingUtilities;
 
 import edu.unlam.pacman.client.modules.estadisticas.Estadisticas;
@@ -37,5 +39,6 @@ public class Launcher {
         PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "");
         PropertiesUtils.pref().put(SharedConstants.GAME_LENGTH, "60");
         PropertiesUtils.pref().put(SharedConstants.GAME_SERVER, "client".equals(args[0]) ? Boolean.FALSE.toString() : Boolean.TRUE.toString());
+        PropertiesUtils.pref().put(SharedConstants.CLIENT_ID, UUID.randomUUID().toString());
     }
 }

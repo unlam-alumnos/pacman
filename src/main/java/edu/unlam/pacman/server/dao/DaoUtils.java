@@ -15,9 +15,9 @@ public class DaoUtils {
 
     private DaoUtils() {
         this.db = Database.forUrlAndCredentials(
-                PropertiesUtils.pref().get(SharedConstants.DB_URL, null),
-                PropertiesUtils.pref().get(SharedConstants.DB_USERNAME, null),
-                PropertiesUtils.pref().get(SharedConstants.DB_PASSWORD, null)
+                PropertiesUtils.pref().get(SharedConstants.DB_URL),
+                PropertiesUtils.pref().get(SharedConstants.DB_USERNAME),
+                PropertiesUtils.pref().get(SharedConstants.DB_PASSWORD)
         );
     }
 
