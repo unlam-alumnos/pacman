@@ -28,8 +28,7 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
             eventBus.post(new ServerEvent(getView().getServerIp(), 8888));
             eventBus.post(new ClientEventRequest(getView().getServerIp(), 8888));
             getView().hideServerIp();
-        } else {
-            eventBus.post(new ClientEventRequest(getView().getServerIp(), 8888));
+            getView().hideConnect();
         }
     }
 
@@ -41,6 +40,11 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
     @Override
     public void register() {
         eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.REGISTRO));
+    }
+
+    @Override
+    public void connect() {
+        eventBus.post(new ClientEventRequest(getView().getServerIp(), 8888));
     }
 
     @Subscribe

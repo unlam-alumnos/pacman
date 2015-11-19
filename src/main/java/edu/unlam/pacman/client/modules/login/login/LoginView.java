@@ -18,6 +18,7 @@ public class LoginView extends View<LoginView.MyView> {
     interface MyView extends UiHandler {
         void login(String username, String password);
         void register();
+        void connect();
     }
 
     private JTextField txtUser;
@@ -25,6 +26,7 @@ public class LoginView extends View<LoginView.MyView> {
     private JTextField txtIp;
     private JButton btnAceptar;
     private JButton btnRegister;
+    private JButton btnConnect;
     private JLabel label;
     private JLabel label_1;
     private JLabel label_2;
@@ -73,6 +75,16 @@ public class LoginView extends View<LoginView.MyView> {
         });
         add(btnRegister);
 
+        btnConnect = new JButton("Conectar");
+        btnConnect.setBounds(147, 166, 137, 23);
+        btnConnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiHandler().connect();
+            }
+        });
+        add(btnConnect);
+
         label = new JLabel("Usuario:");
         label.setBounds(97, 14, 40, 14);
         add(label);
@@ -103,6 +115,10 @@ public class LoginView extends View<LoginView.MyView> {
     public void hideServerIp() {
         label_2.setVisible(false);
         txtIp.setVisible(false);
+    }
+
+    public void hideConnect() {
+        btnConnect.setVisible(false);
     }
 
     @Override
