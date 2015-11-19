@@ -3,15 +3,12 @@ package edu.unlam.pacman.shared.comunication.sockets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.google.gson.Gson;
-
 import edu.unlam.pacman.shared.comunication.bus.Bus;
-import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
+import edu.unlam.pacman.shared.comunication.bus.events.LogEvent;
 
 public class ThreadServer extends Thread {
 
@@ -36,9 +33,6 @@ public class ThreadServer extends Thread {
         try {
             do {
                 if (aux != null) {
-                    if (aux.contains("JugadorMessage")) {
-                        //pushMessage(aux);
-                    }
                     index = connections.iterator();
 
                     while (index.hasNext()) {
@@ -64,26 +58,14 @@ public class ThreadServer extends Thread {
 
             Server.activeClients--;
             connections.remove(socket);
-            System.out.println("Un cliente se ha desconectado.");
+            Bus.getInstance().post(new LogEvent("Un cliente se ha desconectado."));
         } catch (IOException e) {
             try {
                 socket.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
+                Bus.getInstance().post(new LogEvent(e1.getMessage()));
             }
-            System.out.println("La conexion ha finalizado.");
-        }
-    }
-
-    private void pushMessage(String message) {
-        try {
-            GameMessage gameMessage = new Gson().fromJson(message, GameMessage.class);
-            Class clazz = Class.forName(gameMessage.getType());
-            Type type = com.google.gson.internal.$Gson$Types.newParameterizedTypeWithOwner(null, GameMessage.class, clazz);
-            GameMessage completeMessage = new Gson().fromJson(message, type);
-            Bus.getInstance().post(clazz.cast(completeMessage.getMessage()));
-        } catch (ClassNotFoundException e) {
-            System.err.println("Error pushing message: " + message);
+            Bus.getInstance().post(new LogEvent("La conexion ha finalizado."));
         }
     }
 }

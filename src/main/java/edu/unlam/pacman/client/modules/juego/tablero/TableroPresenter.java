@@ -11,17 +11,17 @@ import com.google.common.eventbus.Subscribe;
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.modules.juego.personaje.pacman.Pacman;
 import edu.unlam.pacman.client.mvp.Presenter;
+import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.LogEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.async.DirectionEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.events.async.DirectionEventRequest;
 import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventRequest;
-import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.DeadEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.HunterEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.KillEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.PaintEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ScoreEvent;
-import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.comunication.bus.messages.FruitMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.HunterMessage;
 import edu.unlam.pacman.shared.model.Coordenada;
@@ -118,7 +118,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                             eventBus.post(new DirectionEventCallback(directionEvent.getSubject(), directionEvent.getOrigen(), directionEvent.getDireccion()));
                         }
                     } catch (Exception e) {
-                        System.out.println("Se pasó!");
+                        eventBus.post(new LogEvent("Movimiento inválido"));
                     }
                 }
                 j++;
@@ -206,7 +206,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                         checkCollision(moveEvent.getPersonaje());
 
                     } catch (Exception e) {
-                        System.err.println("Se detectó una colisión inválida, omitiendo verificación...");
+                        eventBus.post(new LogEvent("Se detectó una colisión inválida, omitiendo verificación..."));
                     }
 
                 }
@@ -246,16 +246,16 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
                     } else if (pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
                         // No puede haber 2 pacman en la partida, entonces chocaron 2 fantasmas
 
-                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), false, Status.BLOCK));
-                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), false, Status.BLOCK));
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), true, Status.NORMAL));
-                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), true, Status.NORMAL));
-                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
+//                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), false, Status.BLOCK));
+//                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), false, Status.BLOCK));
+//                        try {
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), true, Status.NORMAL));
+//                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), true, Status.NORMAL));
+//                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
 
                         if (pj instanceof Pacman) {

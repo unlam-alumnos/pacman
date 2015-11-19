@@ -8,6 +8,7 @@ import java.net.Socket;
 import com.google.gson.Gson;
 
 import edu.unlam.pacman.shared.comunication.bus.Bus;
+import edu.unlam.pacman.shared.comunication.bus.events.LogEvent;
 import edu.unlam.pacman.shared.comunication.bus.messages.GameMessage;
 
 public class ThreadCliente extends Thread{
@@ -48,7 +49,7 @@ public class ThreadCliente extends Thread{
                     }
                     data = new DataInputStream(socket.getInputStream());
                 } catch (Exception e) {
-                    System.err.println("- Error en el parseo del mensaje: " + message);
+                    eventBus.post(new LogEvent("- Error en el parseo del mensaje: " + message));
                 }
             } while ((message = data.readLine()) != null);
         } catch (Exception e) {
@@ -56,7 +57,7 @@ public class ThreadCliente extends Thread{
             try {
                 socket.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
+                eventBus.post(new LogEvent(e.getMessage()));
             }
         }
     }
