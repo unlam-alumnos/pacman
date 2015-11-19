@@ -6,8 +6,8 @@ import org.mockito.Mockito;
 import edu.unlam.pacman.client.modules.BasePresenterTest;
 import edu.unlam.pacman.client.modules.juego.personaje.pacman.Pacman;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
-import edu.unlam.pacman.shared.comunication.bus.async.MoveEventCallback;
-import edu.unlam.pacman.shared.comunication.bus.async.MoveEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventCallback;
+import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventRequest;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 

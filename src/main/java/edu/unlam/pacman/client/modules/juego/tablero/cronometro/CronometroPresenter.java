@@ -1,14 +1,15 @@
 package edu.unlam.pacman.client.modules.juego.tablero.cronometro;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.util.PropertiesUtils;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 /**
@@ -16,7 +17,7 @@ import java.awt.event.ActionListener;
  */
 public class CronometroPresenter extends Presenter<CronometroView> implements CronometroView.MyView {
 
-    private final int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH, null));
+    private final int duracion = Integer.parseInt(PropertiesUtils.pref().get(SharedConstants.GAME_LENGTH));
     private Cronometro cronometro = new Cronometro(duracion);
     private Timer timekeeper;
     private Coordenada coordenada = new Coordenada(200,200);

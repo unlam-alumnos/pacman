@@ -1,11 +1,18 @@
 package edu.unlam.pacman.client.modules.login.login;
 
 import com.google.common.eventbus.Subscribe;
-import edu.unlam.pacman.server.service.JugadorService;
-import edu.unlam.pacman.shared.model.JugadorActual;
-import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+
 import edu.unlam.pacman.client.mvp.Presenter;
+import edu.unlam.pacman.server.service.JugadorService;
+import edu.unlam.pacman.shared.SharedConstants;
+import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.ServerEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.async.ClientEventRequest;
+import edu.unlam.pacman.shared.comunication.bus.messages.async.AutenticarJugadorMessageCallback;
+import edu.unlam.pacman.shared.comunication.bus.messages.async.AutenticarJugadorMessageRequest;
 import edu.unlam.pacman.shared.exception.ServiceException;
+import edu.unlam.pacman.shared.model.JugadorActual;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 /**
  * @author Cristian Miranda
@@ -17,22 +24,18 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
     public LoginPresenter() {
         super(new LoginView());
         this.jugadorService = JugadorService.getInstance();
+        if ("true".equals(PropertiesUtils.pref().get(SharedConstants.GAME_SERVER))) {
+            eventBus.post(new ServerEvent(getView().getServerIp(), 8888));
+            eventBus.post(new ClientEventRequest(getView().getServerIp(), 8888));
+            getView().hideServerIp();
+        } else {
+            eventBus.post(new ClientEventRequest(getView().getServerIp(), 8888));
+        }
     }
 
     @Override
     public void login(String username, String password) {
-        try {
-            Jugador jugador = jugadorService.getByUsernameAndPassword(username, password);
-            if (jugador != null) {
-                JugadorActual.set(jugador);
-                getView().clear();
-                eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.MENU));
-            } else {
-                getView().error("Jugador no existente");
-            }
-        } catch (ServiceException e) {
-            getView().error(e.getMessage());
-        }
+        communicationHandler.send(new AutenticarJugadorMessageRequest(username, password), AutenticarJugadorMessageRequest.class);
     }
 
     @Override
@@ -44,6 +47,32 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
     public void handleScreenEvent(ScreenEvent screenEvent) {
         if (ScreenEvent.ScreenType.LOGIN.equals(screenEvent.getScreenType())) {
             getView().clear();
+        }
+    }
+
+    @Subscribe
+    public void handleAutenticarJugadorMessageRequest(AutenticarJugadorMessageRequest request) {
+        if ("true".equals(PropertiesUtils.pref().get(SharedConstants.GAME_SERVER))) {
+            try {
+                Jugador jugador = jugadorService.getByUsernameAndPassword(request.getUsername(), request.getPassword());
+                communicationHandler.send(new AutenticarJugadorMessageCallback(request.getSender(), jugador), AutenticarJugadorMessageCallback.class);
+            } catch (ServiceException e) {
+                getView().error(e.getMessage());
+            }
+        }
+    }
+
+    @Subscribe
+    public void handleAutenticarJugadorMessageCallback(AutenticarJugadorMessageCallback callback) {
+        if (PropertiesUtils.pref().get(SharedConstants.CLIENT_ID).equals(callback.getSender())) {
+            Jugador jugador = callback.getJugador();
+            if (jugador != null) {
+                JugadorActual.set(jugador);
+                getView().clear();
+                eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.MENU));
+            } else {
+                getView().error("Jugador no existente");
+            }
         }
     }
 

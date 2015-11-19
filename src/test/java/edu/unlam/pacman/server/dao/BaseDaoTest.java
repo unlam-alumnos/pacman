@@ -11,6 +11,7 @@ import edu.unlam.pacman.Launcher;
 public class BaseDaoTest {
     @Before
     public void setup() {
-        Launcher.initProperties();
+        String[] args = {"client"};
+        Launcher.initProperties(args);
     }
 }

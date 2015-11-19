@@ -1,6 +1,8 @@
 package edu.unlam.pacman.client.modules.login.login;
 
-public class Jugador {
+import java.io.Serializable;
+
+public class Jugador implements Serializable {
     private Long id;
     private String username;
     private String password;

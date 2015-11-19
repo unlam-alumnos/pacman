@@ -1,9 +1,15 @@
 package edu.unlam.pacman.client.modules.registro.registro;
 
+import com.google.common.eventbus.Subscribe;
+
 import edu.unlam.pacman.client.mvp.Presenter;
 import edu.unlam.pacman.server.service.JugadorService;
+import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
+import edu.unlam.pacman.shared.comunication.bus.messages.async.RegistrarJugadorMessageCallback;
+import edu.unlam.pacman.shared.comunication.bus.messages.async.RegistrarJugadorMessageRequest;
 import edu.unlam.pacman.shared.exception.ServiceException;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 /**
  * @author Cristian Miranda
@@ -20,13 +26,34 @@ public class RegistroPresenter extends Presenter<RegistroView> implements Regist
 
     @Override
     public void register(String username, String password, String passwordConfirmation) {
-        try {
-            jugadorService.register(username, password, passwordConfirmation);
-            getView().info("Jugador registrado con éxito");
-            getView().clear();
-            eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.LOGIN));
-        } catch (ServiceException e) {
-            getView().error("( ! ) - " + e.getMessage());
+        communicationHandler.send(new RegistrarJugadorMessageRequest(username, password, passwordConfirmation),
+                RegistrarJugadorMessageRequest.class);
+    }
+
+    @Subscribe
+    public void handleRegistrarJugadorMessageRequest(RegistrarJugadorMessageRequest request) {
+        if ("true".equals(PropertiesUtils.pref().get(SharedConstants.GAME_SERVER))) {
+            try {
+                jugadorService.register(request.getUsername(), request.getPassword(), request.getPasswordConfirmation());
+                communicationHandler.send(new RegistrarJugadorMessageCallback(request.getSender(), true, "Jugador registrado con exito"),
+                        RegistrarJugadorMessageCallback.class);
+            } catch (ServiceException e) {
+                communicationHandler.send(new RegistrarJugadorMessageCallback(request.getSender(), false, "( ! ) - " + e.getMessage()),
+                        RegistrarJugadorMessageCallback.class);
+            }
+        }
+    }
+
+    @Subscribe
+    public void handleRegistrarJugadorMessageCallback(RegistrarJugadorMessageCallback callback) {
+        if (PropertiesUtils.pref().get(SharedConstants.CLIENT_ID).equals(callback.getSender())) {
+            if (callback.isSuccess()) {
+                getView().info(callback.getMessage());
+                getView().clear();
+                eventBus.post(new ScreenEvent(ScreenEvent.ScreenType.LOGIN));
+            } else {
+                getView().error(callback.getMessage());
+            }
         }
     }
 

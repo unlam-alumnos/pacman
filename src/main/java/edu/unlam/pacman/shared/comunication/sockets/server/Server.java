@@ -9,6 +9,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import edu.unlam.pacman.shared.comunication.bus.Bus;
+import edu.unlam.pacman.shared.comunication.bus.events.LogEvent;
+
 public class Server {
     private String hostName;
     private String ipAddress;
@@ -57,20 +60,12 @@ public class Server {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error al aceptar conexiones, Cerrando el Servidor...");
+            Bus.getInstance().post(new LogEvent("Error al aceptar conexiones, Cerrando el Servidor..."));
             System.exit(1);
         }
-        System.out.println("La conexion NRO " + activeClients + " fue aceptada correctamente.");
+        Bus.getInstance().post(new LogEvent("La conexion NRO " + activeClients + " fue aceptada correctamente."));
         connections.add(client);
         return client;
-    }
-
-    public void stop() {
-        try {
-            server.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public int getPort() {
@@ -98,9 +93,10 @@ public class Server {
     }
 
     public void printInfo(){
-        System.out.println("DATOS DEL SERVIDOR:\n-------------------\n");
-        System.out.println("Hostname:\t" + this.getHostName());
-        System.out.println("IP:\t" + this.getIpAddress());
-        System.out.println("Puerto:\t" + this.getPort());
+
+        Bus.getInstance().post(new LogEvent("DATOS DEL SERVIDOR:\n-------------------\n"));
+        Bus.getInstance().post(new LogEvent("Hostname:\t" + this.getHostName()));
+        Bus.getInstance().post(new LogEvent("IP:\t" + this.getIpAddress()));
+        Bus.getInstance().post(new LogEvent("Puerto:\t" + this.getPort()));
     }
 }

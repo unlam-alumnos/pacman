@@ -1,8 +1,7 @@
 package edu.unlam.pacman.server.service;
 
-import java.util.Random;
-
 import com.google.common.base.Preconditions;
+
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.server.dao.JugadorDao;
 import edu.unlam.pacman.shared.exception.ServiceException;
@@ -38,8 +37,8 @@ public class JugadorService {
 
     public Jugador getByUsernameAndPassword(String username, String password) throws ServiceException {
         checkPreconditions(username, password, password);
-        Jugador jugador = new Jugador(new Random().nextLong(), username, password, true);
-        return jugador; // dao.getByUsernameAndPassword(username, password);
+        //Jugador jugador = new Jugador(new Random().nextLong(), username, password, true);
+        return dao.getByUsernameAndPassword(username, password);
     }
 
     private void checkPreconditions(String username, String password, String passwordConfirmation) throws ServiceException {

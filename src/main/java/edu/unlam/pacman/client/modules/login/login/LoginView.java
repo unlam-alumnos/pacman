@@ -22,10 +22,12 @@ public class LoginView extends View<LoginView.MyView> {
 
     private JTextField txtUser;
     private JPasswordField txtPass;
+    private JTextField txtIp;
     private JButton btnAceptar;
     private JButton btnRegister;
     private JLabel label;
     private JLabel label_1;
+    private JLabel label_2;
 
     @Override
     protected void onBind() {
@@ -45,8 +47,14 @@ public class LoginView extends View<LoginView.MyView> {
         txtPass.setBounds(147, 42, 137, 20);
         add(txtPass);
 
+        txtIp = new JTextField();
+        txtIp.setBounds(147, 73, 137, 20);
+        txtIp.setText("127.0.0.1");
+        add(txtIp);
+        txtIp.setColumns(10);
+
         btnAceptar = new JButton("Login");
-        btnAceptar.setBounds(147, 73, 137, 23);
+        btnAceptar.setBounds(147, 104, 137, 23);
         btnAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +64,7 @@ public class LoginView extends View<LoginView.MyView> {
         add(btnAceptar);
 
         btnRegister = new JButton("Registrarse");
-        btnRegister.setBounds(147, 107, 137, 23);
+        btnRegister.setBounds(147, 135, 137, 23);
         btnRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,6 +80,10 @@ public class LoginView extends View<LoginView.MyView> {
         label_1 = new JLabel("Contrase\u00F1a:");
         label_1.setBounds(77, 45, 60, 14);
         add(label_1);
+
+        label_2 = new JLabel("IP Servidor:");
+        label_2.setBounds(77, 76, 60, 14);
+        add(label_2);
     }
 
     @Override
@@ -82,6 +94,15 @@ public class LoginView extends View<LoginView.MyView> {
     public void clear() {
         txtUser.setText("");
         txtPass.setText("");
+    }
+
+    public String getServerIp() {
+        return txtIp.getText();
+    }
+
+    public void hideServerIp() {
+        label_2.setVisible(false);
+        txtIp.setVisible(false);
     }
 
     @Override
