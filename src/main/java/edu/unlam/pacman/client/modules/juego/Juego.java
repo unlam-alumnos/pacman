@@ -70,20 +70,20 @@ public class Juego extends BaseFrame {
             if (i == 0) {
                 addComponent(new PacmanPresenter(jugador));
             } else {
-                Coordenada origen = new Coordenada(100, 100);
+                Coordenada origen = new Coordenada(150, 150);
                 Color color = Color.CELESTE;
                 switch (i) {
                     case 2:
                         color = Color.ROJO;
-                        origen = new Coordenada(150, 100);
+                        origen = new Coordenada(325, 150);
                         break;
                     case 3:
                         color = Color.VERDE;
-                        origen = new Coordenada(200, 100);
+                        origen = new Coordenada(150, 275);
                         break;
                     case 4:
                         color = Color.VIOLETA;
-                        origen = new Coordenada(250, 100);
+                        origen = new Coordenada(325, 275);
                         break;
                 }
                 addComponent(new FantasmaPresenter(jugador, origen, color));
