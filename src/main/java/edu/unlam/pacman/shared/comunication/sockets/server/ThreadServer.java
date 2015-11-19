@@ -37,7 +37,7 @@ public class ThreadServer extends Thread {
             do {
                 if (aux != null) {
                     if (aux.contains("JugadorMessage")) {
-                        pushMessage(aux);
+                        //pushMessage(aux);
                     }
                     index = connections.iterator();
 

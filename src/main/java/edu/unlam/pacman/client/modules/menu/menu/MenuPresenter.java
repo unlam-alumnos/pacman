@@ -9,12 +9,14 @@ import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.client.mvp.Presenter;
+import edu.unlam.pacman.shared.SharedConstants;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.StartEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.async.ClientEventCallback;
 import edu.unlam.pacman.shared.comunication.bus.messages.JugadorMessage;
 import edu.unlam.pacman.shared.comunication.bus.messages.StartMessage;
 import edu.unlam.pacman.shared.model.JugadorActual;
+import edu.unlam.pacman.shared.util.PropertiesUtils;
 
 /**
  * @author Cristian Miranda
@@ -37,7 +39,11 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
     @Override
     public void unirseAPartida(String ipServer, int portServer) {
         // eventBus.post(new ClientEventRequest(ipServer,portServer));
-        communicationHandler.send(new JugadorMessage(JugadorActual.get()), JugadorMessage.class);
+        if ("true".equals(PropertiesUtils.pref().get(SharedConstants.GAME_SERVER))) {
+            jugadores.add(JugadorActual.get());
+        } else {
+            communicationHandler.send(new JugadorMessage(JugadorActual.get()), JugadorMessage.class);
+        }
     }
 
     @Override
