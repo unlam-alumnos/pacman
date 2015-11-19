@@ -37,6 +37,7 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
     @Override
     public void unirseAPartida(String ipServer, int portServer) {
         // eventBus.post(new ClientEventRequest(ipServer,portServer));
+        communicationHandler.send(new JugadorMessage(JugadorActual.get()), JugadorMessage.class);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
 
     @Subscribe
     public void handleClientCallbackEvent(ClientEventCallback event) {
-        communicationHandler.send(new JugadorMessage(JugadorActual.get()), JugadorMessage.class);
+
     }
 
     @Subscribe
