@@ -34,9 +34,9 @@ public class Launcher {
     }
 
     public static void initProperties(String[] args) {
-        PropertiesUtils.pref().put(SharedConstants.DB_URL, "jdbc:mysql://crismiranda.net:3306/PACMAN");
+        PropertiesUtils.pref().put(SharedConstants.DB_URL, "jdbc:mysql://localhost:3306/PACMAN");
         PropertiesUtils.pref().put(SharedConstants.DB_USERNAME, "root");
-        PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "");
+        PropertiesUtils.pref().put(SharedConstants.DB_PASSWORD, "root");
         PropertiesUtils.pref().put(SharedConstants.GAME_LENGTH, "60");
         PropertiesUtils.pref().put(SharedConstants.GAME_SERVER, "client".equals(args[0]) ? Boolean.FALSE.toString() : Boolean.TRUE.toString());
         PropertiesUtils.pref().put(SharedConstants.CLIENT_ID, UUID.randomUUID().toString());

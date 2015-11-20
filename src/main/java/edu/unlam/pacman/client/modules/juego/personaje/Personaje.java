@@ -131,52 +131,12 @@ public class Personaje implements Serializable {
 
         Personaje personaje = (Personaje) o;
 
-        if (active != personaje.active) {
-            return false;
-        }
-        if (x != personaje.x) {
-            return false;
-        }
-        if (y != personaje.y) {
-            return false;
-        }
-        if (height != personaje.height) {
-            return false;
-        }
-        if (width != personaje.width) {
-            return false;
-        }
-        if (speed != personaje.speed) {
-            return false;
-        }
-        if (kills != personaje.kills) {
-            return false;
-        }
-        if (jugador != null ? !jugador.equals(personaje.jugador) : personaje.jugador != null) {
-            return false;
-        }
-        if (direction != personaje.direction) {
-            return false;
-        }
-        if (status != personaje.status) {
-            return false;
-        }
-        return !(coordenadaPuntaje != null ? !coordenadaPuntaje.equals(personaje.coordenadaPuntaje) : personaje.coordenadaPuntaje != null);
+        return !(jugador != null ? !jugador.equals(personaje.jugador) : personaje.jugador != null);
+
     }
 
     @Override
     public int hashCode() {
-        int result = jugador != null ? jugador.hashCode() : 0;
-        result = 31 * result + (active ? 1 : 0);
-        result = 31 * result + x;
-        result = 31 * result + y;
-        result = 31 * result + height;
-        result = 31 * result + width;
-        result = 31 * result + speed;
-        result = 31 * result + (direction != null ? direction.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + kills;
-        result = 31 * result + (coordenadaPuntaje != null ? coordenadaPuntaje.hashCode() : 0);
-        return result;
+        return jugador != null ? jugador.hashCode() : 0;
     }
 }

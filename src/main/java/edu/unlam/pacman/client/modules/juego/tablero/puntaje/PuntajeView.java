@@ -1,21 +1,21 @@
 package edu.unlam.pacman.client.modules.juego.tablero.puntaje;
 
+import java.awt.Graphics2D;
+
+import javax.swing.ImageIcon;
+
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
 import edu.unlam.pacman.client.modules.juego.personaje.Personaje;
 import edu.unlam.pacman.client.modules.juego.personaje.fantasma.Fantasma;
 import edu.unlam.pacman.client.mvp.UiHandler;
 import edu.unlam.pacman.client.mvp.View;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Created by gmartin on 27/10/2015.
  */
 public class PuntajeView extends View<PuntajeView.MyView> {
-
     interface MyView extends UiHandler {
-        void paint();
+        void paintPuntaje();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PuntajeView extends View<PuntajeView.MyView> {
 
     @Override
     public void paintComponent(Graphics2D g2) {
-        uiHandler().paint();
+        uiHandler().paintPuntaje();
     }
 
     @Override
@@ -39,10 +39,10 @@ public class PuntajeView extends View<PuntajeView.MyView> {
         return JuegoConstants.MAX_HEIGHT;
     }
 
-    public void paint(Personaje personaje){
+    public void paintPuntaje(Personaje personaje, int i){
         String puntaje;
-        int x = personaje.getCoordenadaPuntaje().getX();
-        int y = personaje.getCoordenadaPuntaje().getY();
+        int x = 100 * i;
+        int y = 450;
 
         ImageIcon spritePersonaje = null;
         switch (personaje.getTipoPersonaje()){
@@ -53,7 +53,6 @@ public class PuntajeView extends View<PuntajeView.MyView> {
                 spritePersonaje = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/right.png");
                 break;
         }
-        ImageIcon spritePuntaje = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + Integer.toString(personaje.getKills()) + ".png");
 
         if (personaje.getKills() < 10){
             puntaje = "0" + Integer.toString(personaje.getKills());
