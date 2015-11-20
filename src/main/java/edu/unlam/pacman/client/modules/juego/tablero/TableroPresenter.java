@@ -255,7 +255,7 @@ public class TableroPresenter extends Presenter<TableroView> implements TableroV
 //                        }
 //                        eventBus.post(new BlockEvent(personaje.getJugador().getUsername(), true, Status.NORMAL));
 //                        eventBus.post(new BlockEvent(pj.getJugador().getUsername(), true, Status.NORMAL));
-//                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
+                    } else if (!pj.getTipoPersonaje().equals(personaje.getTipoPersonaje())) {
                         // Choco 1 pacman con algun fantasma, sin estar en modo cazador
 
                         if (pj instanceof Pacman) {
