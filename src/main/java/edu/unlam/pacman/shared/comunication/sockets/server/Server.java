@@ -2,10 +2,8 @@ package edu.unlam.pacman.shared.comunication.sockets.server;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,7 +11,6 @@ import edu.unlam.pacman.shared.comunication.bus.Bus;
 import edu.unlam.pacman.shared.comunication.bus.events.LogEvent;
 
 public class Server {
-    private String hostName;
     private String ipAddress;
     private ServerSocket server;
     private Socket client;
@@ -25,13 +22,7 @@ public class Server {
 
     public Server(int port, int maxClients, int minClients) {
 
-        try {
-            this.hostName = InetAddress.getLocalHost().getHostName();
-            this.ipAddress = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e1) {
-            e1.printStackTrace();
-        }
-
+        this.ipAddress = "127.0.0.1";
         this.port = port;
         this.maxClients = maxClients;
         this.minClients = minClients;
@@ -76,10 +67,6 @@ public class Server {
         return ipAddress;
     }
 
-    public String getHostName() {
-        return hostName;
-    }
-
     public int getMaxClients() {
         return maxClients;
     }
@@ -95,7 +82,6 @@ public class Server {
     public void printInfo(){
 
         Bus.getInstance().post(new LogEvent("DATOS DEL SERVIDOR:\n-------------------\n"));
-        Bus.getInstance().post(new LogEvent("Hostname:\t" + this.getHostName()));
         Bus.getInstance().post(new LogEvent("IP:\t" + this.getIpAddress()));
         Bus.getInstance().post(new LogEvent("Puerto:\t" + this.getPort()));
     }

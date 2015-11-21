@@ -47,10 +47,10 @@ public class PuntajeView extends View<PuntajeView.MyView> {
         ImageIcon spritePersonaje = null;
         switch (personaje.getTipoPersonaje()){
             case "Pacman":
-                spritePersonaje = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/uno/right.gif");
+                spritePersonaje = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/uno/right.gif"));
                 break;
             case "Fantasma":
-                spritePersonaje = new ImageIcon(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/right.png");
+                spritePersonaje = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/right.png"));
                 break;
         }
 
@@ -59,8 +59,8 @@ public class PuntajeView extends View<PuntajeView.MyView> {
         }else{
             puntaje =  Integer.toString(personaje.getKills());
         }
-        ImageIcon sprite1 = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + puntaje.charAt(0) + ".png");
-        ImageIcon sprite2 = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + puntaje.charAt(1) + ".png");
+        ImageIcon sprite1 = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + puntaje.charAt(0) + ".png"));
+        ImageIcon sprite2 = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "tablero/cronometro/" + puntaje.charAt(1) + ".png"));
 
 
         graphics().drawImage(spritePersonaje.getImage(), x, y, personaje.getWidth(), personaje.getHeight(), this);

@@ -37,7 +37,7 @@ public class TableroView extends View<TableroView.MyView> {
         graphics().fill(new Rectangle2D.Double(x, y, ancho, alto));
         graphics().setColor(Color.BLACK);
         graphics().setStroke(new BasicStroke(2f));
-        ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/pared.png");
+        ImageIcon sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "tablero/pared.png"));
 
         graphics().drawRect(x, y, ancho, alto);
         //graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
@@ -57,7 +57,7 @@ public class TableroView extends View<TableroView.MyView> {
     public void dibujarFrutaEspecial(Coordenada coordenada, int ancho, int alto) {
         int x = coordenada.getX();
         int y = coordenada.getY();
-        ImageIcon sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "tablero/fruta_especial.png");
+        ImageIcon sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "tablero/fruta_especial.png"));
         graphics().drawImage(sprite.getImage(), x, y, ancho, alto, this);
     }
 

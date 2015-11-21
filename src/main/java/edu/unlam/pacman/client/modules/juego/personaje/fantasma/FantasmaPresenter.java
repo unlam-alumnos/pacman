@@ -10,7 +10,6 @@ import com.google.common.eventbus.Subscribe;
 
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
-import edu.unlam.pacman.client.sprites.fantasma.Color;
 import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.JugadorActual;

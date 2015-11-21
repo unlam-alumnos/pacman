@@ -16,7 +16,7 @@ import edu.unlam.pacman.client.modules.juego.tablero.cronometro.CronometroPresen
 import edu.unlam.pacman.client.modules.juego.tablero.glass.GlassPresenter;
 import edu.unlam.pacman.client.modules.juego.tablero.puntaje.PuntajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
-import edu.unlam.pacman.client.sprites.fantasma.Color;
+import edu.unlam.pacman.client.modules.juego.personaje.fantasma.Color;
 import edu.unlam.pacman.shared.comunication.bus.events.LogEvent;
 import edu.unlam.pacman.shared.comunication.bus.events.ScreenEvent;
 import edu.unlam.pacman.shared.model.Coordenada;

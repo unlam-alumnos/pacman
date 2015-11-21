@@ -1,4 +1,4 @@
-package edu.unlam.pacman.client.sprites.fantasma;
+package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
 /**
  * @author Cristian Miranda

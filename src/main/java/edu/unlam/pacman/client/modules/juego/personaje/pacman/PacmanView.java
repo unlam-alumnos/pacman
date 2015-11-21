@@ -25,23 +25,23 @@ public class PacmanView extends PersonajeView<PacmanView.MyView> {
         ImageIcon sprite;
 
         if(Status.VICTIM.equals(status)) {
-            sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/victim.gif");
+            sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/victim.gif"));
         }else{
             switch (direction){
                 case RIGHT:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] + "/right.gif");
+                    sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] + "/right.gif"));
                     break;
                 case LEFT:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] +"/left.gif");
+                    sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] +"/left.gif"));
                     break;
                 case UP:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] + "/up.gif");
+                    sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] + "/up.gif"));
                     break;
                 case DOWN:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] + "/down.gif");
+                    sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/" + JuegoConstants.PACMAN_ANIMATION[imageIndex-1] + "/down.gif"));
                     break;
                 default:
-                    sprite = new ImageIcon(JuegoConstants.SPRITES_PATH + "pacman/uno/right.gif");
+                    sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "pacman/uno/right.gif"));
                     break;
             }
         }
