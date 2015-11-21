@@ -111,7 +111,6 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     }
 
     @Subscribe
-    @AllowConcurrentEvents
     public void handleMoveEventCallback(MoveEventCallback moveEvent) {
         if (personaje.getJugador().getUsername().equals(moveEvent.getSubject())) {
             int x = 0;

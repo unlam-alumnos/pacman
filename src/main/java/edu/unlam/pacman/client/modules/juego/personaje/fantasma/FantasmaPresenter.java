@@ -1,18 +1,20 @@
 package edu.unlam.pacman.client.modules.juego.personaje.fantasma;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-
 import edu.unlam.pacman.client.modules.juego.personaje.PersonajePresenter;
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.comunication.bus.events.BlockEvent;
+import edu.unlam.pacman.shared.comunication.bus.events.async.MoveEventRequest;
 import edu.unlam.pacman.shared.model.Coordenada;
+import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.JugadorActual;
+import edu.unlam.pacman.shared.model.Status;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
 /**
  * @author Cristian Miranda
@@ -29,10 +31,10 @@ public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implemen
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleDeadEventCallback(BlockEvent e) {
+    public void handleBlockEventCallback(BlockEvent e) {
         if (e.getSubject().equals(personaje.getJugador().getUsername())){
-            personaje.setActive(e.isActive());
-            personaje.setStatus(e.getStatus());
+            personaje.setTimeBlock(new GregorianCalendar().getTimeInMillis());
+            personaje.setStatus(Status.BLOCK);
         }
     }
 
@@ -47,5 +49,17 @@ public class FantasmaPresenter extends PersonajePresenter<FantasmaView> implemen
         };
         Timer timer = new Timer(personaje.getSpeed(), animate);
         timer.start();
+    }
+
+    @Override
+    public void move(Direction direction) {
+        long diff = new GregorianCalendar().getTimeInMillis() - personaje.getTimeBlock();
+
+        if (diff >= 1000){
+            if (personaje != null && personaje.getJugador() != null && personaje.isActive()) {
+                eventBus.post(new MoveEventRequest(personaje.getJugador().getUsername(), new Coordenada(personaje.getX(), personaje.getY()), direction, "pacman", personaje));
+                personaje.setStatus(Status.NORMAL);
+            }
+        }
     }
 }

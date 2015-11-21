@@ -13,8 +13,10 @@ import edu.unlam.pacman.shared.model.Status;
 public class Fantasma extends Personaje {
 
     private String color;
+    private long timeBlock;
 
     public Fantasma(Jugador jugador, Coordenada origen, Color color) {
+        this.timeBlock = 0;
         setSpeed(130);
         setX(origen.getX());
         setY(origen.getY());
@@ -31,6 +33,16 @@ public class Fantasma extends Personaje {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public void setTimeBlock(long timeBlock) {
+        this.timeBlock = timeBlock;
+    }
+
+    @Override
+    public long getTimeBlock(){
+        return this.timeBlock;
     }
 
     @Override
