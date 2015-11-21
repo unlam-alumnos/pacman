@@ -5,6 +5,6 @@ package edu.unlam.pacman.client.modules.login;
  * @since 10/10/15 - 13:17
  */
 public class LoginConstants {
-    public static final Integer MAX_WIDTH = 500;
-    public static final Integer MAX_HEIGHT = 300;
+    public static final Integer MAX_WIDTH = 400;
+    public static final Integer MAX_HEIGHT = 200;
 }

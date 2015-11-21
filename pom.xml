@@ -6,7 +6,7 @@
 
     <groupId>edu.unlam</groupId>
     <artifactId>pacman</artifactId>
-    <version>1.0</version>
+    <version>1.5</version>
 
     <properties>
         <!-- Dependencies -->
