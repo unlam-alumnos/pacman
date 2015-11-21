@@ -1,11 +1,11 @@
 package edu.unlam.pacman.server.service;
 
+import java.net.Socket;
+
 import edu.unlam.pacman.shared.comunication.sockets.client.Cliente;
 import edu.unlam.pacman.shared.comunication.sockets.client.ThreadCliente;
 import edu.unlam.pacman.shared.comunication.sockets.server.Server;
 import edu.unlam.pacman.shared.comunication.sockets.server.ThreadServer;
-
-import java.net.Socket;
 
 /**
  * @author Cristian Miranda
@@ -39,19 +39,12 @@ public class CommunicationService {
                 new ThreadServer(socket, server.getConnections()).start();
             }
         }
-
-        // TODO: Cerrar el socket al final
-        // server.stop();
     }
 
     public void initClient(String ipServer, int portServer) {
-
         Cliente cliente = new Cliente(ipServer, portServer);
 
         new ThreadCliente(cliente.getSocket()).start();
-
-        // TODO: Cerrar el socket al final
-        //cliente.close();
     }
 
 }

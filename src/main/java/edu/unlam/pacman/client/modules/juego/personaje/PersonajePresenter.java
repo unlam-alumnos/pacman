@@ -151,7 +151,6 @@ public abstract class PersonajePresenter<V extends PersonajeView<?>> extends Pre
     @Subscribe
     @AllowConcurrentEvents
     public void handleMoveMessage(MovementMessage moveMessage) {
-        // TODO: Identificar personajes
         if (moveMessage != null
                 && moveMessage.getPersonaje() != null
                 && personaje.getJugador().equals(moveMessage.getPersonaje().getJugador())) {
