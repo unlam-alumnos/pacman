@@ -1,11 +1,11 @@
 package edu.unlam.pacman.client.modules.juego.personaje;
 
-import java.io.Serializable;
-
 import edu.unlam.pacman.client.modules.login.login.Jugador;
 import edu.unlam.pacman.shared.model.Coordenada;
 import edu.unlam.pacman.shared.model.Direction;
 import edu.unlam.pacman.shared.model.Status;
+
+import java.io.Serializable;
 
 /**
  * Created by gmartin on 22/10/2015.
@@ -139,4 +139,8 @@ public class Personaje implements Serializable {
     public int hashCode() {
         return jugador != null ? jugador.hashCode() : 0;
     }
+
+    public void setTimeBlock(long timeBlock) { }
+
+    public long getTimeBlock() { return 0;}
 }
