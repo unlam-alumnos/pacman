@@ -99,7 +99,12 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginView.My
      *
      * @param jugadorService
      */
+
     public void setJugadorService(JugadorService jugadorService) {
         this.jugadorService = jugadorService;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }
