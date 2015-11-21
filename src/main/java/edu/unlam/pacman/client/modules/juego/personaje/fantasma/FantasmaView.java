@@ -26,8 +26,6 @@ public class FantasmaView extends PersonajeView<FantasmaView.MyView> {
 
         if(Status.VICTIM.equals(status)) {
             sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/victim.png"));
-        }else if(Status.BLOCK.equals(status)) {
-            sprite = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "fantasma/" + ((Fantasma) personaje).getColor() + "/blocked.png"));
         }else{
             switch (direction){
                 case RIGHT:
