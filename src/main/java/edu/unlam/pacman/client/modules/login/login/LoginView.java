@@ -75,15 +75,15 @@ public class LoginView extends View<LoginView.MyView> {
         add(btnRegister);
 
         label = new JLabel("Usuario:");
-        label.setBounds(97, 14, 40, 14);
+        label.setBounds(97, 14, 60, 14);
         add(label);
 
         label_1 = new JLabel("Contrase\u00F1a:");
-        label_1.setBounds(77, 45, 60, 14);
+        label_1.setBounds(74, 45, 90, 14);
         add(label_1);
 
         label_2 = new JLabel("IP Servidor:");
-        label_2.setBounds(77, 76, 60, 14);
+        label_2.setBounds(78, 76, 90, 14);
         add(label_2);
     }
 

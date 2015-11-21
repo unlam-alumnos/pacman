@@ -56,15 +56,15 @@ public class RegistroView extends View<RegistroView.MyView> {
         add(btnAceptar);
 
         JLabel lbUsuario = new JLabel("Usuario:");
-        lbUsuario.setBounds(124, 14, 40, 14);
+        lbUsuario.setBounds(124, 14, 60, 14);
         add(lbUsuario);
 
         JLabel lbPass = new JLabel("Contrase\u00F1a:");
-        lbPass.setBounds(104, 45, 60, 14);
+        lbPass.setBounds(102, 45, 90, 14);
         add(lbPass);
 
         JLabel lblConfirmarPass = new JLabel("Confirmar Contrase\u00F1a:");
-        lblConfirmarPass.setBounds(54, 76, 110, 14);
+        lblConfirmarPass.setBounds(34, 76, 190, 14);
         add(lblConfirmarPass);
     }
 
