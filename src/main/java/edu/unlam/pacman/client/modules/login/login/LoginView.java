@@ -16,9 +16,8 @@ import edu.unlam.pacman.client.mvp.View;
 
 public class LoginView extends View<LoginView.MyView> {
     interface MyView extends UiHandler {
-        void login(String username, String password);
+        void login();
         void register();
-        void connect();
     }
 
     private JTextField txtUser;
@@ -60,7 +59,7 @@ public class LoginView extends View<LoginView.MyView> {
         btnAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                uiHandler().login(txtUser.getText(), txtPass.getText());
+                uiHandler().login();
             }
         });
         add(btnAceptar);
@@ -74,16 +73,6 @@ public class LoginView extends View<LoginView.MyView> {
             }
         });
         add(btnRegister);
-
-        btnConnect = new JButton("Conectar");
-        btnConnect.setBounds(147, 166, 137, 23);
-        btnConnect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                uiHandler().connect();
-            }
-        });
-        add(btnConnect);
 
         label = new JLabel("Usuario:");
         label.setBounds(97, 14, 40, 14);
@@ -108,6 +97,14 @@ public class LoginView extends View<LoginView.MyView> {
         txtPass.setText("");
     }
 
+    public String getUsername() {
+        return txtUser.getText();
+    }
+
+    public String getPassword() {
+        return txtPass.getText();
+    }
+
     public String getServerIp() {
         return txtIp.getText();
     }
@@ -115,10 +112,6 @@ public class LoginView extends View<LoginView.MyView> {
     public void hideServerIp() {
         label_2.setVisible(false);
         txtIp.setVisible(false);
-    }
-
-    public void hideConnect() {
-        btnConnect.setVisible(false);
     }
 
     @Override

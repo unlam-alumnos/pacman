@@ -37,7 +37,7 @@ public class LoginPresenterTest extends BasePresenterTest<LoginPresenter, LoginV
         given(jugadorService.getByUsernameAndPassword(username, password)).willReturn(new Jugador(username, password));
 
         // When
-        presenter.login(username, password);
+        presenter.login();
 
         // Then
         verify(jugadorService).getByUsernameAndPassword(username, password);
@@ -53,7 +53,7 @@ public class LoginPresenterTest extends BasePresenterTest<LoginPresenter, LoginV
         given(jugadorService.getByUsernameAndPassword(username, password)).willThrow(new ServiceException(error));
 
         // When
-        presenter.login(username, password);
+        presenter.login();
 
         // Then
         verify(jugadorService).getByUsernameAndPassword(username, password);
