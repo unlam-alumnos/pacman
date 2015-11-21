@@ -4,3 +4,12 @@
 
 * Documentación: http://cor.to/pacman-docs
 * Métricas: http://cor.to/pacman-metricas
+
+Integrantes
+
+* Di Giacomo, Gastón
+* Blanco, Juan Manuel
+* Martin, Gonzalo Javier
+* Miranda, Cristian Nahuel
+
+Curso: Martes, Viernes y Sábado - Turno noche
