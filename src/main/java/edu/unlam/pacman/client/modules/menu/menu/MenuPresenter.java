@@ -47,8 +47,12 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
 
     @Override
     public void empezarPartida(){
-        communicationHandler.send(new StartMessage(jugadores), StartMessage.class);
-        eventBus.post(new StartEvent());
+        if (jugadores.size() >= 3 && jugadores.size() <= 5) {
+            communicationHandler.send(new StartMessage(jugadores), StartMessage.class);
+            eventBus.post(new StartEvent());
+        } else {
+            getView().error("La partida solo puede comenzar cuando hay un minimo de 3 y un maximo de 5 jugadores en ella.");
+        }
     }
 
     @Subscribe
@@ -73,6 +77,8 @@ public class MenuPresenter extends Presenter<MenuView> implements MenuView.MyVie
     @AllowConcurrentEvents
     public void handleJugadorMessage(JugadorMessage jugadorMessage) {
         Jugador jugador = jugadorMessage.getJugador();
-        jugadores.add(jugador);
+        if (jugadores.size() < 5) {
+            jugadores.add(jugador);
+        }
     }
 }
