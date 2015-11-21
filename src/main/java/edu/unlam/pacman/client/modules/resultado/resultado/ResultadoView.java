@@ -56,8 +56,8 @@ public class ResultadoView extends View<ResultadoView.MyView> {
 
     @Override
     public void paintComponent(Graphics2D g2) {
-        ImageIcon letras = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "/letras.png"));
-        ImageIcon numeros = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "/numeros.png"));
+        ImageIcon letras = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "letras.png"));
+        ImageIcon numeros = new ImageIcon(getClass().getResource(JuegoConstants.SPRITES_PATH + "numeros.png"));
 
         String texto = "fin de la partida";
         int sizeLetra = 25;
