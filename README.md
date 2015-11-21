@@ -6,6 +6,7 @@
 * Todas las versiones estables: [releases](https://github.com/unlam/pacman/releases)
 * Documentación: http://cor.to/pacman-docs
 * Métricas: http://cor.to/pacman-metricas
+* Site: http://unlam.github.io/pacman/
 
 Integrantes
 
