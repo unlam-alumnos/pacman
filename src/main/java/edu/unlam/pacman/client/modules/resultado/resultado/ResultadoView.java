@@ -1,10 +1,9 @@
 package edu.unlam.pacman.client.modules.resultado.resultado;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
 
 import edu.unlam.pacman.client.modules.juego.JuegoConstants;
@@ -58,12 +57,12 @@ public class ResultadoView extends View<ResultadoView.MyView> {
     @Override
     public void paintComponent(Graphics2D g2) {
 
-        // TODO: esto se ejecuta constantemente, podemos adaptarlo para que se imprima cuando se crea unicamente ¿?
+        // TODO: esto se ejecuta constantemente, podemos adaptarlo para que se imprima cuando se crea unicamente ï¿½?
 
         ImageIcon letras = new ImageIcon(JuegoConstants.SPRITES_PATH + "/letras.png");
         ImageIcon numeros = new ImageIcon(JuegoConstants.SPRITES_PATH + "/numeros.png");
 
-        String texto = "ganador usuario";
+        String texto = "fin de la partida";
         int sizeLetra = 25;
         int y = 140;
         int dirImgY = 0;
@@ -80,7 +79,7 @@ public class ResultadoView extends View<ResultadoView.MyView> {
             graphics().drawImage(letras.getImage(), x, y, x+sizeLetra, y+sizeLetra, tamImgSprite*(letra-asciia), dirImgY, tamImgSprite*(letra-(asciia-1)), tamImgSprite , this);
         }
 
-        texto = "tiempo 35 segundos";
+        texto = "";
         y = 180;
         for (int i = 0; i < texto.length(); i++){
             int letra = (int)texto.charAt(i);
